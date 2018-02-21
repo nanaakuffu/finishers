@@ -22,9 +22,13 @@
               <label for='user_pass_word'>Password:</label>
               <input type='password' class='form-control' id='user_pass_word' name='user_pass_word' placeholder='Enter password' required>
             </div>
-            <a href="#"><i class='fa fa-unlock'></i> Forgotten password? </a>
             <div class="form-group">
-              <button class='btn btn-primary w3-round w3-padding-medium w3-right' type='submit' name='login' form='login'>Login <span class='glyphicon glyphicon-log-in'></button>
+              <?php
+                if (isset($_POST['login'])) {
+                  echo "<a class='w3-left' href='#''><i class='fa fa-unlock'></i> Forgotten password? </a>";
+                }
+              ?>
+              <button class='btn btn-primary w3-right' type='submit' name='login' form='login'>Login <span class='glyphicon glyphicon-log-in'></button>
             </div>
         </form>
       </div>

@@ -479,7 +479,7 @@
       $user_num = mysqli_num_rows($user_result);
       $user_array = [];
 
-      $fields = $this->get_field_names($connection, 'priveleges');
+      $fields = $this->get_field_names($connection, 'user_details');
 
       if ($user_num > 0) {
         while ($record = mysqli_fetch_array($user_result)) {

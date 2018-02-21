@@ -36,7 +36,6 @@
                 $_SESSION['auth'] = 'yes';
 
                 $today_date = date('y-m-d h:i:s');
-                $today_date_log = date('y-m-d');
                 $log_id = create_id($today_date, "log");
                 $_SESSION['log_id'] = $log_id;
                 $_SESSION['login_time'] = time();
