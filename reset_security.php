@@ -46,7 +46,7 @@
 
           $db = new Database();
           $con = $db->connect_to_db();
-          $SQL = "SELECT * FROM login_check WHERE user_name = "."'".$_POST['user_name']."'";
+          $SQL = "SELECT * FROM login_security WHERE user_name = "."'".$_POST['user_name']."'";
 
           $result = mysqli_query($con, $SQL);
           $num = mysqli_num_rows($result);
@@ -64,7 +64,7 @@
             if ($_SESSION['update_sec']) {
               $save_data = $db->update_data($con, $_POST, "login_security", "user_name", $_POST['user_name']);
             } else {
-              $save_data = $db->add_new_data($con, $_POST, "login_security");
+              $save_data = $db->add_new($con, $_POST, "login_security");
             }
 
             if ($save_data) {
