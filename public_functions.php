@@ -103,11 +103,11 @@
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-graduation-cap fa-fw'></i> Student <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>";
-                            if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1) {
+                            // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1) {
                                 echo "<li><a href='add_student.php'><span class='glyphicon glyphicon-user'></span> Add New Student </a></li>";
                                 echo "<li><a href='display_students.php'><i class='fa fa-fw fa-edit'></i> View and Edit Students </a></li>";
                                 // echo "<li class='divider'></li>";
-                            }
+                            // }
                   echo "</ul>
                     </li>
                     <li class='dropdown'>
@@ -119,23 +119,23 @@
                             <li>
                                 <a href='teachers_view.php'><i class='fa fa-fw fa-desktop'></i> Teacher's Score View </a>
                             </li>";
-                            if ( $_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1 ) {
+                            // if ( $_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1 ) {
                               echo "<li><a href='view_class_scores.php'><i class='fa fa-fw fa-navicon'></i> Student Score View </a></li>";
-                            }
+                            // }
                   echo "</ul>
                     </li>
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-fw fa-gear'></i> Settings <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>
                             <li>";
-                            if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1) {
+                            // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1) {
                                 echo "<a href='create_users.php'><i class='fa fa-fw fa-user'></i> Add New User </a>";
-                            }
+                            // }
                       echo "</li>
                             <li>";
-                            if ($_SESSION['is_admin'] == 1) {
+                            // if ($_SESSION['is_admin'] == 1) {
                                 echo "<a href='display_users.php'><i class='fa fa-fw fa-edit'></i> View and Edit Users </a>";
-                            }
+                            // }
                       echo "</li>
                             <li>
                                 <a href='change_password.php'><i class='fa fa-fw fa-key'></i> Change Password </a>
@@ -145,9 +145,9 @@
                             </li>
                             <li class='divider'></li>
                             <li>";
-                            if ($_SESSION['is_admin'] == 1) {
+                            // if ($_SESSION['is_admin'] == 1) {
                                 echo "<a href='down_page.php'><i class='fa fa-fw fa-database'></i> Back Up Database </a>";
-                            }
+                            // }
                       echo  "</li>
                         </ul>
                     </li>
