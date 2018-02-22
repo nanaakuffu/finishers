@@ -25,7 +25,7 @@
             <div class="form-group">
               <?php
                 if (isset($_POST['login'])) {
-                  echo "<a class='w3-left' href='#''><i class='fa fa-unlock'></i> Forgotten password? </a>";
+                  echo "<a class='w3-left' href='#'><i class='fa fa-unlock'></i> Forgotten password? </a>";
                 }
               ?>
               <button class='btn btn-primary w3-right' type='submit' name='login' form='login'>Login <span class='glyphicon glyphicon-log-in'></button>
@@ -35,9 +35,9 @@
     </div>
 <?php
   if (isset($_SESSION['message'])) {
-    echo "<div class='panel panel-default'>
-              <div class='panel-body'>", $_SESSION['message'], "</div>
-          </div>";
+    echo "<div class='alert alert-danger'>
+              ", $_SESSION['message'],
+         "</div>";
     unset($_SESSION['message']);
   }
 ?>
