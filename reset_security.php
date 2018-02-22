@@ -39,7 +39,7 @@
           }
           $_SESSION['message'] = $message;
 
-          include_once 'reset_page.php';
+          include_once 'security_question.php';
           exit();
 
         } else {
@@ -52,7 +52,7 @@
           $num = mysqli_num_rows($result);
           if ($num > 0 and !isset($_SESSION['update_sec'])) {   //user name already exists
             $_SESSION['message'] = "User Name already exists";
-            include_once 'reset_page.php';
+            include_once 'security_question.php';
           } else {
             // This is an array that holds the keys of the wanted field names
             $field_names_array = $db->get_field_names($con, "login_security");
