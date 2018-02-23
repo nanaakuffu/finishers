@@ -25,7 +25,8 @@
             <div class="form-group">
               <?php
                 if (isset($_POST['login'])) {
-                  echo "<a class='w3-left' href='forgotten_pass.php?user_name=".$_POST['user_name']."'><i class='fa fa-unlock'></i> Forgotten password? </a>";
+                  $user = encrypt_data($_POST['user_name']);
+                  echo "<a class='w3-left' href='forgotten_pass.php?use={$user}'><i class='fa fa-unlock'></i> Forgotten password? </a>";
                 }
               ?>
               <button class='btn btn-primary w3-right' type='submit' name='login' form='login'>Login <span class='glyphicon glyphicon-log-in'></button>

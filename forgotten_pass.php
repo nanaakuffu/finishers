@@ -9,7 +9,8 @@
 
     // $question_array = $db->create_data_array($con, 'login_security', 'security_question', TRUE, TRUE);
 
-    $username = mysqli_real_escape_string($con, $_GET['user_name']);
+    $username = mysqli_real_escape_string($con, $_GET['use']);
+    $username = decrypt_data($username);
     $query = "SELECT security_question FROM login_security WHERE user_name='$username'";
 
     $result = mysqli_query($con, $query);
