@@ -69,6 +69,7 @@
 
               if (!$db->data_exists($con, "user_details", "user_name", $_POST['user_name'])) {
                 // Actually save the data
+                $_POST = secure_data_array($_POST);
                 $save_data = $db->add_new($con, $_POST, "user_details");
 
                 if ($save_data) {
@@ -78,6 +79,7 @@
                   $date_time = date('y-m-d h:m:S');
                   $_ACT = array('activity_id' => $activity_id, 'user_name' => $user_name,
                           'activity_details' => $activity, 'activity_date_time' => $date_time);
+                  $_ACT = secure_data_array($_ACT);
                   $add_activity = $db->add_activity($con, $_ACT, 'login_activity');
 
                   // If saving was possible try to set the access level
@@ -103,7 +105,8 @@
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
-
+              // Secure data
+              $_POST = secure_data_array($_POST);
               // Update the data
               $save_data = $db->update_data($con, $_POST, "user_details", "user_name", $_POST['user_name']);
 
@@ -113,6 +116,7 @@
               $date_time = date('y-m-d h:m:S');
               $_ACT = array('activity_id' => $activity_id, 'user_name' => $user_name,
                       'activity_details' => $activity, 'activity_date_time' => $date_time);
+              $_ACT = secure_data_array($_ACT);
               $add_activity = $db->add_activity($con, $_ACT, 'login_activity');
 
               unset($_SESSION['update_user']);

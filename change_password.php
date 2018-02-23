@@ -71,6 +71,9 @@ if(!isset($_POST['submit'])) {
           $pass_data['user_name'] = $_POST['user_name'];
           $pass_data['user_password'] = encryption($_POST['new_password'], $_SESSION['full_name']);
 
+          // Secure data
+          $pass_data = secure_data_array($pass_data);
+          
           $change_data = $db->update_data($con, $pass_data, 'users', 'user_name', $pass_data['user_name']);
           if ($change_data) {
             header('Location: index.php');

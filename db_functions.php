@@ -63,8 +63,6 @@
 
       foreach($form_data as $field => $value)
       {
-        $form_data[$field] = trim($form_data[$field]);
-        $form_data[$field] = strip_tags($form_data[$field]);
         $form_data[$field] = mysqli_real_escape_string($connection, $form_data[$field]);
 
         $field_array[] = $field;
@@ -107,10 +105,7 @@
 
       if (is_array($form_data)) {
         foreach ($form_data as $field => $value) {
-          $value = trim($value);
-          $value = strip_tags($value);
           $value = mysqli_real_escape_string($connection, $value);
-
           $query .= "$field ="."'".$value."'".", ";
         }
         $query = substr($query, 0, strlen($query) - 2)." WHERE $prim_key = "."'".$prim_value."'";

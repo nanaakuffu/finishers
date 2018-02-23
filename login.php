@@ -42,6 +42,7 @@
 
                 // Create an array with the variables available
                 $log_array = array('login_id'=>$log_id, 'user_name'=>$user_name, 'login_date_time'=>$today_date);
+                $log_array = secure_data_array($log_array);
                 // Update login Details
                 $result = $db->add_new($con, $log_array, 'login_details');
 

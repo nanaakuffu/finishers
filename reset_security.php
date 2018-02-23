@@ -60,7 +60,8 @@
             /* Removes unwanted field names that came from the form */
             $_POST = filter_array($_POST, $field_names_array);
             $_POST['answer'] = encrypt_data($_POST['answer']);
-
+            $_POST = secure_data_array($_POST);
+            
             if ($_SESSION['update_sec']) {
               $save_data = $db->update_data($con, $_POST, "login_security", "user_name", $_POST['user_name']);
             } else {

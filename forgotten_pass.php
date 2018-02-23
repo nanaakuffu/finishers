@@ -20,24 +20,31 @@
             $sec_ques = $row['security_question'];
         }
     }
-
-    if (isset($_SESSION['message'])) {
-      echo "<div class='alert alert-danger'>
-                ", $_SESSION['message'],
-           "</div>";
-      unset($_SESSION['message']);
-    }
 ?>
+<nav class='navbar navbar-inverse navbar-fixed-top' role='navigation'>
+  <div class='container'>
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class='navbar-header'>
+        <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1'>
+            <span class='sr-only'>Toggle navigation</span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+        </button>
+        <a class='navbar-brand bitterlabel' href='#'> <i class='fa fa-home fa-fw'></i> Finishers Co. Ltd </a>
+    </div>
+  </div>
+</nav>
 <div class="container-fluid">
   <div class="container">
-    <div class="jumbotron">
+    <!-- <div class="jumbotron">
       <h1> Welcome! </h1>
       <p> It appears you are having problems in logging in.
           You only need to fill the form below to retrieve your password.
           This is just to identify you. </p>
-    </div>
+    </div> -->
 
-    <div class='row' style='margin-top:-100px'>
+    <div class='row' style='margin-top:-50px'>
         <div class='col-md-3'>
           <br />
         </div>
@@ -60,16 +67,16 @@
                       <input type='text' class='form-control' id='answer' name='answer'
                         placeholder='Answer' required>
                   </div>
-                  <button class='btn btn-primary' type='submit' name='reset' form='reset'
-                          value='reset'> Verify <i class='fa fa-fw fa-refresh'></i></button>
+                  <button class='btn btn-primary' type='submit' name='retrieve' form='reset'
+                          value='retrieve'><i class='fa fa-check-square-o'></i> Verify Answer </button>
                 </form>
             </div>
           </div>
             <?php
               if (isset($_SESSION['message'])) {
-                echo "<div class='panel panel-default'>
-                          <div class='panel-body'>", $_SESSION['message'], "</div>
-                      </div>";
+                echo "<div class='alert alert-danger'>
+                          ", $_SESSION['message'],
+                     "</div>";
                 unset($_SESSION['message']);
               }
             ?>

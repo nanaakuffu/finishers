@@ -129,7 +129,7 @@
                         <ul class='dropdown-menu'>
                             <li>";
                             // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1) {
-                                echo "<a href='create_users.php'><i class='fa fa-fw fa-user'></i> Add New User </a>";
+                                echo "<a href='create_users.php'><i class='fa fa-fw fa-user-plus'></i> Add New User </a>";
                             // }
                       echo "</li>
                             <li>";
@@ -163,8 +163,6 @@
           </div>
         </nav>";
     }
-
-
 
     function add_footer()
     {
@@ -264,7 +262,7 @@
       $data_value = trim($data_value);
       $data_value = stripslashes($data_value);
       $data_value = strip_tags($data_value);
-      $secrued_value = htmlspecialchars($data_value);
+      $secured_value = htmlspecialchars($data_value);
 
       return $secured_value;
     }
