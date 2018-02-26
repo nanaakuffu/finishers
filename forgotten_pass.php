@@ -7,19 +7,19 @@
     $db = new Database();
     $con = $db->connect_to_db();
 
-    // $question_array = $db->create_data_array($con, 'login_security', 'security_question', TRUE, TRUE);
+    if (isset($_GET['use'])) {
+      $username = mysqli_real_escape_string($con, $_GET['use']);
+      $username = decrypt_data($username);
+      $query = "SELECT security_question FROM login_security WHERE user_name='$username'";
 
-    $username = mysqli_real_escape_string($con, $_GET['use']);
-    $username = decrypt_data($username);
-    $query = "SELECT security_question FROM login_security WHERE user_name='$username'";
+      $result = mysqli_query($con, $query);
+      $record_count = mysqli_num_rows($result);
 
-    $result = mysqli_query($con, $query);
-    $record_count = mysqli_num_rows($result);
-
-    if ($record_count > 0 ){
-        while ($row = mysqli_fetch_array($result)) {
-            $sec_ques = $row['security_question'];
-        }
+      if ($record_count > 0 ){
+          while ($row = mysqli_fetch_array($result)) {
+              $sec_ques = $row['security_question'];
+          }
+      }
     }
 ?>
 <nav class='navbar navbar-inverse navbar-fixed-top' role='navigation'>
@@ -52,23 +52,23 @@
         <div class='col-md-6'>
           <div class='panel panel-default' style='margin-top:90px'>
             <div class='panel-body'>
-                <form action='#' id='reset' method='POST'>
+                <form action='verify_answer.php' id='reset' method='POST'>
                   <div class='form-group'>
                       <label for='user_name'> Username: </label>
                       <input type='text' class='form-control' id='user_name' name='user_name'
-                        value='<?php echo $username; ?>' placeholder='Enter username' readonly>
+                        value='<?php $user = (isset($_GET['use'])) ? $username : $_POST['user_name']; echo $user; ?>' placeholder='Enter username' readonly>
                   </div>
                   <div class='form-group'>
                       <label for='user_name'> Security Question: </label>
                       <input type='text' class='form-control' id='sec_ques' name='security_question'
-                        value='<?php echo $sec_ques; ?>' placeholder='Security Question' readonly>
+                        value='<?php $sec_q = (isset($_GET['use'])) ? $sec_ques : $_POST['security_question']; echo $sec_q; ?>' placeholder='Security Question' readonly>
                   </div>
                   <div class='form-group'>
                       <label for='security_answer'> Answer: </label>
                       <input type='text' class='form-control' id='answer' name='answer'
                         placeholder='Answer' required>
                   </div>
-                  <button class='btn btn-primary' type='submit' name='retrieve' form='reset'
+                  <button class='btn btn-primary' type='submit' name='verify' form='reset'
                           value='retrieve'><i class='fa fa-check-square-o'></i> Verify Answer </button>
                 </form>
             </div>
