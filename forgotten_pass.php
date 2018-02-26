@@ -16,9 +16,9 @@
       $record_count = mysqli_num_rows($result);
 
       if ($record_count > 0 ){
-          while ($row = mysqli_fetch_array($result)) {
-              $sec_ques = $row['security_question'];
-          }
+        while ($row = mysqli_fetch_array($result)) {
+            $sec_ques = $row['security_question'];
+        }
       }
     }
 ?>

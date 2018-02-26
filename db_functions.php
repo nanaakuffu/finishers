@@ -79,8 +79,15 @@
         return FALSE;
     }
 
-    function add_activity($connection, $form_data, $table_name)
+    function add_activity($connection, $user_name, $activity)
     {
+      require_once 'public_functions';
+      
+      $form_data = array('activity_id' => create_id(date('y-m-d'), 'act_id'),
+                         'user_name' => $user_name,
+                         'activity_details' => $activity,
+                         'activity_date_time' => date('y-m-d h:m:S'));
+
       foreach($form_data as $field => $value)
       {
         $form_data[$field] = mysqli_real_escape_string($connection, $form_data[$field]);
@@ -91,7 +98,7 @@
 
       $fields = implode(",", $field_array);
       $values = implode('","', $value_array);
-      $query = "INSERT INTO $table_name ($fields) VALUES (\"$values\")";
+      $query = "INSERT INTO login_activity ($fields) VALUES (\"$values\")";
 
       if ($result = mysqli_query($connection, $query))
         return TRUE;

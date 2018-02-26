@@ -74,13 +74,7 @@
 
                 if ($save_data) {
                   // Add user acitivty
-                  $activity_id = create_id($today_date, 'act_id');
-                  $activity = 'Added a new user: '.$_POST['user_name'];
-                  $date_time = date('y-m-d h:m:S');
-                  $_ACT = array('activity_id' => $activity_id, 'user_name' => $user_name,
-                          'activity_details' => $activity, 'activity_date_time' => $date_time);
-                  $_ACT = secure_data_array($_ACT);
-                  $add_activity = $db->add_activity($con, $_ACT, 'login_activity');
+                  $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new user: '.$_POST['user_name']);
 
                   // If saving was possible try to set the access level
                   $_SESSION['new_user'] = $_POST['user_name'];
@@ -111,13 +105,7 @@
               $save_data = $db->update_data($con, $_POST, "user_details", "user_name", $_POST['user_name']);
 
               // Add user acitivty
-              $activity_id = create_id($today_date, 'act_id');
-              $activity = 'Updated your account details';
-              $date_time = date('y-m-d h:m:S');
-              $_ACT = array('activity_id' => $activity_id, 'user_name' => $user_name,
-                      'activity_details' => $activity, 'activity_date_time' => $date_time);
-              $_ACT = secure_data_array($_ACT);
-              $add_activity = $db->add_activity($con, $_ACT, 'login_activity');
+              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated your account details');
 
               unset($_SESSION['update_user']);
               unset($_SESSION['id']);
