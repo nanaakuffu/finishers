@@ -81,8 +81,8 @@
 
     function add_activity($connection, $user_name, $activity)
     {
-      require_once 'public_functions';
-      
+      // require_once 'public_functions.php';
+
       $form_data = array('activity_id' => create_id(date('y-m-d'), 'act_id'),
                          'user_name' => $user_name,
                          'activity_details' => $activity,

@@ -10,10 +10,18 @@
 
     if ($backup) {
       $message="<i class='fa fa-fw fa-check-box'></i> Database backup completed succesfully!";
+
+      // Add user activity
+      $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Backed up the database.');
+
       $_SESSION['message'] = $message;
       include_once 'down_page.php';
     } else {
       $message="<i class='fa fa-fw fa-close'></i>Database backup completed succesfully!";
+
+      // Add user activity
+      $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Backed up the database.');
+      
       $_SESSION['message'] = $message;
       include_once 'down_page.php';
     }

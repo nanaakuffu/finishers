@@ -26,8 +26,8 @@
         <div class="col-sm-5">
           <div class='form-group'>
               <label> User Name: </label>
-              <input class='form-control' type='text' name='user_name' value=''
-                       id='uname' placeholder='User Name' required>
+              <input class='form-control' type='text' name='user_name' value='<?php echo $_SESSION['user_name'] ?>'
+                       id='uname' placeholder='User Name' readonly>
           </div>
           <div class='form-group'>
               <label> Old Password: </label>

@@ -21,23 +21,17 @@
           if ($_POST['security_question'] == $rows[0]['security_question']) {
             if ($_POST['answer'] == decrypt_data($rows[0]['answer'])) {
 
-              // Set the date and time you are doing this
-              // $today_date = date('y-m-d');
-              // $today_time = date('h:i:s');
-              // $log_id = $db->get_last_logged_in($con, $_POST['user_name']);
               $user_sql = "SELECT user_password, first_name, middle_name, last_name FROM user_details WHERE user_name = "."'".$_POST['user_name']."'";
               $user_result = mysqli_query($con, $user_sql) or die("Couldn't execute query for getting user.");
               while($record = mysqli_fetch_assoc($user_result)){
                 $user[] = $record;
               }
-              // $user_sql = "UPDATE users SET status='0' WHERE user_name ="."'".$_POST['user_name']."'";
-              // $result = mysqli_query($con, $user_sql) or die("Couldn't execute query.");
-              // if ($result) {
-              //   $log_sql = "UPDATE login_details SET logout_date='$today_date', logout_time='$today_time' WHERE log_id='$log_id'";
-              //   $log_result = mysqli_query($con, $log_sql) or die("Couldn't execute query.");
-              // }
+
               $full_name = $user[0]['first_name']." ".$user[0]['first_name']." ".$user[0]['last_name'];
               $password = decryption($user[0]['user_password'], $full_name);
+
+              // Add user activity
+              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'System was able to succesfully verify you as the user with the name: ' $_SESSION['user_name']);
 
               $db->close_connection($con);
               $message = "<i class='fa fa-check-square-o'></i> Your answer has been verified. Your password is <b>$password</b> Please
@@ -47,6 +41,8 @@
               exit();
 
             } else {
+              // Add user activity
+              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'System was not able to succesfully verify due to an incorrect answer to the security question.');
               $db->close_connection($con);
               $message = "<i class='fa fa-fw fa-close'></i> Your answer and question does not match. Please
                         try again.";
@@ -55,6 +51,8 @@
               exit();
             }
           } else {
+            // Add user activity
+            $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'System was not able to succesfully verify due to an incorrect answer to the security question.');
             $db->close_connection($con);
             $message = "<i class='fa fa-fw fa-close'></i> Your question does not match your user name.
                         Please try again.";

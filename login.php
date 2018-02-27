@@ -46,6 +46,9 @@
                 // Update login Details
                 $result = $db->add_new($con, $log_array, 'login_details');
 
+                // Add user activity
+                $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Logged into the system.');
+
                 $db->close_connection($con);
                 header("Location: index.php");
             } else {
