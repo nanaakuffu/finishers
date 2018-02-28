@@ -21,7 +21,7 @@
     <div class='w3-container w3-blue'>
         <h3> Change User Password </h3>
     </div>
-    <form class='w3-form w3-border' action='change_password.php' method='POST'>
+    <form class='w3-form w3-border' action='change_password.php' method='POST' id="change_p">
       <div class="row">
         <div class="col-sm-5">
           <div class='form-group'>
@@ -50,8 +50,11 @@
         <div class="col-sm-2">
           <div class='form-group'>
             <label> Control </label>
-            <input class='btn btn-primary btn-block' type='submit' name='submit'
-                  value='Change Password'>
+            <button class='btn btn-primary' type='submit' name='submit'
+                form='change_p' value='Change Password'> Change Password <i class='fa fa-fw fa-plus'></i></button>
+
+            <!-- <input class='btn btn-primary btn-block' type='submit' name='submit'
+                  value='Change Password'> -->
           </div>
         </div>
       </div>

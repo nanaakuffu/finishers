@@ -86,7 +86,7 @@
       $form_data = array('activity_id' => create_id(date('y-m-d'), 'act_id'),
                          'user_name' => $user_name,
                          'activity_details' => $activity,
-                         'activity_date_time' => date('y-m-d h:m:S'));
+                         'activity_date_time' => date('y-m-d h:i:s'));
 
       foreach($form_data as $field => $value)
       {

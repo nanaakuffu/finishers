@@ -463,7 +463,7 @@
 
       $str_length = str_repeat("0", (4 - strlen(strval($db_num + 1)))).strval($db_num + 1);
 
-      $std_id = "DIA".$date_given[2].$date_given[1].$date_given[0].$str_length;
+      $std_id = "FCL".$date_given[2].$date_given[1].$date_given[0].$str_length;
 
       return $std_id;
     }
