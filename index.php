@@ -13,7 +13,7 @@
     $con = $db->connect_to_db();
     $total = 0;
 
-    echo "<pre>", var_dump($_SESSION), "</pre>";
+    // echo "<pre>", var_dump($_SESSION), "</pre>";
 ?>
     <br />
     <div class='container' style='margin-top:auto'>

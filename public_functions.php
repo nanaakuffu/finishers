@@ -81,6 +81,7 @@
     {
       $up_2 = encrypt_data('2');
       $full_name = $_SESSION['full_name'];
+      $login_count = $_SESSION['login_count'];
       // $user_type = $_SESSION['user_type'];
       $user = encrypt_data($_SESSION['user_name']);
 
@@ -152,7 +153,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href='users_page.php?u_id={$user}&up_user={$up_2}'><span class='glyphicon glyphicon-user'></span> $full_name </a>
+                        <a href='users_page.php?u_id={$user}&up_user={$up_2}'>
+                            <span class='glyphicon glyphicon-user'></span> $full_name
+                            <span class='badge'>$login_count</span>
+                        </a>
                     </li>
                     <li>
                         <a href='logout.php'> Log Out <i class='fa fa-sign-out fa-fw'></i> </a>
