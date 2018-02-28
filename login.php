@@ -12,7 +12,7 @@
 
         $user_array = $db->get_user_priveleges($con, $_POST['user_name']);
 
-        $user_sql = "SELECT user_name, first_name, middle_name, last_name FROM user_details WHERE user_name = "."'".$_POST['user_name']."'";
+        $user_sql = "SELECT user_password, first_name, middle_name, last_name FROM user_details WHERE user_name = "."'".$_POST['user_name']."'";
 
         $result = mysqli_query($con, $user_sql) or die("Couldn't execute query for getting the user name.");
         $num = mysqli_num_rows($result);
@@ -24,33 +24,30 @@
         if ($num > 0) {   // user name was found
           $full_name = $full_rows[0]['first_name']." ".$full_rows[0]['middle_name']." ".$full_rows[0]['last_name'];
           $password = encryption($_POST['user_pass_word'], trim($full_name));
-          $pass_sql = "SELECT * FROM user_details WHERE user_name="."'".$_POST['user_name']."'"." AND user_password=". "'".$password."'";
-          $pass_result = mysqli_query($con, $pass_sql) or die("Couldn't execute query for getting the password.");
-          $num_available = mysqli_num_rows($pass_result);
 
-          if ($num_available > 0) { // Password did match
-                $_SESSION = $user_array;
-                $user_name = $_POST['user_name'];
-                $_SESSION['user_name'] = $user_name;
-                $_SESSION['full_name'] = $full_name;
-                $_SESSION['auth'] = 'yes';
+          if ( $password == $full_rows[0]['user_password'] ) { // Password did match
+              $_SESSION = $user_array;
+              $_SESSION['user_name'] = $_POST['user_name'];
+              $_SESSION['full_name'] = $full_name;
+              $_SESSION['auth'] = 'yes';
 
-                $today_date = date('y-m-d h:i:s');
-                $log_id = create_id($today_date, "log");
-                $_SESSION['log_id'] = $log_id;
-                $_SESSION['login_time'] = time();
+              $today_date = date('y-m-d h:i:s');
+              $log_id = create_id($today_date, "log");
+              $_SESSION['log_id'] = $log_id;
+              $_SESSION['login_time'] = time();
 
-                // Create an array with the variables available
-                $log_array = array('login_id'=>$log_id, 'user_name'=>$user_name, 'login_date_time'=>$today_date);
-                $log_array = secure_data_array($log_array);
-                // Update login Details
-                $result = $db->add_new($con, $log_array, 'login_details');
+              // Create an array with the variables available
+              $log_array = array('login_id'=>$log_id, 'user_name'=>$_POST['user_name'], 'login_date_time'=>$today_date);
+              $log_array = secure_data_array($log_array);
 
-                // Add user activity
-                $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Logged into the system.');
+              // Update login Details
+              $result = $db->add_new($con, $log_array, 'login_details');
 
-                $db->close_connection($con);
-                header("Location: index.php");
+              // Add user activity
+              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Logged into the system.');
+
+              $db->close_connection($con);
+              header("Location: index.php");
             } else {
             $db->close_connection($con);
             $message = "<i class='fa fa-fw fa-close'></i> Password does not match your user name!";
