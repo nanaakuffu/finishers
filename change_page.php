@@ -52,9 +52,6 @@
             <label> Control </label>
             <button class='btn btn-primary' type='submit' name='submit'
                 form='change_p' value='Change Password'> Change Password <i class='fa fa-fw fa-plus'></i></button>
-
-            <!-- <input class='btn btn-primary btn-block' type='submit' name='submit'
-                  value='Change Password'> -->
           </div>
         </div>
       </div>

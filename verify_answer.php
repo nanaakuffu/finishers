@@ -9,7 +9,7 @@
         $db = new Database();
         $con = $db->connect_to_db();
 
-        $login_sql = "SELECT * FROM login_security WHERE user_name = "."'".$_POST['user_name']."'";
+        $login_sql = "SELECT security_question, answer FROM login_security WHERE user_name = "."'".$_POST['user_name']."'";
 
         $result = mysqli_query($con, $login_sql) or die("Couldn't execute query for login security.");
         $num = mysqli_num_rows($result);

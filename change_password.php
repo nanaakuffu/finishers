@@ -47,7 +47,7 @@ if(!isset($_POST['submit'])) {
       $con = $db->connect_to_db();
       $check_user_data = [];
 
-      $check_user_sql = "SELECT user_name, user_password FROM users WHERE user_name = "."'".$_POST['user_name']."'";
+      $check_user_sql = "SELECT user_name, user_password FROM user_details WHERE user_name = "."'".$_POST['user_name']."'";
 
       $result = mysqli_query($con, $check_user_sql);
       $num_of_records = mysqli_num_rows($result);

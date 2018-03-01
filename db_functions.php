@@ -166,7 +166,7 @@
     function get_active_users($connection)
     {
       $active_users = [];
-      $active_result = mysqli_query($connection, "SELECT user_name FROM user_details") or die("Couldn't perform query to load active users.");
+      $active_result = mysqli_query($connection, "SELECT user_name FROM user_privileges") or die("Couldn't perform query to load active users.");
 
       $active_num = mysqli_num_rows($active_result);
       if ( $active_num > 0 ) {
@@ -475,13 +475,13 @@
 
     function get_user_priveleges($connection, $user_name)
     {
-      $user_sql = "SELECT * FROM user_details WHERE user_name="."'".$user_name."'";
+      $user_sql = "SELECT * FROM user_privileges WHERE user_name="."'".$user_name."'";
 
       $user_result = mysqli_query($connection, $user_sql);
       $user_num = mysqli_num_rows($user_result);
       $user_array = [];
 
-      $fields = $this->get_field_names($connection, 'user_details');
+      $fields = $this->get_field_names($connection, 'user_privileges');
 
       if ($user_num > 0) {
         while ($record = mysqli_fetch_array($user_result)) {

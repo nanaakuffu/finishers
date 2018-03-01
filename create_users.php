@@ -62,7 +62,7 @@
               $full_name = $_POST['first_name']." ".$_POST['middle_name']." ".$_POST['last_name'];
               $_POST['user_password'] = encryption($_POST['user_password'], $full_name);
               $_POST['added_by'] = $user_name; //$_SESSION['full_name'];
-              $_POST['date_added'] = date('y-m-d h:m:s');
+              $_POST['date_added'] = date('y-m-d h:i:s');
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -91,11 +91,11 @@
 
             case 'Update User Details':
               // Encyprt the password being sent to the databse
-              $full_name = $_POST['first_name']." ".$_POST['middle_name']." ".$_POST['last_name'];
-              $_POST['user_password'] = encryption($_POST['user_password'], $full_name);
+              $_SESSION['full_name'] = $_POST['first_name']." ".$_POST['middle_name']." ".$_POST['last_name'];
+              // Update the encrypted password
+              $_POST['user_password'] = encryption($_POST['user_password'], $_SESSION['full_name']);
               $_POST['edited_by'] = $_POST['user_name'];
-              $_POST['date_edited'] = date('y-m-d h:m:s');
-              $_SESSION['full_name'] = $full_name;
+              $_POST['date_edited'] = date('y-m-d h:i:s');
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);

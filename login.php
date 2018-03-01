@@ -21,8 +21,8 @@
         $result = mysqli_query($con, $user_sql) or die("Couldn't execute query for getting the user name.");
         $num = mysqli_num_rows($result);
 
-        while($full_record = mysqli_fetch_assoc($result)){
-          $full_rows[] = $full_record;
+        while($_record = mysqli_fetch_assoc($result)){
+          $full_rows[] = $_record;
         }
         // SELECT user_password, first_name, middle_name, last_name, COUNT(`login_details`.user_name) AS CNT FROM `user_details`, `login_details` WHERE `user_details`.user_name='Admin'
         if ($num > 0) {   // user name was found
@@ -35,15 +35,13 @@
               $_SESSION['full_name'] = $full_name;
               $_SESSION['auth'] = 'yes';
 
-              $today_date = date('y-m-d h:i:s');
-              $log_id = create_id($today_date, "log");
-              $_SESSION['log_id'] = $log_id;
               $_SESSION['login_time'] = time();
 
-
               // Create an array with the variables available
-              $log_array = array('login_id'=>$log_id, 'user_name'=>$_POST['user_name'], 'login_date_time'=>$today_date);
+              $log_array = array('login_id'=>create_id($today_date, "log"), 'user_name'=>$_POST['user_name'], 'login_date_time'=>date('y-m-d h:i:s'));
               $log_array = secure_data_array($log_array);
+
+              $_SESSION['log_id'] = $log_array['login_id'];
 
               // Update login Details
               $result = $db->add_new($con, $log_array, 'login_details');
