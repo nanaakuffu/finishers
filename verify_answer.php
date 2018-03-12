@@ -31,7 +31,7 @@
               $password = decryption($user[0]['user_password'], $full_name);
 
               // Add user activity
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'System was able to succesfully verify you as the user with the name: ' $_SESSION['user_name']);
+              $add_activity = $db->add_activity($con, $_POST['user_name'], 'System was able to succesfully verify you as the user with the name: '.$_POST['user_name']);
 
               $db->close_connection($con);
               $message = "<i class='fa fa-check-square-o'></i> Your answer has been verified. Your password is <b>$password</b> Please
@@ -42,7 +42,7 @@
 
             } else {
               // Add user activity
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'System was not able to succesfully verify due to an incorrect answer to the security question.');
+              $add_activity = $db->add_activity($con, $_POST['user_name'], 'System was not able to succesfully verify due to an incorrect answer to the security question.');
               $db->close_connection($con);
               $message = "<i class='fa fa-fw fa-close'></i> Your answer and question does not match. Please
                         try again.";
@@ -52,7 +52,7 @@
             }
           } else {
             // Add user activity
-            $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'System was not able to succesfully verify due to an incorrect answer to the security question.');
+            $add_activity = $db->add_activity($con, $_POST['user_name'], 'System was not able to succesfully verify due to an incorrect answer to the security question.');
             $db->close_connection($con);
             $message = "<i class='fa fa-fw fa-close'></i> Your question does not match your user name.
                         Please try again.";

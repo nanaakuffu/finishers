@@ -1,6 +1,11 @@
 <?php
     require_once 'public_functions.php';
+    require_once 'db_functions.php';
+
     base_header('Login Form');
+
+    $db = new Database();
+    $con = $db->connect_to_db();
 ?>
 
 <div class='w3-container row' style='margin-top:-50px'>
@@ -24,7 +29,7 @@
             </div>
             <div class="form-group">
               <?php
-                if (isset($_POST['login'])) {
+                if (isset($_POST['login']) AND $db->data_exists($con, 'user_details', 'user_name', $_POST['user_name'])) {
                   $user = encrypt_data($_POST['user_name']);
                   echo "<a class='w3-left' href='forgotten_pass.php?use={$user}'><i class='fa fa-unlock'></i> Forgotten password? </a>";
                 }

@@ -10,7 +10,7 @@
 
   #Database constants
   define("DB_NAME", "finishers");
-  define("DB_PASSWORD", "");
+  define("DB_PASSWORD", "admin");
   define("DB_USER_NAME", "root");
   define("DB_HOST", "localhost");
 
