@@ -16,7 +16,7 @@
     // echo "<pre>", var_dump($_SESSION), "</pre>";
 ?>
     <br />
-    <div class='container' style='margin-top:auto'>
+    <div class='container topstart'>
       <?php home_search_bar('index.php'); ?>
       <br />
       <div class="table-responsive">

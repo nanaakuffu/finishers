@@ -24,7 +24,7 @@
       $user_name = $_SESSION['user_name'];
     }
 ?>
-<div class='w3-container row' style='margin-top:-50px'>
+<div class='w3-container row topstart'>
     <!-- <div class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1>Bootstrap Tutorial</h1>

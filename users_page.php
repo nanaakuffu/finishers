@@ -48,7 +48,7 @@
   $buttton_ctr = (isset($_SESSION['update_user'])) ? "readonly" : "required" ;
 ?>
 <br/>
-  <div class="container">
+  <div class="container topstart">
     <?php
       if (isset($_SESSION['message'])) {
        echo "<div class='panel panel-default'>

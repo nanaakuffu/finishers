@@ -23,7 +23,7 @@
       $records = $db->display_data($con, "user_details", $fields, "first_name");
     }
 
-    echo "<div class='container'>",
+    echo "<div class='container topstart'>",
             search_bar('display_users.php', 'Search ...'),
            "<br /><div class='table-responsive'>
               <table id='d_user' class='table table-hover' cellpadding='8' cellspacing='10'>

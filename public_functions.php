@@ -42,6 +42,10 @@
                 .bitterlabel {
                   font-family: Roboto;
                 }
+
+                .topstart {
+                  margin-top:50px;
+                }
               </style>
             </head>
             <body>";
@@ -66,8 +70,7 @@
       echo "<form class='{$form_class}' action='$search_page' method='GET'>
               <div class='input-group'>
                 <input type='text' class='form-control input-lg'
-                  placeholder='Search for items in stock... '
-                  name='search_value' value='{$value}'>
+                  placeholder='Search for items in stock...' name='search_value' value='{$value}'>
                 <div class='input-group-btn'>
                   <button class='btn btn-default input-lg w3-blue' type='submit' name='search' value='set'>
                     <i class='fa fa-search' style='font-size:25px;'></i>

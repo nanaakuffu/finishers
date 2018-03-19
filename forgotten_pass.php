@@ -23,7 +23,7 @@
     }
 ?>
 <nav class='navbar navbar-inverse navbar-fixed-top' role='navigation'>
-  <div class='container'>
+  <div class='container topstart'>
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class='navbar-header'>
         <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#bs-example-navbar-collapse-1'>
