@@ -13,3 +13,12 @@ function get_question(value) {
 function set_focus(){
   document.index_search.search_value.focus();
 }
+
+function calculate_amount(quantity, unitcost, amount){
+  var quantity = parseFloat(quantity.value);
+  var unitcost = parseFloat(unitcost.value);
+  var amount = quantity * unitcost;
+
+  alert(amount);
+  // amount.value = amount;
+}

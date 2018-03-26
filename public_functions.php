@@ -118,7 +118,7 @@
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-tasks'></i> Orders <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>
                             <li>
-                                <a href='add_scores.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Order </a>
+                                <a href='purchase_form.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Order </a>
                             </li>
                             <li>
                                 <a href='teachers_view.php'><i class='fa fa-fw fa-desktop'></i> View Purchase Orders </a>
