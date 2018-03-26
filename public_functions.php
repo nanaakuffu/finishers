@@ -44,11 +44,11 @@
                 }
 
                 .topstart {
-                  margin-top:50px;
+                  margin-top:60px;
                 }
               </style>
             </head>
-            <body>";
+            <body onload='set_focus();'>";
     }
 
     function search_bar($search_page)
@@ -67,7 +67,7 @@
 
     function home_search_bar($search_page, $value="", $form_class="")
     {
-      echo "<form class='{$form_class}' action='$search_page' method='GET'>
+      echo "<form class='{$form_class}' action='$search_page' method='GET' name='index_search'>
               <div class='input-group'>
                 <input type='text' class='form-control input-lg'
                   placeholder='Search for items in stock...' name='search_value' value='{$value}'>
@@ -189,7 +189,7 @@
               <script src='static/js/bootstrap-datepicker.min.js'></script>
               <script src='static/js/jquery.dataTables.min.js'></script>
               <script src='static/js/dataTables.bootstrap.min.js'></script>
-              <script src='static/js/dia.js'></script>
+              <script src='static/js/finishers.js'></script>
               <script type='text/javascript'>
                 $(function () {
                   $('#display_result').DataTable({

@@ -9,3 +9,7 @@ function get_question(value) {
         }
     })
 }
+
+function set_focus(){
+  document.index_search.search_value.focus();
+}
