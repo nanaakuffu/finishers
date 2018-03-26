@@ -105,7 +105,7 @@
             <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
                 <ul class='nav navbar-nav navbar-right'>
                     <li class='dropdown'>
-                        <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-graduation-cap fa-fw'></i> Student <b class='glyphicon glyphicon-menu-down'></b></a>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-graduation-cap fa-fw'></i> Stock <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>";
                             // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1) {
                                 echo "<li><a href='add_student.php'><span class='glyphicon glyphicon-user'></span> Add New Student </a></li>";
@@ -115,16 +115,16 @@
                   echo "</ul>
                     </li>
                     <li class='dropdown'>
-                        <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-tasks'></i> Scores <b class='glyphicon glyphicon-menu-down'></b></a>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-tasks'></i> Orders <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>
                             <li>
-                                <a href='add_scores.php'><i class='fa fa-fw fa-plus'></i> Add Student Score </a>
+                                <a href='add_scores.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Order </a>
                             </li>
                             <li>
-                                <a href='teachers_view.php'><i class='fa fa-fw fa-desktop'></i> Teacher's Score View </a>
+                                <a href='teachers_view.php'><i class='fa fa-fw fa-desktop'></i> View Purchase Orders </a>
                             </li>";
                             // if ( $_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1 ) {
-                              echo "<li><a href='view_class_scores.php'><i class='fa fa-fw fa-navicon'></i> Student Score View </a></li>";
+                              echo "<li><a href='view_class_scores.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
                             // }
                   echo "</ul>
                     </li>
