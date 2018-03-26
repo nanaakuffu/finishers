@@ -19,6 +19,6 @@ function calculate_amount(quantity, unitcost, amount){
   var unitcost = parseFloat(unitcost.value);
   var amount = quantity * unitcost;
 
-  alert(amount);
-  // amount.value = amount;
+  // alert(amount);
+  amount.value = amount;
 }
