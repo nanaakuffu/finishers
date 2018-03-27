@@ -34,6 +34,7 @@
               $_SESSION['user_name'] = $_POST['user_name'];
               $_SESSION['full_name'] = $full_name;
               $_SESSION['auth'] = 'yes';
+              $_SESSION['is_admin'] = 1;
 
               $_SESSION['login_time'] = time();
 

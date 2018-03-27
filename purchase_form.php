@@ -1,7 +1,7 @@
 <?php
-  // if (isset($_GET['str'])) {
+  if (isset($_GET['up_orders'])) {
     session_start();
-  // }
+  }
 
   unset($_SESSION['update_order']);
 
@@ -16,8 +16,8 @@
   $db = new Database();
   $con = $db->connect_to_db();
 
-  if (isset($_GET['str'])) {
-    $purchase_order_id = decrypt_data($_GET['str']);
+  if (isset($_GET['po_id'])) {
+    $purchase_order_id = decrypt_data($_GET['po_id']);
     $_POST = $db->view_data($con, "tblpurchaseordertracker", "poID", $purchase_order_id );
     $_POST['add_order'] = 'Update Order';
     $_SESSION['update_order'] = TRUE;
@@ -28,14 +28,14 @@
     $_SESSION['update_order'] = TRUE;
   }
 
-  $quantity = (isset($_POST['add_order'])) ? $_POST['quantity'] : '' ;
-  $unit_cost = (isset($_POST['add_order'])) ? $_POST['unit_cost'] : '' ;
-  $amount = (isset($_POST['add_order'])) ? $_POST['amount'] : '' ;
-  $receipt_no = (isset($_POST['add_order'])) ? $_POST['amount'] : '' ;
-  $station = (isset($_POST['add_order'])) ? $_POST['station'] : '' ;
-  $date = (isset($_POST['add_order'])) ? date("F-j-Y", strtotime($_POST['date_of_birth'])) : date("F-j-Y");
-  $type = (isset($_POST['add_order'])) ? $_POST['type'] : '' ;
-  $description = (isset($_POST['add_order'])) ? $_POST['description'] : '' ;
+  $quantity = (isset($_POST['add_order'])) ? $_POST['poQuantity'] : '' ;
+  $unit_cost = (isset($_POST['add_order'])) ? $_POST['poUnitCost'] : '' ;
+  $amount = (isset($_POST['add_order'])) ? $_POST['poAmount'] : '' ;
+  $receipt_no = (isset($_POST['add_order'])) ? $_POST['poReceiptNo'] : '' ;
+  $station = (isset($_POST['add_order'])) ? $_POST['poStation'] : '' ;
+  $date = (isset($_POST['add_order'])) ? date("F-j-Y", strtotime($_POST['poDate'])) : date("F-j-Y");
+  $type = (isset($_POST['add_order'])) ? $_POST['poType'] : '' ;
+  $description = (isset($_POST['add_order'])) ? $_POST['poDescription'] : '' ;
 
   echo "<br />
         <div class='container topstart'>";
@@ -53,11 +53,11 @@
                 echo "<h3> Add Purchase Order </h3>";
               }
   echo "  </div>
-          <form class='w3-form w3-border w3-round' action='add_student.php' method='POST' id='poForm'>
+          <form class='w3-form w3-border w3-round' action='purchase_order.php' method='POST' id='poForm'>
             <div class='row'>
               <div class='col-sm-4'>";
-                if (isset($_SESSION['update_student'])) {
-                   echo "<input type='hidden' name='student_number' value='{$purchase_order_id}'>";
+                if (isset($_SESSION['update_order'])) {
+                   echo "<input type='hidden' name='poID' value='{$purchase_order_id}'>";
                 }
 
         echo "  <div class='form-group'>
@@ -122,15 +122,21 @@
                         </div>";
                 } else {
                   if ($_SESSION['is_admin']) {
-                    echo "<div class='btn-group'>
-                            <input class='btn btn-primary' type='submit' name='add_order' value='Update Student'>
-                            <input class='btn btn-primary' type='submit' name='add_order' value='Delete Student'>
-                            <a class='btn btn-primary' href='display_students.php'>Back</a>
+                    echo "<div class='form-group'>
+                            <label class='bitterlabel'> Control </label><br />
+                            <div class='btn-group'>
+                              <input class='btn btn-primary' type='submit' name='add_order' value='Update Order'>
+                              <input class='btn btn-primary' type='submit' name='add_order' value='Delete Order'>
+                              <a class='btn btn-primary' href='display_purchases.php'>Back</a>
+                            </div>
                           </div>";
                   } else {
-                    echo "<div class='btn-group'>
-                            <input class='btn btn-primary' type='submit' name='add_order' value='Update Student'>
-                            <a class='btn btn-primary' href='display_students.php'>Back</a>
+                    echo "<div class='form-group'>
+                            <label class='bitterlabel'> Control </label><br />
+                            <div class='btn-group'>
+                              <input class='btn btn-primary' type='submit' name='add_order' value='Update Order'>
+                              <a class='btn btn-primary' href='display_purchases.php'>Back</a>
+                            </div>
                           </div>";
                   }
                 }

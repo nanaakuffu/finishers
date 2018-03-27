@@ -1,125 +1,116 @@
 <?php
-  /* Script name: users_page */
+  /* Script name: add student scores */
   session_start();
 
   require_once "db_functions.php";
   require_once "public_vars.php";
   require_once "public_functions.php";
 
-  if(!isset($_POST['add_order'])) {
+  if (!isset($_POST['add_order'])) {
     include_once "purchase_form.php";
     exit();
   } else {
+    // echo "<pre>", var_dump($_POST), "</pre>";
+    // echo strtotime($_POST['poDate']), "<br />";
+    // echo Date('Y-m-d', strtotime($_POST['poDate']));
       $errors = [];
 
-      foreach($_POST as $field => $value) {
-         /* Checking for invalid and empty data */
-         $value = trim($value);
-         if (preg_match("/user_name/i", $field)) {
-           if (!ereg("^[A-Za-z0-9].*", $value)) {
-             $errors[] = "<b>$value</b> is not a valid user name.,";
-           }
-         }
-         if ( preg_match("/name/i", $field)) {
-           if (!ereg("^[A-Za-z\-].*", $value )) {
-             $errors[] = "$value is not a valid name.";
-           }
-         }
-         if (preg_match("/password/i", $field)) {
-           if (strlen($value) < 8 ) {
-             $errors[] = "Password must be 8 characters or more.,";
-           }
+      foreach($_POST as $field=>$value) {
+         /* Checking for empty data */
+         if (!empty($_POST[$field])) {
+           /* Checking for invalid and empty data */
          }
        }
-      //  Extracting and sisplaying all the errors collected
+      //  Extracting and displaying all the errors collected
        if ( @sizeof($errors) > 0) {
           $error_message = "";
           foreach($errors as $field => $value) {
             $error_message .= "<li><i class='fa-li fa fa-check-square'></i>".$value." Please try again </li>";
           }
           $_SESSION['message'] = $error_message;
-
-          if (isset($_SESSION['update_user'])) {
-            $_SESSION['id'] = $_POST['user_name'];
+          if (isset($_SESSION['update_order'])) {
+            $_SESSION['poid'] = $_POST['poID'];
           }
-
-          include_once "users_page.php";
+          include_once "purchase_form.php";
           exit();
         } else {
-
           /* If the code gets here, it means the data is really clean */
           $db = new Database();
+
           $con = $db->connect_to_db();
 
           // This is an array that holds the keys of the wanted field names
-          $field_names_array = $db->get_field_names($con, "user_details");
-          $today_date = date('y-m-d');
-          $user_name = 'Admin'; //$_SESSION['user_name'];
+          $field_names_array = $db->get_field_names($con, "tblpurchaseordertracker");
 
-          switch ($_POST['submit']) {
+          switch ($_POST['add_order']) {
+            // Actually save the data from the form.
+            case 'Add Purchase Order':
 
-            case "Add New User":
-              $full_name = $_POST['first_name']." ".$_POST['middle_name']." ".$_POST['last_name'];
-              $_POST['user_password'] = encryption($_POST['user_password'], $full_name);
-              $_POST['added_by'] = $user_name; //$_SESSION['full_name'];
-              $_POST['date_added'] = date('y-m-d h:i:s');
+              // Reset the date for the database format
+              $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
 
-              /* Removes unwanted field names that came from the form */
+              /* Remove unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
 
-              if (!$db->data_exists($con, "user_details", "user_name", $_POST['user_name'])) {
-                // Actually save the data
-                $_POST = secure_data_array($_POST);
-                $save_data = $db->add_new($con, $_POST, "user_details");
+              $_POST = secure_data_array($_POST);
 
-                if ($save_data) {
-                  // Add user acitivty
-                  $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new user: '.$_POST['user_name']);
+              // Check data redundancy
+              $fields = array('poQuantity', 'poUnitCost', 'poDate', 'poReceiptNo');
+              $criteria = filter_array($_POST, $fields);
+              $data_checked = $db->multiple_data_exists($con, "tblpurchaseordertracker", $fields, $criteria);
 
-                  // If saving was possible try to set the access level
-                  $_SESSION['new_user'] = $_POST['user_name'];
-                  include_once 'user_query.php';
-                } else {
-                  $_SESSION['message'] = "<li><i class='fa-li fa fa-check-square'></i> ".SAVE_ERROR."</li>"; // Saving was not possible
-                  include_once "users_page.php";
-                }
+              if (!$data_checked) {
+                  // Add new data
+                  $save_data = $db->add_new($con, $_POST, "tblpurchaseordertracker");
+
+                  if ($save_data) {
+                    // Add user acitivty
+                    $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new order totalling '.$_POST['poAmount']);
+                    include_once 'purchase_form.php';
+                  }
               } else {
-                $_SESSION['message'] = "<li><i class='fa-li fa fa-check-square'></i> User Name already exists </li>";
-                include_once "users_page.php";
+                  $_SESSION['message'] = "The data you are trying to add already exists!";
+                  // $_SESSION['id'] = $exam_id;
+                  include_once "purchase_form.php";
               }
               break;
 
-            case 'Update User Details':
-              // Encyprt the password being sent to the databse
-              $_SESSION['full_name'] = $_POST['first_name']." ".$_POST['middle_name']." ".$_POST['last_name'];
-              // Update the encrypted password
-              $_POST['user_password'] = encryption($_POST['user_password'], $_SESSION['full_name']);
-              $_POST['edited_by'] = $_POST['user_name'];
-              $_POST['date_edited'] = date('y-m-d h:i:s');
+            case 'Update Order':
+              // Reset the date for the database format
+              $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
-              // Secure data
+
               $_POST = secure_data_array($_POST);
+
               // Update the data
-              $save_data = $db->update_data($con, $_POST, "user_details", "user_name", $_POST['user_name']);
+              $save_data = $db->update_data($con, $_POST, "tblpurchaseordertracker", "poID", $_POST['poID']);
 
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated your account details');
+              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated an order with receipt number '.$_POST['poReceiptNo']);
 
-              unset($_SESSION['update_user']);
-              unset($_SESSION['id']);
-
-              header("Location: index.php");
+              unset($_SESSION['update_order']);
+              unset($_SESSION['poid']);
+              header("Location: display_purchases.php");
               break;
 
             default:
-              # code...
+              $delete_data = $db->delete_data($con, "tblpurchaseordertracker", "poid", $_POST['poID']);
+
+              // Add user acitivty
+              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Deleted an order with receipt number '.$_POST['poReceiptNo']);
+
+              if ($delete_data) {
+                header("Location: display_purchases.php");
+              } else {
+                echo DELETE_ERROR;
+              }
               break;
           }
 
-          // CLosing the database
-          $db->close_connection($con);
+         // Closing the database
+         $db->close_connection($con);
         }
   }
 

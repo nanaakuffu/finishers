@@ -107,39 +107,39 @@
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-graduation-cap fa-fw'></i> Stock <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>";
-                            // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1) {
+                            if ($_SESSION['is_admin'] == 1 ) {
                                 echo "<li><a href='add_student.php'><span class='glyphicon glyphicon-user'></span> Add New Student </a></li>";
                                 echo "<li><a href='display_students.php'><i class='fa fa-fw fa-edit'></i> View and Edit Students </a></li>";
                                 // echo "<li class='divider'></li>";
-                            // }
+                            }
                   echo "</ul>
                     </li>
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-tasks'></i> Orders <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>
                             <li>
-                                <a href='purchase_form.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Order </a>
+                                <a href='purchase_order.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Order </a>
                             </li>
                             <li>
-                                <a href='teachers_view.php'><i class='fa fa-fw fa-desktop'></i> View Purchase Orders </a>
+                                <a href='display_purchases.php'><i class='fa fa-fw fa-desktop'></i> View Purchase Orders </a>
                             </li>";
-                            // if ( $_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1 or $_SESSION['is_form_teacher'] == 1 ) {
-                              echo "<li><a href='view_class_scores.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
-                            // }
+                            if ( $_SESSION['is_admin'] == 1) {
+                              echo "<li><a href='#'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
+                            }
                   echo "</ul>
                     </li>
                     <li class='dropdown'>
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-fw fa-gear'></i> Settings <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>
                             <li>";
-                            // if ($_SESSION['is_admin'] == 1 or $_SESSION['is_head'] == 1) {
+                            if ($_SESSION['is_admin'] == 1) {
                                 echo "<a href='create_users.php'><i class='fa fa-fw fa-user-plus'></i> Add New User </a>";
-                            // }
+                            }
                       echo "</li>
                             <li>";
-                            // if ($_SESSION['is_admin'] == 1) {
+                            if ($_SESSION['is_admin'] == 1) {
                                 echo "<a href='display_users.php'><i class='fa fa-fw fa-edit'></i> View and Edit Users </a>";
-                            // }
+                            }
                       echo "</li>
                             <li>
                                 <a href='change_password.php'><i class='fa fa-fw fa-key'></i> Change Password </a>
@@ -149,9 +149,9 @@
                             </li>
                             <li class='divider'></li>
                             <li>";
-                            // if ($_SESSION['is_admin'] == 1) {
+                            if ($_SESSION['is_admin'] == 1) {
                                 echo "<a href='down_page.php'><i class='fa fa-fw fa-database'></i> Back Up Database </a>";
-                            // }
+                            }
                       echo  "</li>
                         </ul>
                     </li>
@@ -208,21 +208,13 @@
                     'info': true,
                     'autoWidth': true
                   });
-                  $('#file_table').DataTable({
+                  $('#d_order').DataTable({
                     'paging': true,
                     'lengthChange': false,
                     'searching': true,
                     'ordering': true,
                     'info': true,
                     'autoWidth': true
-                  });
-                  $('#user_table').DataTable({
-                    'paging': true,
-                    'lengthChange': false,
-                    'searching': false,
-                    'ordering': true,
-                    'info': true,
-                    'autoWidth': false
                   });
                   $('#form_datetime').datepicker({
                     format: 'MM-dd-yyyy',

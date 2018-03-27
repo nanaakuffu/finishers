@@ -8,7 +8,7 @@
     $con = $db->connect_to_db();
 ?>
 
-<div class='w3-container row topstart'>
+<div class='w3-container row'>
   <div class='col-md-4'>
     <br />
   </div>
