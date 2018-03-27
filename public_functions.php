@@ -124,7 +124,7 @@
                                 <a href='display_purchases.php'><i class='fa fa-fw fa-desktop'></i> View Purchase Orders </a>
                             </li>";
                             if ( $_SESSION['is_admin'] == 1) {
-                              echo "<li><a href='#'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
+                              echo "<li><a href='payment_form.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
                             }
                   echo "</ul>
                     </li>
@@ -226,9 +226,8 @@
           </html>";
     }
 
-    function select_data($data_array, $select_name, $select_value, $width=100, $id = '', $sorted = FALSE, $disabled = '')
+    function select_data($data_array, $select_value, $sorted = FALSE)
     {
-      echo "<select class='form-control' name='{$select_name}' id='{$id}' style='width:{$width}%' $disabled>\n";
 
       // Sort the array
       if ($sorted) {
@@ -242,7 +241,6 @@
         }
         echo "> $value </option>";
       }
-      echo "</select>\n";
     }
 
     function create_toggle_switch($control_name, $control_value, $checked=FALSE)

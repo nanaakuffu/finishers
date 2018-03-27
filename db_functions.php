@@ -184,6 +184,40 @@
       }
     }
 
+    function get_order_amount($connection, $id_value)
+    {
+      $sql = "SELECT poAmount FROM tblpurchaseordertracker WHERE poID=$id_value";
+      $result = mysqli_query($connection, $sql);
+      $result_number = mysqli_num_rows($results);
+      $amount = 0.00;
+
+      if ($result_number > 0 ) {
+        while ($records = mysqli_fetch_assoc($result)) {
+          $amounts[] = $records;
+        }
+        return $amounts[0]['poAmount'];
+      } else {
+        return $amount;
+      }
+    }
+
+    function get_order_payments($connection, $id_value)
+    {
+      $sql = "SELECT SUM(pmtAmount) AS Amount_Paid FROM tblpaymenttracker WHERE poID=$id_value";
+      $result = mysqli_query($connection, $sql);
+      $result_number = mysqli_num_rows($results);
+      $amount_paid = 0.00;
+
+      if ($result_number > 0 ) {
+        while ($records = mysqli_fetch_assoc($result)) {
+          $amounts[] = $records;
+        }
+        return $amounts[0]['Amount_Paid'];
+      } else {
+        return $amount_paid;
+      }
+    }
+
     function delete_data($connection, $table_name, $prim_key, $prim_value)
     {
       $query = "DELETE FROM $table_name WHERE $prim_key= "."'".$prim_value."'";

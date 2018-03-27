@@ -10,6 +10,24 @@ function get_question(value) {
     })
 }
 
+function get_order_details(value) {
+  $.ajax({
+      type: "GET",
+      url: "order_details.php",
+      data: "id="+value,
+      success: function(data){
+          var myjson = data;
+          var myobj = JSON.parse(myjson);
+          // $('#s_question').val(data)
+          $('#receipt_no').val(myobj.receipt_no);
+          $('#item_cost').val(myobj.amount);
+          $('#amt_paid').val(myobj.amtpaid);
+          // $('#amt_paid').val(myobj.amtpaid);
+          // alert(data['amount']);
+      }
+  })
+}
+
 function set_focus() {
   document.index_search.search_value.focus();
 }
@@ -22,10 +40,11 @@ function calculate_amount(id_quantity, id_unitcost, id_amount) {
   id_amount.value = amount;
 }
 
-function calculate_balance(id_amount, id_paid, id_balance){
-  var item_cost = id_amount.value;
+function calculate_balance(id_cost, id_paid, id_amount, id_balance){
+  var item_cost = id_cost.value;
   var amount_paid = id_paid.value;
-  var balance = (item_cost - amount_paid).toFixed(2);
+  var amount = id_amount.value;
+  var balance = (item_cost - amount_paid - amount).toFixed(2);
 
   id_balance.value = balance;
 }
