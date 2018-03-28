@@ -48,7 +48,9 @@
             case 'Add Order Payment':
 
               // Reset the date for the database format
-              // $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
+              if ($_POST['pmtType'] == 'Cheque') {
+                $_POST['pmtType'] = 'Cheque : '.$_POST['cheque_no'];
+              }
 
               /* Remove unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -78,7 +80,9 @@
 
             case 'Update Payment':
               // Reset the date for the database format
-              // $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
+              if ($_POST['pmtType'] == 'Cheque') {
+                $_POST['pmtType'] = 'Cheque : '.$_POST['cheque_no'];
+              }
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -93,7 +97,7 @@
 
               unset($_SESSION['update_payment']);
               unset($_SESSION['poid']);
-              header("Location: display_purchases.php");
+              header("Location: display_payments.php");
               break;
 
             default:

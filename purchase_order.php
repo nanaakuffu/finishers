@@ -10,9 +10,7 @@
     include_once "purchase_form.php";
     exit();
   } else {
-    // echo "<pre>", var_dump($_POST), "</pre>";
-    // echo strtotime($_POST['poDate']), "<br />";
-    // echo Date('Y-m-d', strtotime($_POST['poDate']));
+      // Check for errors in the data submitted!
       $errors = [];
 
       foreach($_POST as $field=>$value) {

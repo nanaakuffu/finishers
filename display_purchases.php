@@ -19,6 +19,7 @@
 
     $records = $db->display_data($con, "tblpurchaseordertracker", $fields, "poQuantity");
 ?>
+  <br />
   <div class='container topstart'>
     <div class='table-responsive'>
       <table id='d_order' class='table table-hover' cellpadding='8' cellspacing='10'>

@@ -18,12 +18,9 @@ function get_order_details(value) {
       success: function(data){
           var myjson = data;
           var myobj = JSON.parse(myjson);
-          // $('#s_question').val(data)
           $('#receipt_no').val(myobj.receipt_no);
           $('#item_cost').val(myobj.amount);
           $('#amt_paid').val(myobj.amtpaid);
-          // $('#amt_paid').val(myobj.amtpaid);
-          // alert(data['amount']);
       }
   })
 }
@@ -47,4 +44,14 @@ function calculate_balance(id_cost, id_paid, id_amount, id_balance){
   var balance = (item_cost - amount_paid - amount).toFixed(2);
 
   id_balance.value = balance;
+}
+
+function control_cheque_number(){
+  if (document.getElementById('ptype').value == 'Cash') {
+    document.getElementById('cheque_number').disabled = true;
+  } else {
+    document.getElementById('cheque_number').disabled = false;
+    document.getElementById('cheque_number').focus();
+    document.getElementById('cheque_number').required = true;
+  }
 }

@@ -124,7 +124,8 @@
                                 <a href='display_purchases.php'><i class='fa fa-fw fa-desktop'></i> View Purchase Orders </a>
                             </li>";
                             if ( $_SESSION['is_admin'] == 1) {
-                              echo "<li><a href='payment_form.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
+                              echo "<li><a href='payments.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
+                              echo "<li><a href='display_payments.php'><i class='fa fa-fw fa-desktop'></i> Display Payment </a></li>";
                             }
                   echo "</ul>
                     </li>

@@ -10,8 +10,6 @@
             WHERE tblpurchaseordertracker.poID ='".$id."'
             AND tblpaymenttracker.poID ='".$id."'";
 
-  // echo $query;
-
   $result = mysqli_query($con, $query);
   $record_count = mysqli_num_rows($result);
 
@@ -30,8 +28,6 @@
   } else {
     echo "";
   }
-
-  // var_dump($data);
 
   echo json_encode(array('receipt_no' => $new_data['poReceiptNo'],
                          'amount' => $new_data['poAmount'],

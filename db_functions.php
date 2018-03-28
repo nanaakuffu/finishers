@@ -184,11 +184,28 @@
       }
     }
 
+    function get_receipt_no($connection, $id_value)
+    {
+      $sql = "SELECT poReceiptNo FROM tblpurchaseordertracker WHERE poID=$id_value";
+      $result = mysqli_query($connection, $sql);
+      $result_number = mysqli_num_rows($result);
+      $receipt_no = '';
+
+      if ($result_number > 0 ) {
+        while ($records = mysqli_fetch_assoc($result)) {
+          $amounts[] = $records;
+        }
+        return $amounts[0]['poReceiptNo'];
+      } else {
+        return $amount;
+      }
+    }
+
     function get_order_amount($connection, $id_value)
     {
       $sql = "SELECT poAmount FROM tblpurchaseordertracker WHERE poID=$id_value";
       $result = mysqli_query($connection, $sql);
-      $result_number = mysqli_num_rows($results);
+      $result_number = mysqli_num_rows($result);
       $amount = 0.00;
 
       if ($result_number > 0 ) {
@@ -205,7 +222,7 @@
     {
       $sql = "SELECT SUM(pmtAmount) AS Amount_Paid FROM tblpaymenttracker WHERE poID=$id_value";
       $result = mysqli_query($connection, $sql);
-      $result_number = mysqli_num_rows($results);
+      $result_number = mysqli_num_rows($result);
       $amount_paid = 0.00;
 
       if ($result_number > 0 ) {
@@ -215,6 +232,32 @@
         return $amounts[0]['Amount_Paid'];
       } else {
         return $amount_paid;
+      }
+    }
+
+    function get_payment_summary($connection)
+    {
+      $data = array();
+      $query = "SELECT tblpurchaseordertracker.poID,
+                      tblpurchaseordertracker.poReceiptNo,
+                      tblpurchaseordertracker.poAmount,
+                      SUM(tblpaymenttracker.pmtAmount) AS amtPaid,
+                      (tblpurchaseordertracker.poAmount - SUM(tblpaymenttracker.pmtAmount)) AS Balance
+                FROM tblpaymenttracker
+                INNER JOIN tblpurchaseordertracker
+                ON tblpaymenttracker.poID = tblpurchaseordertracker.poID
+                GROUP BY tblpurchaseordertracker.poID";
+
+      $result = mysqli_query($connection, $query);
+      $record_count = mysqli_num_rows($result);
+
+      if ($record_count > 0 ){
+          while ($row = mysqli_fetch_assoc($result)) {
+              $data[] = $row;
+          }
+        return $data;
+      } else {
+        return $data;
       }
     }
 
