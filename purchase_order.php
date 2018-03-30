@@ -46,6 +46,8 @@
 
               // Reset the date for the database format
               $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
+              $_POST['poID'] = create_id(date('y-m-d'), 'poID');
+              $_SESSION['poID'] = $_POST['poID'];
 
               /* Remove unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -53,24 +55,24 @@
               $_POST = secure_data_array($_POST);
 
               // Check data redundancy
-              $fields = array('poQuantity', 'poUnitCost', 'poDate', 'poReceiptNo');
-              $criteria = filter_array($_POST, $fields);
-              $data_checked = $db->multiple_data_exists($con, "tblpurchaseordertracker", $fields, $criteria);
+              // $fields = array('poQuantity', 'poUnitCost', 'poDate', 'poReceiptNo');
+              // $criteria = filter_array($_POST, $fields);
+              // $data_checked = $db->multiple_data_exists($con, "tblpurchaseordertracker", $fields, $criteria);
 
-              if (!$data_checked) {
+              // if (!$data_checked) {
                   // Add new data
-                  $save_data = $db->add_new($con, $_POST, "tblpurchaseordertracker");
+              $save_data = $db->add_new($con, $_POST, "tblpurchaseordertracker");
 
-                  if ($save_data) {
-                    // Add user acitivty
-                    $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new order totalling '.$_POST['poAmount']);
-                    include_once 'purchase_form.php';
-                  }
-              } else {
-                  $_SESSION['message'] = "The data you are trying to add already exists!";
-                  // $_SESSION['id'] = $exam_id;
-                  include_once "purchase_form.php";
+              if ($save_data) {
+                // Add user acitivty
+                $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new order totalling '.$_POST['poAmount']);
+                include_once 'item_purchase.php';
               }
+              // } else {
+              //     $_SESSION['message'] = "The data you are trying to add already exists!";
+              //     // $_SESSION['id'] = $exam_id;
+              //     include_once "purchase_form.php";
+              // }
               break;
 
             case 'Update Order':

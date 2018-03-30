@@ -73,7 +73,7 @@
       $values = implode('","', $value_array);
       $query = "INSERT INTO $table_name ($fields) VALUES (\"$values\")";
 
-      if ($result = mysqli_query($connection, $query) or die("Couldn't execute query!<br>"."Reason:".mysql_error()))
+      if ($result = mysqli_query($connection, $query) or die("Couldn't execute query!<br>"."Reason:".mysqli_error()))
         return TRUE;
       else
         return FALSE;
@@ -184,6 +184,33 @@
       }
     }
 
+    function get_item_amount($connection, $criteria)
+    {
+      $query = "SELECT SUM(itemCost) AS item_amount FROM tblpurchaseorderitems WHERE poID="."'".$criteria."'";
+
+      $result = mysqli_query($connection, $query);
+      $amounts = mysqli_num_rows($result) or die("Could not get amount.");
+      $amount_array = [];
+
+      if ($amounts > 0) {
+        while ($record = mysqli_fetch_assoc($result)) {
+          $amount_array[] = $record;
+        }
+        return $amount_array;
+      } else {
+        return $amount_array;
+      }
+    }
+
+    function update_order_amount($connection, $criteria)
+    {
+      $total_amount = $this->get_item_amount($connection, $criteria);
+      $amount = (float)$total_amount[0]['item_amount'];
+      $_sql = "UPDATE tblpurchaseordertracker SET poAmount="."'".$amount."'"." WHERE poID="."'".$criteria."'";
+
+      $result = mysqli_query($connection, $_sql) or die("Could not execute query to update amount.");
+    }
+
     function get_receipt_no($connection, $id_value)
     {
       $sql = "SELECT poReceiptNo FROM tblpurchaseordertracker WHERE poID=$id_value";
@@ -203,7 +230,7 @@
 
     function get_order_amount($connection, $id_value)
     {
-      $sql = "SELECT poAmount FROM tblpurchaseordertracker WHERE poID=$id_value";
+      $sql = "SELECT poAmount FROM tblpurchaseordertracker WHERE poID="."'".$id_value."'";
       $result = mysqli_query($connection, $sql);
       $result_number = mysqli_num_rows($result);
       $amount = 0.00;

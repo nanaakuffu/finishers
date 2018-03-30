@@ -1,0 +1,5 @@
+1. Add multiple payments for one purchase.
+2. Drop down for the types in purchase order and add a routine to add type.
+3. Add cheque details.
+4. Concatenate order ID and description in the payment form.
+5. Change station to company in the order form.

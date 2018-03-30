@@ -118,14 +118,14 @@
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-tasks'></i> Orders <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>
                             <li>
-                                <a href='purchase_order.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Order </a>
+                                <a href='purchase_order.php'><i class='fa fa-fw fa-plus'></i> Make An Order </a>
                             </li>
                             <li>
-                                <a href='display_purchases.php'><i class='fa fa-fw fa-desktop'></i> View Purchase Orders </a>
+                                <a href='display_purchases.php'><i class='fa fa-fw fa-desktop'></i> View Orders </a>
                             </li>";
                             if ( $_SESSION['is_admin'] == 1) {
-                              echo "<li><a href='payments.php'><i class='fa fa-fw fa-plus'></i> Add Purchase Payment </a></li>";
-                              echo "<li><a href='display_payments.php'><i class='fa fa-fw fa-desktop'></i> Display Payment </a></li>";
+                              echo "<li><a href='payments.php'><i class='fa fa-fw fa-plus'></i> Add Payment </a></li>";
+                              echo "<li><a href='display_payments.php'><i class='fa fa-fw fa-desktop'></i> Display Payments </a></li>";
                             }
                   echo "</ul>
                     </li>

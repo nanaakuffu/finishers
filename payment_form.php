@@ -146,7 +146,7 @@
               ?>
             </div>
             <div class="col-xs-7">
-              <label for="ex3">Cheque Number</label>
+              <label for="ex3"> Cheque Number </label>
               <input class="form-control" id="cheque_number" type="text" name="cheque_no" value='<?php echo $cheque_no; ?>'
                   placeholder="Cheque Number" value='' disabled>
             </div>
@@ -163,7 +163,7 @@
           <?php
                 if (!isset($_SESSION['update_payment'])) {
                   echo "<div class='form-group'>
-                          <label class='bitterlabel'> Control </label><br />
+                          <label class='bitterlabel sr-only'></label><br />
                           <input class='btn btn-primary' type='submit' name='add_payment'
                           value='Add Order Payment' >
                         </div>";
