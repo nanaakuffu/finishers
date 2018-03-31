@@ -44,7 +44,7 @@
   $item_cost = (isset($_POST['add_item'])) ? $_POST['itemCost'] : '' ;
 
 ?>
-  <!-- <br /> -->
+  <br />
   <div class='container topstart'>
     <?php
       if (isset($_SESSION['message'])) {
@@ -83,9 +83,11 @@
           <div class='form-group'>
             <label class='bitterlabel' for='receiptno'> Unit: </label>
             <div class="input-group">
-              <span class='input-group-addon'>
-                  <span class='fa fa-fw fa-plus'></span>
-              </span>
+              <div class='input-group-btn'>
+                  <a class='btn btn-primary' data-toggle="modal" data-target="#UnitModal">
+                      <i class='fa fa-fw fa-plus'></i>
+                  </a>
+              </div>
               <select class='form-control' name='itemUnit' id='itemUnit'>
                 <?php select_data($unit_array, $unit); ?>
               </select>
@@ -103,9 +105,11 @@
           <div class='form-group'>
             <label class='bitterlabel' for='receiptno'> Item Type: </label>
             <div class="input-group">
-              <span class='input-group-addon'>
-                  <span class='fa fa-fw fa-plus'></span>
-              </span>
+              <div class='input-group-btn'>
+                  <a class='btn btn-primary' data-toggle="modal" data-target="#TypeModal">
+                      <i class='fa fa-fw fa-plus'></i>
+                  </a>
+              </div>
               <select class='form-control' name='itemType' id='itemType'>
                 <?php select_data($type_array, $type); ?>
               </select>
@@ -158,6 +162,64 @@
         </div>
       </div>
     </form>
+
+    <!-- Beginning of Unit Modal -->
+    <div class="modal fade" id="UnitModal" tabindex="-1" role="dialog" aria-labelledby="UnitModalLabel">
+  	  <div class="modal-dialog" role="document">
+  	    <div class="modal-content">
+
+  	      <div class="modal-header">
+  	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  	        <h4 class="modal-title" id="UnitModalLabel">&nbsp;</h4>
+  	      </div>
+
+  	      <div class="modal-body">
+  	          <div class="box-body pad">
+  	            <form action="data.php" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+              	  	<label for="iUnit">Item Unit: </label>
+                		<input type="text" class="form-control" id="iUnit" name="unit" placeholder="Item Unit">
+                  </div>
+                  <div class="form-group">
+    	          		 <input type="submit" name="add_unit" value="Add Unit" class="btn btn-primary">
+                 	</div>
+  	            </form>
+  	          </div>
+  	      </div>
+
+  	    </div>
+  	  </div>
+  	 </div>
+     <!-- End of Unit Modal -->
+
+     <!-- Beginning of Type Modal -->
+     <div class="modal fade" id="TypeModal" tabindex="-1" role="dialog" aria-labelledby="TypeModalLabel">
+   	  <div class="modal-dialog" role="document">
+   	    <div class="modal-content">
+
+   	      <div class="modal-header">
+   	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+   	        <h4 class="modal-title" id="TypeModalLabel">&nbsp;</h4>
+   	      </div>
+
+   	      <div class="modal-body">
+   	          <div class="box-body pad">
+   	            <form action="data.php" method="post" enctype="multipart/form-data">
+                   <div class="form-group">
+               	  	<label for="iType">Item Type: </label>
+                 		<input type="text" class="form-control" id="iType" name="unit" placeholder="Item Type">
+                   </div>
+                   <div class="form-group">
+     	          		 <input type="submit" name="add_type" value="Add Type" class="btn btn-primary">
+                  	</div>
+   	            </form>
+   	          </div>
+   	      </div>
+
+   	    </div>
+   	  </div>
+   	 </div>
+      <!-- End of Unit Modal -->
   </div>
 
 <?php
