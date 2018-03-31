@@ -163,6 +163,25 @@
       }
     }
 
+    function display_specific_data($connection, $table_name, $field_list, $key_field, $key, $order_field='')
+    {
+      $fields = implode(",", $field_list);
+      $query = (strlen($order_field) > 0) ? "SELECT $fields FROM $table_name WHERE $key_field="."'".$key."'"." ORDER BY $order_field ASC" : "SELECT $fields FROM $table_name WHERE $key_field="."'".$key."'";
+
+      $result = mysqli_query($connection, $query) or die("Could not execute query to display data.");
+      $records = mysqli_num_rows($result);
+      $rows = array();
+
+      if ($records > 0) {
+        while($record = mysqli_fetch_assoc($result)){
+          $rows[] = $record;
+        }
+        return $rows;
+      } else {
+        return $rows;
+      }
+    }
+
     function get_active_users($connection)
     {
       $active_users = [];

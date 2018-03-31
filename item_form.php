@@ -17,9 +17,9 @@
   $con = $db->connect_to_db();
 
   if (isset($_GET['itemID'])) {
-    $item_id = $_GET['itemID'];
+    $item_id = decrypt_data($_GET['itemID']);
     $_POST = $db->view_data($con, "tblpurchaseorderitems", "itemID", $item_id );
-    $_POST['add_item'] = 'Add Item';
+    $_POST['add_item'] = 'Update Item';
     $_SESSION['update_item'] = TRUE;
   }
   //
@@ -33,15 +33,18 @@
   $unit_array = array('Drums' , 'Pieces');
   $type_array = array('Oil' , 'Liquid' );
 
-  $order_id = (isset($_POST['add_item'])) ? $_POST['poID'] : '';
+  // $order_id = (isset($_POST['add_item'])) ? $_POST['poID'] : '';
+  $order_id = $_POST['poID'];
+  $po_id = encrypt_data($order_id);
   $quantity = (isset($_POST['add_item'])) ? $_POST['itemQuantity'] : '' ;
   $unit_price = (isset($_POST['add_item'])) ? $_POST['itemUnitPrice'] : '' ;
   $unit = (isset($_POST['add_item'])) ? $_POST['itemUnit'] : $unit_array[0] ;
   $type = (isset($_POST['add_item'])) ? $_POST['itemType'] : $type_array[0] ;
   $description = (isset($_POST['add_item'])) ? $_POST['itemDescription'] : '' ;
   $item_cost = (isset($_POST['add_item'])) ? $_POST['itemCost'] : '' ;
+
 ?>
-  <br />
+  <!-- <br /> -->
   <div class='container topstart'>
     <?php
       if (isset($_SESSION['message'])) {
@@ -54,7 +57,7 @@
     ?>
     <div class='w3-container w3-blue'>
         <?php
-          if (isset($_SESSION['update_order'])) {
+          if (isset($_SESSION['update_item'])) {
             echo "<h3> Update Order Item </h3>";
           } else {
             echo "<h3> Add Order Item </h3>";
@@ -67,11 +70,11 @@
           <?php
             if (isset($_SESSION['update_item'])) {
                echo "<input type='hidden' name='itemID' value='{$item_id}'>";
-               echo "<input type='hidden' name='poID' value='{$order_id}'>";
             }
           ?>
+          <input type='hidden' name='poID' value='<?php echo $order_id; ?>' >
           <div class='form-group'>
-            <label class='bitterlabel' for='receiptno'> Quanity: </label>
+            <label class='bitterlabel' for='receiptno'> Quantity: </label>
             <input class='form-control' type='text' name='itemQuantity'
                    id='itemQuantity' value='<?php echo $quantity; ?>'
                     placeholder='Item Quanity' required>
@@ -137,17 +140,17 @@
                     <div class='form-group'>
                       <label class='bitterlabel'> Control </label><br />
                       <div class='btn-group btn-block'>
-                        <input class='btn btn-primary' type='submit' name='add_order' value='Update Item'>
-                        <input class='btn btn-primary' type='submit' name='add_order' value='Delete Item'>
-                        <a class='btn btn-primary' href='display_item.php'>Back</a>
+                        <input class='btn btn-primary' type='submit' name='add_item' value='Update Item'>
+                        <input class='btn btn-primary' type='submit' name='add_item' value='Delete Item'>
+                        <a class='btn btn-primary' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
                       </div>
                     </div>
             <?php } else { ?>
                     <div class='form-group'>
                       <label class='bitterlabel'> Control </label><br />
                       <div class='btn-group btn-block'>
-                        <input class='btn btn-primary' type='submit' name='add_order' value='Update Item'>
-                        <a class='btn btn-primary' href='display_item.php'>Back</a>
+                        <input class='btn btn-primary' type='submit' name='add_item' value='Update Item'>
+                        <a class='btn btn-primary' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
                       </div>
                     </div>
             <?php }
@@ -158,6 +161,6 @@
   </div>
 
 <?php
-      // unset($_SESSION['id']); // Unset the id
-      create_footer();
+    unset($_SESSION['itemID']); // Unset the id
+    create_footer();
 ?>

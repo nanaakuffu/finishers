@@ -10,14 +10,15 @@
 
     $con = $db->connect_to_db();
 
-    $fields = array('poID', 'PoQuantity', 'poAmount', 'poReceiptNo', 'poType', 'poDescription');
+    $header_arr =array('Purchase Order ID', 'Order Date', 'Order Cost', 'Receipt Number');
+    $fields = array('poID', 'poDate', 'poAmount', 'poReceiptNo');
 
     base_header('Purchase Orders');
     create_header();
 
     // $active_users = $db->get_active_users($con);
 
-    $records = $db->display_data($con, "tblpurchaseordertracker", $fields, "poQuantity");
+    $records = $db->display_data($con, "tblpurchaseordertracker", $fields, "poID");
 ?>
   <br />
   <div class='container topstart'>
@@ -27,12 +28,12 @@
          <tr class='w3-blue'>
            <?php
              $headers = "";
-             foreach ($fields as $key => $value) {
-               if ($value != 'poID') {
+             foreach ($header_arr as $key => $value) {
+               // if ($value != 'poID') {
                  // Remove the 'po' from the table names
-                 $value = substr(get_column_name($value), 2, strlen($value) - 2);
+                 // $value = substr(get_column_name($value), 2, strlen($value) - 2);
                  $headers .= "<th>".$value."</th>";
-               }
+               // }
              }
              echo $headers;
            ?>
@@ -44,11 +45,13 @@
              foreach ($records as $key => $record) {
                echo "<tr>";
                foreach ($record as $rkey => $value) {
-                 if ($rkey != 'poID') {
-                   $po_id = encrypt_data($record['poID']);
-                   // $up_3 = encrypt_data('1');
-                   echo "<td ><a href=purchase_form.php?po_id={$po_id}&up_orders=1>", $value, "</a></td>";
-                 }
+                  $po_id = encrypt_data($record['poID']);
+                  if ($rkey == 'poDate') {
+                    $value = date("F j, Y", strtotime($value));
+                    echo "<td ><a href=purchase_form.php?po_id={$po_id}&up_order=1>", $value, "</a></td>";
+                  } else {
+                    echo "<td ><a href=purchase_form.php?po_id={$po_id}&up_order=1>", $value, "</a></td>";
+                  }
                }
                echo "</tr>";
              }

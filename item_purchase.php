@@ -6,8 +6,10 @@
   require_once "public_vars.php";
   require_once "public_functions.php";
 
+  // echo "<pre>", print_r($_POST) ,"</pre>";
   if (!isset($_POST['add_item'])) {
     include_once "item_form.php";
+    // include 'index.php';
     exit();
   } else {
       // Check for errors in the data submitted!
@@ -34,7 +36,6 @@
         } else {
           /* If the code gets here, it means the data is really clean */
           $db = new Database();
-
           $con = $db->connect_to_db();
 
           // This is an array that holds the keys of the wanted field names
@@ -46,7 +47,7 @@
 
               // Reset the date for the database format
               $_POST['itemID'] = create_id(date('y-m-d'), 'itemID');
-              $_POST['poID'] = $_SESSION['poID'];
+              // $_POST['poID'] = $_SESSION['poID'];
 
               /* Remove unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -58,14 +59,14 @@
               if ($save_data) {
                 // Update the order amount
                 $update_amount = $db->update_order_amount($con, $_POST['poID']);
-                echo $update_amount;
+
                 // Add user acitivty
                 $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added '. $_POST['itemDescription'].' item for the order '.$_POST['poID']);
-                include_once 'item_form.php';
+                // include_once 'item_form.php';
               }
               break;
 
-            case 'Update Order':
+            case 'Update Item':
               // Reset the date for the database format
 
               /* Removes unwanted field names that came from the form */
@@ -82,8 +83,10 @@
               $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated an item with order ID '.$_POST['poID']);
 
               unset($_SESSION['update_item']);
-              unset($_SESSION['poid']);
-              header("Location: display_items.php");
+              unset($_SESSION['itemID']);
+              $po_id = encrypt_data($_POST['poID']);
+              header("Location: purchase_form.php?po_id={$po_id}&up_order=1");
+              // include_once "";
               break;
 
             default:
@@ -95,7 +98,9 @@
               $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Deleted an item with ID '.$_POST['itemID']);
 
               if ($delete_data) {
-                header("Location: display_items.php");
+                $po_id = encrypt_data($_POST['poID']);
+                header("Location: purchase_form.php?po_id={$po_id}&up_order=1");
+                // header("Location: display_items.php");
               } else {
                 echo DELETE_ERROR;
               }

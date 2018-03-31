@@ -3,3 +3,13 @@
 3. Add cheque details.
 4. Concatenate order ID and description in the payment form.
 5. Change station to company in the order form.
+
+
+SELECT tblpurchaseorderitems.poID,
+		   itemDescription, SUM(itemCost) AS Cost,
+       poStation,
+       poDate
+FROM tblpurchaseorderitems
+INNER JOIN tblpurchaseordertracker
+ON tblpurchaseorderitems.poID = tblpurchaseordertracker.poID
+GROUP BY tblpurchaseordertracker.poID

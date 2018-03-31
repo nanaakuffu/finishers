@@ -47,7 +47,7 @@
               // Reset the date for the database format
               $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
               $_POST['poID'] = create_id(date('y-m-d'), 'poID');
-              $_SESSION['poID'] = $_POST['poID'];
+              // $_SESSION['poID'] = $_POST['poID'];
 
               /* Remove unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -58,7 +58,7 @@
               // $fields = array('poQuantity', 'poUnitCost', 'poDate', 'poReceiptNo');
               // $criteria = filter_array($_POST, $fields);
               // $data_checked = $db->multiple_data_exists($con, "tblpurchaseordertracker", $fields, $criteria);
-
+              // echo "<pre>", print_r($_POST), "</pre>";
               // if (!$data_checked) {
                   // Add new data
               $save_data = $db->add_new($con, $_POST, "tblpurchaseordertracker");
@@ -97,6 +97,7 @@
 
             default:
               $delete_data = $db->delete_data($con, "tblpurchaseordertracker", "poid", $_POST['poID']);
+              $item_data = $db->delete_data($con, 'tblpurchaseorderitems', 'poid', $_POST['poID']);
 
               // Add user acitivty
               $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Deleted an order with receipt number '.$_POST['poReceiptNo']);
