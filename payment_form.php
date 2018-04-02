@@ -47,7 +47,17 @@
   $balance = (isset($_POST['add_payment'])) ? $_POST['pmtBalance'] : '' ;
 
   $readonly = (isset($_POST['add_payment'])) ? 'readonly' : 'required' ;
-  $disabled = ($_POST['pmtType'] == 'Cash') ? 'disabled' : 'required' ;
+
+  if (isset($_POST['add_payment'])) {
+    if ($_POST['pmtType'] == 'Cash') {
+      $disabled = 'disabled';
+    } else {
+      $disabled = 'required';
+    }
+  } else {
+    $disabled = 'disabled';
+  }
+
 ?>
   <br />
   <div class='container topstart'>
