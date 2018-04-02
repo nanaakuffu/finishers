@@ -3,6 +3,8 @@
 3. Add cheque details.
 4. Concatenate order ID and description in the payment form.
 5. Change station to company in the order form.
+6. Finish the modal forms for the other forms.
+7.
 
 
 SELECT tblpurchaseorderitems.poID,
@@ -24,6 +26,8 @@ GROUP BY tblpurchaseordertracker.poID
   //         value=".trim($order_id)." id='tpoID' placeholder='Purchase Order ID' readonly>";
   // }
 ?>
+
+<?php if(isset($_SESSION['update_payment'])) { echo "<br />"; } ?>
 
 Some thoughts
 1. I think Date should be included as a field in the payments.
