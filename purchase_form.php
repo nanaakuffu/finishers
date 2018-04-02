@@ -24,7 +24,7 @@
   // $active_users = $db->get_active_users($con);
 
   // $history = $db->display_data($con, "tblpaymenttracker", $fields, "poID");
-
+  // echo $_GET['po_id'];
   if (isset($_GET['po_id'])) {
     $po_id = decrypt_data($_GET['po_id']);
     $_POST = $db->view_data($con, "tblpurchaseordertracker", "poID", $po_id );
@@ -43,7 +43,9 @@
     $po_id = $_SESSION['po_id'];
     $_SESSION['update_order'] = TRUE;
   }
+  // echo $po_id;
 
+  // echo "<pre>", print_r($_POST), "</pre>";
   // $quantity = (isset($_POST['add_order'])) ? $_POST['poQuantity'] : '' ;
   // $unit_cost = (isset($_POST['add_order'])) ? $_POST['poUnitCost'] : '' ;
   // $purchase_order_id = (isset($_POST['add_order'])) ? $_POST['poID'] : '' ;
@@ -164,9 +166,9 @@
             if ($_SESSION['is_admin']) {
               echo "<div class='form-group'>
                       <label class='bitterlabel'> Control </label><br />
-                        <input class='btn btn-primary btn-block' type='submit' name='add_order' value='Update Order'>
-                        <input class='btn btn-primary btn-block' type='submit' name='add_order' value='Delete Order'>
-                        <a class='btn btn-primary btn-block' href='display_purchases.php'>Back</a>
+                      <input class='btn btn-primary btn-block' type='submit' name='add_order' value='Update Order'>
+                      <input class='btn btn-primary btn-block' type='submit' name='add_order' value='Delete Order'>
+                      <a class='btn btn-primary btn-block' href='display_purchases.php'>Back</a>
                     </div>";
             } else {
               echo "<div class='form-group'>
@@ -222,7 +224,7 @@
         <br />
         <?php if (sizeof($records) == 0) { ?>
           <div class='form-group'>
-            <a class='btn btn-primary' href='item_form.php'>Add Purchase Order</a>
+            <a class='btn btn-primary' href='item_form.php?po_id=<?php echo encrypt_data($po_id);?>&up_item=1'>Add Purchase Order</a>
           </div>
         <?php } else { ?>
           <!-- Payment Diaplsy View -->
