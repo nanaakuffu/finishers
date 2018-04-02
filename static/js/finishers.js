@@ -18,11 +18,11 @@ function save_cheque_details() {
      type:'json',
      success:function(data)
      {
-         $('#btnAdd').click(function() {
-           var value = $('#ChequeID').val();
-           $('#chqID').val(value);
-           $('#poTypeModal').modal('hide');
-         });
+         // $('#btnAdd').click(function() {
+         var value = $('#ChequeID').val();
+         $('#chqID').val(value);
+         $('#poTypeModal').modal('hide');
+         // });
        // alert('Record Inserted Successfully.');
      }
 
