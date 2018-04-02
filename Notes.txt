@@ -13,3 +13,18 @@ FROM tblpurchaseorderitems
 INNER JOIN tblpurchaseordertracker
 ON tblpurchaseorderitems.poID = tblpurchaseordertracker.poID
 GROUP BY tblpurchaseordertracker.poID
+
+<?php
+  // if (!isset($_SESSION['update_payment'])) {
+  //   echo "<select class='form-control' name='poID' id='spoID' onchange='get_order_details(this.value);'>\n";
+  //     select_data($order_array, $order_id);
+  //   echo "</select>";
+  // } else {
+  //   echo "<input class='form-control' type='text' name='poID'
+  //         value=".trim($order_id)." id='tpoID' placeholder='Purchase Order ID' readonly>";
+  // }
+?>
+
+Some thoughts
+1. I think Date should be included as a field in the payments.
+2. Also receipt number should be included as receipt is given upon payment.

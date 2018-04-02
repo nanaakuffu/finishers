@@ -41,16 +41,15 @@
 
           // This is an array that holds the keys of the wanted field names
           $field_names_array = $db->get_field_names($con, "tblpaymenttracker");
-          $receipt_no = $_POST['poReceiptNo'];
+
 
           switch ($_POST['add_payment']) {
             // Actually save the data from the form.
             case 'Add Order Payment':
 
+              $receipt_no = $_POST['poReceiptNo'];
               // Reset the date for the database format
-              if ($_POST['pmtType'] == 'Cheque') {
-                $_POST['pmtType'] = 'Cheque : '.$_POST['cheque_no'];
-              }
+              $_POST['pmtID'] = create_id(date('y-m-d'), "pmtID");
 
               /* Remove unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -80,9 +79,10 @@
 
             case 'Update Payment':
               // Reset the date for the database format
-              if ($_POST['pmtType'] == 'Cheque') {
-                $_POST['pmtType'] = 'Cheque : '.$_POST['cheque_no'];
-              }
+              // if ($_POST['pmtType'] == 'Cheque') {
+              //   $_POST['pmtType'] = 'Cheque : '.$_POST['cheque_no'];
+              // }
+              $receipt_no = $_POST['poReceiptNo'];
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -100,7 +100,13 @@
               header("Location: display_payments.php");
               break;
 
+            // case 'Add Cheque Details':
+            //
+            //   break;
+
             default:
+
+              $receipt_no = $_POST['poReceiptNo'];
               $delete_data = $db->delete_data($con, "tblpaymenttracker", "pmtID", $_POST['pmtID']);
 
               // Add user acitivty

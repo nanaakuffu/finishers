@@ -232,7 +232,7 @@
 
     function get_receipt_no($connection, $id_value)
     {
-      $sql = "SELECT poReceiptNo FROM tblpurchaseordertracker WHERE poID=$id_value";
+      $sql = "SELECT poReceiptNo FROM tblpurchaseordertracker WHERE poID="."'".$id_value."'";
       $result = mysqli_query($connection, $sql);
       $result_number = mysqli_num_rows($result);
       $receipt_no = '';
@@ -243,7 +243,7 @@
         }
         return $amounts[0]['poReceiptNo'];
       } else {
-        return $amount;
+        return $receipt_no;
       }
     }
 
@@ -266,7 +266,7 @@
 
     function get_order_payments($connection, $id_value)
     {
-      $sql = "SELECT SUM(pmtAmount) AS Amount_Paid FROM tblpaymenttracker WHERE poID=$id_value";
+      $sql = "SELECT SUM(pmtAmount) AS Amount_Paid FROM tblpaymenttracker WHERE poID="."'".$id_value."'";
       $result = mysqli_query($connection, $sql);
       $result_number = mysqli_num_rows($result);
       $amount_paid = 0.00;
@@ -281,18 +281,26 @@
       }
     }
 
-    function get_payment_summary($connection)
+    function get_payment_summary($connection, $po_id)
     {
       $data = array();
+      // $query = "SELECT tblpurchaseordertracker.poID,
+      //                 tblpurchaseordertracker.poReceiptNo,
+      //                 tblpurchaseordertracker.poAmount,
+      //                 SUM(tblpaymenttracker.pmtAmount) AS amtPaid,
+      //                 (tblpurchaseordertracker.poAmount - SUM(tblpaymenttracker.pmtAmount)) AS Balance
+      //           FROM tblpaymenttracker
+      //           INNER JOIN tblpurchaseordertracker
+      //           ON tblpaymenttracker.poID = tblpurchaseordertracker.poID
+      //           GROUP BY tblpurchaseordertracker.poID";
       $query = "SELECT tblpurchaseordertracker.poID,
                       tblpurchaseordertracker.poReceiptNo,
                       tblpurchaseordertracker.poAmount,
                       SUM(tblpaymenttracker.pmtAmount) AS amtPaid,
                       (tblpurchaseordertracker.poAmount - SUM(tblpaymenttracker.pmtAmount)) AS Balance
-                FROM tblpaymenttracker
-                INNER JOIN tblpurchaseordertracker
-                ON tblpaymenttracker.poID = tblpurchaseordertracker.poID
-                GROUP BY tblpurchaseordertracker.poID";
+                FROM tblpaymenttracker, tblpurchaseordertracker
+                WHERE tblpurchaseordertracker.poID="."'".$po_id."'
+                AND tblpaymenttracker.poID="."'".$po_id."'";
 
       $result = mysqli_query($connection, $query);
       $record_count = mysqli_num_rows($result);
@@ -510,7 +518,10 @@
                 $tables = is_array($tables) ? $tables : explode(',',$tables);
             }
 
-            $sql = 'CREATE DATABASE IF NOT EXISTS '.$this->db_name.";\n\n";
+            $sql = "SET SQL_MODE = "."'NO_AUTO_VALUE_ON_ZERO';\n";
+            $sql .= "SET time_zone = "."'+00:00';\n\n";
+
+            $sql .= 'CREATE DATABASE IF NOT EXISTS '.$this->db_name.";\n\n";
             $sql .= 'USE '.$this->db_name.";\n\n";
 
             /**

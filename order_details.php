@@ -7,8 +7,8 @@
   $id = mysqli_real_escape_string($con, $_GET['id']);
   $query = "SELECT poReceiptNo, poAmount, SUM(tblpaymenttracker.pmtAmount) AS amtPaid
             FROM tblpurchaseordertracker, tblpaymenttracker
-            WHERE tblpurchaseordertracker.poID ='".$id."'
-            AND tblpaymenttracker.poID ='".$id."'";
+            WHERE tblpurchaseordertracker.poID='".$id."'
+            AND tblpaymenttracker.poID='".$id."'";
 
   $result = mysqli_query($con, $query);
   $record_count = mysqli_num_rows($result);

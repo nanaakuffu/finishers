@@ -38,25 +38,16 @@
   $type_array = array('Cash', 'Cheque');
   $cheque = array();
 
-  $order_id = (isset($_POST['add_payment'])) ? $_POST['poID'] : $order_array['default'] ;
+  $order_id = (isset($_POST['add_payment'])) ? $_POST['poID'] : '' ;
+  $po_id = encrypt_data($order_id);
   $amount_paid = (isset($_POST['add_payment'])) ? $_POST['pmtAmount'] : '' ;
-  // $payment_type = (isset($_POST['add_payment'])) ? $_POST['pmtType'] : 'Cash' ;
-  if (isset($_POST['add_payment'])) {
-    if ($_POST['pmtType'] != 'Cash') {
-      $cheque = explode(":", $_POST['pmtType']);
-      $payment_type = 'Cheque';
-      $cheque_no = trim($cheque[1]);
-    } else {
-      $payment_type = 'Cash';
-      $cheque_no = '';
-    }
-  } else {
-    $payment_type = '';
-  }
+  $cheque_id = (isset($_POST['add_payment'])) ? $_POST['chqID'] : '' ;
+  $payment_type = (isset($_POST['add_payment'])) ? $_POST['pmtType'] : $type_array[0] ;
 
   $balance = (isset($_POST['add_payment'])) ? $_POST['pmtBalance'] : '' ;
 
-  // $date = (isset($_POST['add_payment'])) ? date("F-j-Y", strtotime($_POST['poDate'])) : date("F-j-Y");
+  $readonly = (isset($_POST['add_payment'])) ? 'readonly' : 'required' ;
+  $disabled = ($_POST['pmtType'] == 'Cash') ? 'disabled' : 'required' ;
 ?>
   <br />
   <div class='container topstart'>
@@ -89,16 +80,8 @@
           ?>
           <div class='form-group'>
             <label class='bitterlabel' for='quantity'> Purchase Order ID </label>
-            <?php
-              if (!isset($_SESSION['update_payment'])) {
-                echo "<select class='form-control' name='poID' id='spoID' onchange='get_order_details(this.value);'>\n";
-                  select_data($order_array, $order_id);
-                echo "</select>";
-              } else {
-                echo "<input class='form-control' type='text' name='poID'
-                      value=".trim($order_id)." id='tpoID' placeholder='Purchase Order ID' readonly>";
-              }
-            ?>
+            <input class='form-control' type='text' name='poID' value='<?php echo $order_id; ?>'
+                   id='poID' oninput='get_order_details(this.value);' placeholder='Order ID' <?php echo $readonly; ?> >
           </div>
 
           <div class='form-group'>
@@ -132,23 +115,25 @@
           </div>
 
           <div class='form-group row'>
-            <div class="col-xs-5">
-              <label class='bitterlabel' for='amount'> Payment Type </label>
-              <?php
-                if (!isset($_SESSION['update_payment'])) {
-                  echo "<select class='form-control' name='pmtType' id='ptype' onchange='control_cheque_number()'>\n";
-                    select_data($type_array, $payment_type);
-                  echo "</select>";
-                } else {
-                  echo "<input class='form-control' type='text' name='pmtType'
-                        value=".trim($payment_type)." id='pmttype' placeholder='Payment Type ' readonly>";
-                }
-              ?>
+              <div class="col-xs-5">
+                <label class='bitterlabel' for='amount'> Payment Type </label>
+                  <?php
+                    echo "<select class='form-control' name='pmtType' id='ptype' onchange='get_cheque_id()'>\n";
+                      select_data($type_array, $payment_type);
+                    echo "</select>";
+                  ?>
             </div>
             <div class="col-xs-7">
-              <label for="ex3"> Cheque Number </label>
-              <input class="form-control" id="cheque_number" type="text" name="cheque_no" value='<?php echo $cheque_no; ?>'
-                  placeholder="Cheque Number" value='' disabled>
+              <label for="ex3"> Cheque ID </label>
+              <div class="input-group">
+                <input class="form-control" id="chqID" type="text" name="chqID" value='<?php echo $cheque_id; ?>'
+                    placeholder="Cheque ID" value='' <?php echo $disabled; ?> >
+                <div class='input-group-btn'>
+                    <a class='btn btn-primary' data-toggle="modal" data-target="#poTypeModal" id="modalButton">
+                        <i class='fa fa-fw fa-plus'></i>
+                    </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -174,7 +159,7 @@
                             <div class='btn-group'>
                               <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
                               <input class='btn btn-primary' type='submit' name='add_payment' value='Delete Payment'>
-                              <a class='btn btn-primary' href='display_payments.php'>Back</a>
+                              <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
                             </div>
                           </div>";
                   } else {
@@ -182,7 +167,7 @@
                             <label class='bitterlabel'> Control </label><br />
                             <div class='btn-group'>
                               <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
-                              <a class='btn btn-primary' href='display_payments.php'>Back</a>
+                              <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
                             </div>
                           </div>";
                   }
@@ -191,7 +176,65 @@
         </div>
       </div>
     </form>
+
+    <!-- Beginning of Cheque Modal -->
+    <div class="modal fade" id="poTypeModal" tabindex="-1" role="dialog" aria-labelledby="ChequeModalLabel">
+  	  <div class="modal-dialog" role="document">
+  	    <div class="modal-content">
+
+  	      <div class="modal-header">
+  	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  	        <h3 class="modal-title" id="ChequeModalLabel">Cheque Details</h3>
+  	      </div>
+
+  	      <div class="modal-body">
+  	          <div class="box-body pad">
+  	            <form id="chqForm" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+              	  	<label for="ChequeID">Cheque ID: </label>
+                		<input type="text" class="form-control" id="ChequeID" name="chqID" placeholder="Cheque Number"
+                    value="<?php echo create_id(date('y-m-d'), 'chqID'); ?>">
+                  </div>
+                  <div class="form-group">
+              	  	<label for="ChequeNumber">Cheque Number: </label>
+                		<input type="text" class="form-control" id="ChequeNumber" name="chqNumber" placeholder="Cheque Number" required>
+                  </div>
+                  <div class="form-group">
+              	  	<label for="ChequeBank">Bank: </label>
+                		<input type="text" class="form-control" id="ChequeBank" name="chqBank" placeholder="Bank of the Cheque" required>
+                  </div>
+                  <div class="form-group">
+              	  	<label for="ChequeDate">Cheque Date: </label>
+                    <div class='input-group date' id='form_datetime'>
+                      <input class='form-control' type='text' id="ChequeDate" name='chqDate' placeholder="Date of the Cheque" required>
+                      <span class='input-group-addon'>
+                          <span class='glyphicon glyphicon-calendar'></span>
+                      </span>
+                    </div>
+                		<!-- <input type="text" class="form-control" id="ChequeDate" name="chqDate" placeholder="Date of the Cheque" required> -->
+                  </div>
+                  <div class="form-group">
+                    <button type="button" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"> Add Cheque Details</button>
+                 	</div>
+  	            </form>
+  	          </div>
+  	      </div>
+
+  	    </div>
+  	  </div>
+  	 </div>
+     <!-- End of Unit Modal -->
+
   </div>
+  <!-- <script type='text/javascript'>
+    $(function() {
+      $('#btnAdd').click(function() {
+        var value = $('#ChequeID').val();
+        $('#chqID').val(value);
+        $('#poTypeModal').modal('hide');
+      });
+    });
+  </script> -->
 
 <?php
       unset($_SESSION['id']); // Unset the id

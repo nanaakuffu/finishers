@@ -10,7 +10,27 @@ function get_question(value) {
     })
 }
 
+function save_cheque_details() {
+  $.ajax({
+     url: "save_cheque_details.php",
+     method:"POST",
+     data:$('#chqForm').serialize(),
+     type:'json',
+     success:function(data)
+     {
+         $('#btnAdd').click(function() {
+           var value = $('#ChequeID').val();
+           $('#chqID').val(value);
+           $('#poTypeModal').modal('hide');
+         });
+       // alert('Record Inserted Successfully.');
+     }
+
+  });
+}
+
 function get_order_details(value) {
+  // alert(value);
   $.ajax({
       type: "GET",
       url: "order_details.php",
@@ -21,6 +41,8 @@ function get_order_details(value) {
           $('#receipt_no').val(myobj.receipt_no);
           $('#item_cost').val(myobj.amount);
           $('#amt_paid').val(myobj.amtpaid);
+
+          // alert(data);
       }
   })
 }
@@ -46,12 +68,19 @@ function calculate_balance(id_cost, id_paid, id_amount, id_balance){
   id_balance.value = balance;
 }
 
-function control_cheque_number(){
+function get_cheque_id(){
   if (document.getElementById('ptype').value == 'Cash') {
-    document.getElementById('cheque_number').disabled = true;
+    document.getElementById('chqID').disabled = true;
   } else {
-    document.getElementById('cheque_number').disabled = false;
-    document.getElementById('cheque_number').focus();
-    document.getElementById('cheque_number').required = true;
+    document.getElementById('chqID').disabled = false;
+    document.getElementById('chqID').focus();
+    document.getElementById('chqID').required = true;
   }
+}
+
+function invoke_modal() {
+    var input = document.getElementById('chqID')
+    input.addEventListener('click', function(event){
+        document.getElementById('modalButton').click();
+      });
 }
