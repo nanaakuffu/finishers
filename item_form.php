@@ -33,8 +33,10 @@
   $unit_array = array('Drums' , 'Pieces');
   $type_array = array('Oil' , 'Liquid' );
 
+  // echo $_GET['po_id'];
+
   // $order_id = (isset($_POST['add_item'])) ? $_POST['poID'] : '';
-  $order_id = $_POST['poID'];
+  $order_id = (isset($_GET['po_id'])) ? trim(decrypt_data($_GET['po_id'])) : $_POST['poID'];
   $po_id = encrypt_data($order_id);
   $quantity = (isset($_POST['add_item'])) ? $_POST['itemQuantity'] : '' ;
   $unit_price = (isset($_POST['add_item'])) ? $_POST['itemUnitPrice'] : '' ;
@@ -133,13 +135,22 @@
         </div>
 
         <div class='col-sm-4'>
-            <?php if (!isset($_SESSION['update_item'])) { ?>
-                <div class='form-group'>
-                  <label class='bitterlabel'> Control </label><br />
-                  <input class='btn btn-primary btn-block' type='submit' name='add_item'
-                  value='Add Purchase Item' >
-                </div>
-            <?php } else {
+          <?php if (!isset($_SESSION['update_item'])) {
+                  if (!isset($_GET['po_id'])) { ?>
+                    <div class='form-group'>
+                      <label class='bitterlabel'> Control </label><br />
+                      <input class='btn btn-primary btn-block' type='submit' name='add_item'
+                      value='Add Purchase Item' >
+                    </div>
+            <?php } else { ?>
+                    <div class='form-group'>
+                      <label class='bitterlabel'> Control </label><br />
+                      <input class='btn btn-primary btn-block' type='submit' name='add_item'
+                      value='Add Purchase Item' >
+                      <a class='btn btn-primary btn-block' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
+                    </div>
+            <?php }
+              } else {
                   if ($_SESSION['is_admin']) { ?>
                     <div class='form-group'>
                       <label class='bitterlabel'> Control </label><br />
