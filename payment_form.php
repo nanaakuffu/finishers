@@ -47,6 +47,7 @@
   $balance = (isset($_POST['add_payment'])) ? $_POST['pmtBalance'] : '' ;
 
   $readonly = (isset($_POST['add_payment'])) ? 'readonly' : 'required' ;
+  $disable_control = (!is_null($payments)) ? 'disabled' : 'required';
 
   if (isset($_POST['add_payment'])) {
     if ($_POST['pmtType'] == 'Cash') {
@@ -171,22 +172,16 @@
                   if ($_SESSION['is_admin']) { ?>
                       <div class='form-group'>
                         <label class='bitterlabel'> Control </label><br />
-                        <div class='btn-group'>
-                          <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
-                          <?php if ( is_null($payments) ): ?>
-                            <input class='btn btn-primary' type='submit' name='add_payment' value='Delete Payment' disabled>
-                          <?php else: ?>
-                            <input class='btn btn-primary' type='submit' name='add_payment' value='Delete Payment'>
-                          <?php endif; ?>
-                          <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
-                        </div>
+                          <input class='btn btn-primary btn-block' type='submit' name='add_payment' value='Update Payment'>
+                          <input class='btn btn-primary btn-block' type='submit' name='add_payment' value='Delete Payment' <?php echo $disable_control; ?> >
+                          <a class='btn btn-primary btn-block' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
                       </div>
           <?php   } else { ?>
                     <div class='form-group'>
                         <label class='bitterlabel'> Control </label><br />
                         <div class='btn-group'>
                           <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
-                          <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
+                          <a class='btn btn-primary' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
                         </div>
                     </div>
           <?php   }

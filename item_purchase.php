@@ -62,6 +62,7 @@
 
                 // Add user acitivty
                 $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added '. $_POST['itemDescription'].' item for the order '.$_POST['poID']);
+                $_POST['add_item'] = 'Add Purchase Item';
                 include_once 'item_form.php';
               }
               break;

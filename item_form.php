@@ -30,6 +30,8 @@
     $_SESSION['update_item'] = TRUE;
   }
 
+  $payments = (isset($_POST['add_item'])) ? $db->get_order_payments($con, $_POST['poID']) : '';
+
   $fields = array('itemID', 'itemDescription', 'itemType', 'itemUnit', 'itemQuantity', 'itemUnitPrice', 'itemCost');
 
   $unit_array = $db->create_data_array($con, "tblpurchaseorderitems", "itemUnit", TRUE, TRUE);
@@ -49,6 +51,8 @@
   $type = (isset($_POST['add_item'])) ? $_POST['itemType'] : $type_array[0] ;
   $description = (isset($_POST['add_item'])) ? $_POST['itemDescription'] : $desc_array[0] ;
   $item_cost = (isset($_POST['add_item'])) ? $_POST['itemCost'] : '' ;
+
+  $disable_control = (!is_null($payments)) ? 'disabled' : 'required';
 
 ?>
   <br />
@@ -149,11 +153,10 @@
                   if ($_SESSION['is_admin']) { ?>
                     <div class='form-group'>
                       <label class='bitterlabel'> Control </label><br />
-                      <div class='btn-group btn-block'>
-                        <input class='btn btn-primary' type='submit' name='add_item' value='Update Item'>
-                        <input class='btn btn-primary' type='submit' name='add_item' value='Delete Item'>
-                        <a class='btn btn-primary' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
-                      </div>
+                      <input class='btn btn-primary btn-block' type='submit' name='add_item' value='Update Item'>
+                      <input class='btn btn-primary btn-block' type='submit' name='add_item' value='Delete Item' <?php echo $disable_control; ?> >
+                      <a class='btn btn-primary btn-block' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
+
                     </div>
             <?php } else { ?>
                     <div class='form-group'>
@@ -170,43 +173,45 @@
     </form>
 
     <!-- Loading the table for items ordered -->
-    <?php if (isset($_POST['poID'])): ?>
-      <br />
-      <div class='table-responsive'>
-          <table id='item_order' class='table table-hover' cellpadding='8' cellspacing='10'>
-            <thead>
-             <tr class='w3-blue'>
+    <?php if (isset($_POST['add_item'])): ?>
+      <?php if ( $_POST['add_item'] == 'Add Purchase Item'): ?>
+        <br />
+        <div class='table-responsive'>
+            <table id='item_order' class='table table-hover' cellpadding='8' cellspacing='10'>
+              <thead>
+               <tr class='w3-blue'>
+                 <?php
+                   $headers = "";
+                   foreach ($fields as $key => $value) {
+                     if ($value != 'itemID') {
+                       // Remove the 'item' from the table names
+                       $value = substr(get_column_name($value), 4, strlen($value) - 2);
+                       $headers .= "<th>".$value."</th>";
+                     }
+                   }
+                   echo $headers;
+                 ?>
+               </tr>
+              </thead>
+              <tbody>
                <?php
-                 $headers = "";
-                 foreach ($fields as $key => $value) {
-                   if ($value != 'itemID') {
-                     // Remove the 'item' from the table names
-                     $value = substr(get_column_name($value), 4, strlen($value) - 2);
-                     $headers .= "<th>".$value."</th>";
+                 if (sizeof($records) != 0) {
+                   foreach ($records as $key => $record) {
+                     echo "<tr>";
+                     foreach ($record as $rkey => $value) {
+                        $itemID = encrypt_data($record['itemID']);
+                        if ($rkey != 'itemID') {
+                          echo "<td >", $value, "</td>";
+                        }
+                     }
+                     echo "</tr>";
                    }
                  }
-                 echo $headers;
-               ?>
-             </tr>
-            </thead>
-            <tbody>
-             <?php
-               if (sizeof($records) != 0) {
-                 foreach ($records as $key => $record) {
-                   echo "<tr>";
-                   foreach ($record as $rkey => $value) {
-                      $itemID = encrypt_data($record['itemID']);
-                      if ($rkey != 'itemID') {
-                        echo "<td >", $value, "</td>";
-                      }
-                   }
-                   echo "</tr>";
-                 }
-               }
-            ?>
-          </tbody>
-        </table>
-      </div>
+              ?>
+            </tbody>
+          </table>
+        </div>
+      <?php endif; ?>
     <?php endif; ?>
 
   </div>

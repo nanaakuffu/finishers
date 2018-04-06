@@ -54,7 +54,7 @@
               }
 
               $db->close_connection($con);
-              header("Location: index.php");
+              header("Location: purchase_order.php");
             } else {
             $db->close_connection($con);
             $message = "<i class='fa fa-fw fa-close'></i> Password does not match your user name!";
