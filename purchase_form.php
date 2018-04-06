@@ -53,6 +53,8 @@
   $receipt_no = (isset($_POST['add_order'])) ? $_POST['poReceiptNo'] : '' ;
   $station = (isset($_POST['add_order'])) ? $_POST['poStation'] : '' ;
   $date = (isset($_POST['add_order'])) ? date("F-j-Y", strtotime($_POST['poDate'])) : date("F-j-Y");
+
+  $station_array = $db->create_data_array($con, "tblpurchaseordertracker", "poStation", TRUE, TRUE);
   // $type = (isset($_POST['add_order'])) ? $_POST['poType'] : '' ;
   // $description = (isset($_POST['add_order'])) ? $_POST['poDescription'] : '' ;
 
@@ -94,7 +96,7 @@
             <div class='form-group'>
               <label class='bitterlabel' for='receiptno'> Receipt Number: </label>
               <input class='form-control' type='text' name='poReceiptNo' value=''
-                     placeholder='Receipt Number' readonly>
+                     placeholder='Receipt Number'>
             </div>
           </div>
 
@@ -107,8 +109,11 @@
             </div>
             <div class='form-group'>
               <label class='bitterlabel' for='station'> Station: </label>
-              <input class='form-control' type='text' name='poStation' value=''
-                     placeholder='Station' readonly>
+              <select class='form-control' name='poStation' id='poStation'>
+                <?php select_data($station_array, ""); ?>
+              </select>
+              <!-- <input class='form-control' type='text' name='poStation' value=''
+                     placeholder='Station' > -->
             </div>
           </div>
 
@@ -158,7 +163,7 @@
             </div>
 
             <div class='form-group'>
-              <label class='bitterlabel' for='station'> Station: </label>
+              <label class='bitterlabel' for='station'> Company or Station: </label>
               <input class='form-control' type='text' name='poStation' value='<?php echo $station; ?>'
                      placeholder='Station' >
             </div>
