@@ -30,13 +30,18 @@
     $_SESSION['update_item'] = TRUE;
   }
 
-  $unit_array = array('Drums' , 'Pieces');
-  $type_array = array('Oil' , 'Liquid' );
+  $fields = array('itemID', 'itemDescription', 'itemType', 'itemUnit', 'itemQuantity', 'itemUnitPrice', 'itemCost');
+
+  $unit_array = $db->create_data_array($con, "tblpurchaseorderitems", "itemUnit", TRUE, TRUE);
+  $type_array = $db->create_data_array($con, "tblpurchaseorderitems", "itemType", TRUE, TRUE);
+  $desc_array = $db->create_data_array($con, "tblpurchaseorderitems", "itemDescription", TRUE, TRUE);
 
   // echo $_GET['po_id'];
 
   // $order_id = (isset($_POST['add_item'])) ? $_POST['poID'] : '';
   $order_id = (isset($_GET['po_id'])) ? trim(decrypt_data($_GET['po_id'])) : $_POST['poID'];
+  $records = $db->display_specific_data($con, "tblpurchaseorderitems", $fields, "poID", $order_id, "itemID");
+
   $po_id = encrypt_data($order_id);
   $quantity = (isset($_POST['add_item'])) ? $_POST['itemQuantity'] : '' ;
   $unit_price = (isset($_POST['add_item'])) ? $_POST['itemUnitPrice'] : '' ;
@@ -84,43 +89,34 @@
 
           <div class='form-group'>
             <label class='bitterlabel' for='receiptno'> Unit: </label>
-            <div class="input-group">
-              <div class='input-group-btn'>
-                  <a class='btn btn-primary' data-toggle="modal" data-target="#UnitModal">
-                      <i class='fa fa-fw fa-plus'></i>
-                  </a>
-              </div>
-              <select class='form-control' name='itemUnit' id='itemUnit'>
-                <?php select_data($unit_array, $unit); ?>
-              </select>
-            </div>
+            <select class='form-control' name='itemUnit' id='itemUnit'>
+              <?php select_data($unit_array, $unit); ?>
+            </select>
           </div>
 
           <div class='form-group'>
             <label class='bitterlabel' for='itemDescription'> Description: </label>
-            <input class='form-control' type='text' name='itemDescription' value='<?php echo $description; ?>'
-                   placeholder='item Description' required>
+            <select class='form-control' name='itemDescription' id='itemDescription'>
+              <?php select_data($desc_array, $description); ?>
+            </select>
           </div>
         </div>
 
         <div class='col-sm-4'>
           <div class='form-group'>
-            <label class='bitterlabel' for='receiptno'> Item Type: </label>
-            <div class="input-group">
-              <div class='input-group-btn'>
-                  <a class='btn btn-primary' data-toggle="modal" data-target="#TypeModal">
-                      <i class='fa fa-fw fa-plus'></i>
-                  </a>
-              </div>
-              <select class='form-control' name='itemType' id='itemType'>
-                <?php select_data($type_array, $type); ?>
-              </select>
-            </div>
+            <label class='bitterlabel' for='itemType'> Item Type: </label>
+            <!-- <div class="select2-wrapper"> -->
+
+            <select class='form-control' name='itemType' id='itemType'>
+              <?php select_data($type_array, $type); ?>
+            </select>
+            <!-- </div> -->
           </div>
 
           <div class='form-group'>
             <label class='bitterlabel' for='itemUnitPrice'> Unit Price: </label>
             <input class='form-control' type='text' name='itemUnitPrice'
+                   oninput='calculate_amount(itemQuantity, itemUnitPrice, itemCost);'
                    value='<?php echo $unit_price; ?>'
                    id='itemUnitPrice' placeholder='Item Unit Price' required>
           </div>
@@ -128,7 +124,6 @@
           <div class='form-group'>
             <label class='bitterlabel' for='itemCost'> Item Cost: </label>
             <input class='form-control' type='text' name='itemCost' id="itemCost"
-                   onfocus="calculate_amount(itemQuantity, itemUnitPrice, itemCost);"
                    value='<?php echo $item_cost; ?>'
                    placeholder='Item Cost' readonly>
           </div>
@@ -150,7 +145,7 @@
                       <a class='btn btn-primary btn-block' href='purchase_form.php?po_id=<?php echo $po_id; ?>&up_order=1'>Back</a>
                     </div>
             <?php }
-              } else {
+                } else {
                   if ($_SESSION['is_admin']) { ?>
                     <div class='form-group'>
                       <label class='bitterlabel'> Control </label><br />
@@ -174,63 +169,46 @@
       </div>
     </form>
 
-    <!-- Beginning of Unit Modal -->
-    <div class="modal fade" id="UnitModal" tabindex="-1" role="dialog" aria-labelledby="UnitModalLabel">
-  	  <div class="modal-dialog" role="document">
-  	    <div class="modal-content">
+    <!-- Loading the table for items ordered -->
+    <?php if (isset($_POST['poID'])): ?>
+      <br />
+      <div class='table-responsive'>
+          <table id='item_order' class='table table-hover' cellpadding='8' cellspacing='10'>
+            <thead>
+             <tr class='w3-blue'>
+               <?php
+                 $headers = "";
+                 foreach ($fields as $key => $value) {
+                   if ($value != 'itemID') {
+                     // Remove the 'item' from the table names
+                     $value = substr(get_column_name($value), 4, strlen($value) - 2);
+                     $headers .= "<th>".$value."</th>";
+                   }
+                 }
+                 echo $headers;
+               ?>
+             </tr>
+            </thead>
+            <tbody>
+             <?php
+               if (sizeof($records) != 0) {
+                 foreach ($records as $key => $record) {
+                   echo "<tr>";
+                   foreach ($record as $rkey => $value) {
+                      $itemID = encrypt_data($record['itemID']);
+                      if ($rkey != 'itemID') {
+                        echo "<td >", $value, "</td>";
+                      }
+                   }
+                   echo "</tr>";
+                 }
+               }
+            ?>
+          </tbody>
+        </table>
+      </div>
+    <?php endif; ?>
 
-  	      <div class="modal-header">
-  	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  	        <h4 class="modal-title" id="UnitModalLabel">&nbsp;</h4>
-  	      </div>
-
-  	      <div class="modal-body">
-  	          <div class="box-body pad">
-  	            <form action="data.php" method="post" enctype="multipart/form-data">
-                  <div class="form-group">
-              	  	<label for="iUnit">Item Unit: </label>
-                		<input type="text" class="form-control" id="iUnit" name="unit" placeholder="Item Unit">
-                  </div>
-                  <div class="form-group">
-    	          		 <input type="submit" name="add_unit" value="Add Unit" class="btn btn-primary">
-                 	</div>
-  	            </form>
-  	          </div>
-  	      </div>
-
-  	    </div>
-  	  </div>
-  	 </div>
-     <!-- End of Unit Modal -->
-
-     <!-- Beginning of Type Modal -->
-     <div class="modal fade" id="TypeModal" tabindex="-1" role="dialog" aria-labelledby="TypeModalLabel">
-   	  <div class="modal-dialog" role="document">
-   	    <div class="modal-content">
-
-   	      <div class="modal-header">
-   	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-   	        <h4 class="modal-title" id="TypeModalLabel">&nbsp;</h4>
-   	      </div>
-
-   	      <div class="modal-body">
-   	          <div class="box-body pad">
-   	            <form action="data.php" method="post" enctype="multipart/form-data">
-                   <div class="form-group">
-               	  	<label for="iType">Item Type: </label>
-                 		<input type="text" class="form-control" id="iType" name="unit" placeholder="Item Type">
-                   </div>
-                   <div class="form-group">
-     	          		 <input type="submit" name="add_type" value="Add Type" class="btn btn-primary">
-                  	</div>
-   	            </form>
-   	          </div>
-   	      </div>
-
-   	    </div>
-   	  </div>
-   	 </div>
-      <!-- End of Unit Modal -->
   </div>
 
 <?php
