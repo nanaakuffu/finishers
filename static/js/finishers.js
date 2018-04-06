@@ -30,21 +30,21 @@ function save_cheque_details() {
 }
 
 function get_order_details(value) {
-  // alert(value);
-  $.ajax({
-      type: "GET",
-      url: "order_details.php",
-      data: "id="+value,
-      success: function(data){
-          var myjson = data;
-          var myobj = JSON.parse(myjson);
-          $('#receipt_no').val(myobj.receipt_no);
-          $('#item_cost').val(myobj.amount);
-          $('#amt_paid').val(myobj.amtpaid);
-
-          // alert(data);
-      }
-  })
+  alert(value);
+  // $.ajax({
+  //     type: "GET",
+  //     url: "order_details.php",
+  //     data: "id="+value,
+  //     success: function(data){
+          // var myjson = data;
+          // var myobj = JSON.parse(myjson);
+          // $('#receipt_no').val(myobj.receipt_no);
+          // $('#item_cost').val(myobj.amount);
+          // $('#amt_paid').val(myobj.amtpaid);
+  //
+  //         // alert(data);
+  //     }
+  // })
 }
 
 function set_focus() {
