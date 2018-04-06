@@ -27,9 +27,16 @@
     function connect_to_db()
     {
       // Establishing data connection
-      $sconnect = mysqli_connect($this->host, $this->account, $this->password, $this->db_name)
-                  or die("Database Connection Failed! <br>"."Reason: ".mysqli_connect_error());
-      return $sconnect;
+      try {
+        $sconnect = mysqli_connect($this->host, $this->account, $this->password, $this->db_name);
+                    // or die("Database Connection Failed! <br>"."Reason: ".mysqli_connect_error());
+        return $sconnect;
+      } catch (Exception $e) {
+        var_dump($e->getMessage());
+        return FALSE;
+      }
+
+
     }
 
     function get_field_names($connection, $table_name)
@@ -431,23 +438,6 @@
         return $data_array;
       } else {
         return $data_array;
-      }
-    }
-
-    function members_summary($connection, $table, $group_by)
-    {
-      $sql = "SELECT Status, COUNT($group_by) AS Members FROM $table GROUP BY $group_by";
-      $result = mysqli_query($connection, $sql);
-      $result_number = mysqli_num_rows($result);
-      $rows = [];
-
-      if ($result_number > 0) {
-        while ($record = mysqli_fetch_assoc($result)) {
-          $rows[] = $record;
-        }
-        return $rows;
-      } else {
-        return $rows;
       }
     }
 
