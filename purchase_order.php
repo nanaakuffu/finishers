@@ -66,7 +66,7 @@
               if ($save_data) {
                 // Add user acitivty
                 $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new order totalling '.$_POST['poAmount']);
-                include_once 'item_purchase.php';
+                include_once 'item_form.php';
               }
               // } else {
               //     $_SESSION['message'] = "The data you are trying to add already exists!";
