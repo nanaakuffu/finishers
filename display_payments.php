@@ -17,15 +17,11 @@
   base_header('Display Payments');
   create_header();
 
-  // $active_users = $db->get_active_users($con);
   $summary = $db->get_payment_summary($con);
   $history = $db->display_data($con, "tblpaymenttracker", $fields, "poID");
 ?>
 <br />
 <div class="container topstart">
-  <!-- <h2>Dynamic Tabs</h2>
-  <p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p> -->
-
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#summary">Payment Summary</a></li>
     <li><a data-toggle="tab" href="#history">Payment History</a></li>
