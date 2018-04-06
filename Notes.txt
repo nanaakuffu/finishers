@@ -1,8 +1,8 @@
-1. Add multiple payments for one purchase.
-2. Drop down for the types in purchase order and add a routine to add type.
-3. Add cheque details.
-4. Concatenate order ID and description in the payment form.
-5. Change station to company in the order form.
+1. Add multiple payments for one purchase. -- done
+2. Drop down for the types in purchase order and add a routine to add type. -- done; related to the modal forms
+3. Add cheque details. -- done
+4. Concatenate order ID and description in the payment form. -- changed
+5. Change station to company in the order form. -- done
 6. Finish the modal forms for the other forms.
 7.
 
@@ -15,6 +15,14 @@ FROM tblpurchaseorderitems
 INNER JOIN tblpurchaseordertracker
 ON tblpurchaseorderitems.poID = tblpurchaseordertracker.poID
 GROUP BY tblpurchaseordertracker.poID
+
+onchange='get_order_details(this.options[this.selectedIndex].value);'
+
+<input class='form-control' type='text' name='itemDescription' value='<?php echo $description; ?>'
+			 placeholder='item Description' required>
+
+<!-- <input class='form-control' type='text' name='poID' value='<?php echo $order_id; ?>'
+			 id='poID' oninput='get_order_details(this.value);' placeholder='Order ID' <?php echo $readonly; ?> > -->
 
 <?php
   // if (!isset($_SESSION['update_payment'])) {
