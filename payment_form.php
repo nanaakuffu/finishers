@@ -90,8 +90,14 @@
           ?>
           <div class='form-group'>
             <label class='bitterlabel' for='quantity'> Purchase Order ID </label>
-            <input class='form-control' type='text' name='poID' value='<?php echo $order_id; ?>'
-                   id='poID' oninput='get_order_details(this.value);' placeholder='Order ID' <?php echo $readonly; ?> >
+            <?php if (!isset($_SESSION['update_payment'])): ?>
+                <select class='form-control' name='poID' id='spoID'>\n";
+                    <?php select_data($order_array, $order_id); ?>
+                </select>
+            <?php else: ?>
+              <input class='form-control' type='text' name='poID' value="<?php echo trim($order_id); ?>"
+              id='tpoID' placeholder='Purchase Order ID' readonly>
+            <?php endif; ?>
           </div>
 
           <div class='form-group'>
@@ -155,34 +161,36 @@
                     value='<?php echo $balance; ?>' placeholder='Amount Left' readonly>
           </div>
 
-          <?php
-                if (!isset($_SESSION['update_payment'])) {
-                  echo "<div class='form-group'>
-                          <label class='bitterlabel sr-only'></label><br />
-                          <input class='btn btn-primary' type='submit' name='add_payment'
-                          value='Add Order Payment' >
-                        </div>";
-                } else {
-                  if ($_SESSION['is_admin']) {
-                    echo "<div class='form-group'>
-                            <label class='bitterlabel'> Control </label><br />
-                            <div class='btn-group'>
-                              <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
-                              <input class='btn btn-primary' type='submit' name='add_payment' value='Delete Payment'>
-                              <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
-                            </div>
-                          </div>";
-                  } else {
-                    echo "<div class='form-group'>
-                            <label class='bitterlabel'> Control </label><br />
-                            <div class='btn-group'>
-                              <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
-                              <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
-                            </div>
-                          </div>";
-                  }
-                }
-            ?>
+          <?php if (!isset($_SESSION['update_payment'])) { ?>
+                  <div class='form-group'>
+                      <label class='bitterlabel sr-only'>Control</label><br />
+                      <input class='btn btn-primary' type='submit' name='add_payment'
+                      value='Add Order Payment' >
+                  </div>
+          <?php } else {
+                  if ($_SESSION['is_admin']) { ?>
+                      <div class='form-group'>
+                        <label class='bitterlabel'> Control </label><br />
+                        <div class='btn-group'>
+                          <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
+                          <?php if ( is_null($payments) ): ?>
+                            <input class='btn btn-primary' type='submit' name='add_payment' value='Delete Payment' disabled>
+                          <?php else: ?>
+                            <input class='btn btn-primary' type='submit' name='add_payment' value='Delete Payment'>
+                          <?php endif; ?>
+                          <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
+                        </div>
+                      </div>
+          <?php   } else { ?>
+                    <div class='form-group'>
+                        <label class='bitterlabel'> Control </label><br />
+                        <div class='btn-group'>
+                          <input class='btn btn-primary' type='submit' name='add_payment' value='Update Payment'>
+                          <a class='btn btn-primary' href='purchase_form.php?po_id=$po_id&up_order=1'>Back</a>
+                        </div>
+                    </div>
+          <?php   }
+                }  ?>
         </div>
       </div>
     </form>
