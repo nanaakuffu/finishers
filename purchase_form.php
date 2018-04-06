@@ -43,28 +43,13 @@
     $po_id = $_SESSION['po_id'];
     $_SESSION['update_order'] = TRUE;
   }
-  // echo $po_id;
-
-  // echo "<pre>", print_r($_POST), "</pre>";
-  // $quantity = (isset($_POST['add_order'])) ? $_POST['poQuantity'] : '' ;
-  // $unit_cost = (isset($_POST['add_order'])) ? $_POST['poUnitCost'] : '' ;
-  // $purchase_order_id = (isset($_POST['add_order'])) ? $_POST['poID'] : '' ;
-  $amount = (isset($_POST['add_order'])) ? $_POST['poAmount'] : '' ;
-  $receipt_no = (isset($_POST['add_order'])) ? $_POST['poReceiptNo'] : '' ;
-  $station = (isset($_POST['add_order'])) ? $_POST['poStation'] : '' ;
-  $date = (isset($_POST['add_order'])) ? date("F-j-Y", strtotime($_POST['poDate'])) : date("F-j-Y");
 
   $station_array = $db->create_data_array($con, "tblpurchaseordertracker", "poStation", TRUE, TRUE);
-  // $type = (isset($_POST['add_order'])) ? $_POST['poType'] : '' ;
-  // $description = (isset($_POST['add_order'])) ? $_POST['poDescription'] : '' ;
-
-  // $required = (isset($_POST['poID'])) ? 'disabled' : 'required' ;
-  // $readonly = (isset($_POST['poID'])) ? 'disabled' : 'readonly' ;
-
-
-  // if (isset($_POST['poID'])) {
-    // echo "<pre>", print_r($_POST), "</pre>";
-  // }
+  // echo "<pre>", var_dump($station_array), "</pre>";
+  $amount = (isset($_POST['add_order'])) ? $_POST['poAmount'] : '' ;
+  $receipt_no = (isset($_POST['add_order'])) ? $_POST['poReceiptNo'] : '' ;
+  $station = (isset($_POST['add_order'])) ? $_POST['poStation'] : $station_array[0] ;
+  $date = (isset($_POST['add_order'])) ? date("F-j-Y", strtotime($_POST['poDate'])) : date("F-j-Y");
 ?>
   <br />
   <div class='container topstart'>
@@ -80,7 +65,7 @@
       <div class='w3-container w3-blue'>
           <h3> Add Purchase Order </h3>
       </div>
-      <form class='w3-form w3-border w3-round' action='purchase_order.php' method='POST' id='poForm'>
+      <form class='w3-form w3-border w3-round' action='#' method='POST' id='poForm'>
         <div class='row'>
           <div class='col-sm-3'>
             <div class='form-group'>
@@ -96,7 +81,7 @@
             <div class='form-group'>
               <label class='bitterlabel' for='receiptno'> Receipt Number: </label>
               <input class='form-control' type='text' name='poReceiptNo' value=''
-                     placeholder='Receipt Number'>
+                     placeholder='Receipt Number' required>
             </div>
           </div>
 
@@ -109,11 +94,9 @@
             </div>
             <div class='form-group'>
               <label class='bitterlabel' for='station'> Station: </label>
-              <select class='form-control' name='poStation' id='poStation'>
-                <?php select_data($station_array, ""); ?>
+              <select class='form-control' name='poStation' id='poStation' required>
+                <?php select_data($station_array, $station); ?>
               </select>
-              <!-- <input class='form-control' type='text' name='poStation' value=''
-                     placeholder='Station' > -->
             </div>
           </div>
 

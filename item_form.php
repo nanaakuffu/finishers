@@ -47,7 +47,7 @@
   $unit_price = (isset($_POST['add_item'])) ? $_POST['itemUnitPrice'] : '' ;
   $unit = (isset($_POST['add_item'])) ? $_POST['itemUnit'] : $unit_array[0] ;
   $type = (isset($_POST['add_item'])) ? $_POST['itemType'] : $type_array[0] ;
-  $description = (isset($_POST['add_item'])) ? $_POST['itemDescription'] : '' ;
+  $description = (isset($_POST['add_item'])) ? $_POST['itemDescription'] : $desc_array[0] ;
   $item_cost = (isset($_POST['add_item'])) ? $_POST['itemCost'] : '' ;
 
 ?>

@@ -38,7 +38,7 @@
   $type_array = array('Cash', 'Cheque');
   $cheque = array();
 
-  $order_id = (isset($_POST['add_payment'])) ? $_POST['poID'] : '' ;
+  $order_id = (isset($_POST['add_payment'])) ? $_POST['poID'] : $order_array['default'] ;
   $po_id = encrypt_data($order_id);
   $amount_paid = (isset($_POST['add_payment'])) ? $_POST['pmtAmount'] : '' ;
   $cheque_id = (isset($_POST['add_payment'])) ? $_POST['chqID'] : '' ;
@@ -163,8 +163,8 @@
 
           <?php if (!isset($_SESSION['update_payment'])) { ?>
                   <div class='form-group'>
-                      <label class='bitterlabel sr-only'>Control</label><br />
-                      <input class='btn btn-primary' type='submit' name='add_payment'
+                      <label class='bitterlabel'>Control</label><br />
+                      <input class='btn btn-primary btn-block' type='submit' name='add_payment'
                       value='Add Order Payment' >
                   </div>
           <?php } else {
