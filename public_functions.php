@@ -23,9 +23,8 @@
               <link href='static/css/jquery.dataTables.min.css' rel='stylesheet'>
 
               <!-- Custom CSS -->
-              <link href='static/css/modern-business.css' rel='stylesheet'>
               <link href='static/css/w3.css' rel='stylesheet'>
-              <link href='static/css/dia.css' rel='stylesheet'>
+              <link href='static/css/jquery-editable-select.min.css' rel='stylesheet' />
 
               <!-- Custom Fonts -->
               <link href='static/font-awesome/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
@@ -190,6 +189,7 @@
               <script src='static/js/bootstrap-datepicker.min.js'></script>
               <script src='static/js/jquery.dataTables.min.js'></script>
               <script src='static/js/dataTables.bootstrap.min.js'></script>
+              <script src='static/js/jquery-editable-select.min.js'></script>
               <script src='static/js/finishers.js'></script>
               <script type='text/javascript'>
                 $(function () {
@@ -217,10 +217,43 @@
                     'info': true,
                     'autoWidth': true
                   });
+                  $('#item_order').DataTable({
+                    'paging': true,
+                    'lengthChange': false,
+                    'searching': false,
+                    'ordering': true,
+                    'info': true,
+                    'autoWidth': true
+                  });
                   $('#form_datetime').datepicker({
                     format: 'MM-dd-yyyy',
                     autoclose: true
                   });
+                  $('#itemType').editableSelect({filter: false});
+                  $('#itemUnit').editableSelect({filter: false});
+                  $('#userType').editableSelect({filter: false});
+                  $('#itemDescription').editableSelect({filter: false});
+                  $('#poStation').editableSelect({filter: false});
+
+
+                  $('#spoID')
+                    .editableSelect({filter: false})
+                    .on('select.editable-select', function (e, li) {
+                      var str = li.text();
+                      $.ajax({
+                          type: 'GET',
+                          url: 'order_details.php',
+                          data: 'id='+str.trim(),
+                          success: function(data){
+                            var myjson = data;
+                            var myobj = JSON.parse(myjson);
+                            $('#receipt_no').val(myobj.receipt_no);
+                            $('#item_cost').val(myobj.amount);
+                            $('#amt_paid').val(myobj.amtpaid);
+                          }
+                      })
+                  });
+
                 });
               </script>
           </body>
