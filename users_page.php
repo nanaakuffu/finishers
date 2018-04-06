@@ -78,7 +78,9 @@
               <label> User Type: </label>
               <?php
                 if (!isset($_SESSION['update_user'])) {
-                  select_data($type_array, "user_type", $user_type);
+                  echo "<select class='form-control' id='userType' name='user_type'>";
+                    select_data($type_array, $user_type);
+                  echo "</select>";
                 } else {
                   echo "<input class='form-control' type='text' name='user_type'
                         value=".trim($user_type)." id='utype' placeholder='User Type' readonly>";
