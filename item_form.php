@@ -173,45 +173,43 @@
     </form>
 
     <!-- Loading the table for items ordered -->
-    <?php if (isset($_POST['add_item'])): ?>
-      <?php if ( $_POST['add_item'] == 'Add Purchase Item'): ?>
-        <br />
-        <div class='table-responsive'>
-            <table id='item_order' class='table table-hover' cellpadding='8' cellspacing='10'>
-              <thead>
-               <tr class='w3-blue'>
-                 <?php
-                   $headers = "";
-                   foreach ($fields as $key => $value) {
-                     if ($value != 'itemID') {
-                       // Remove the 'item' from the table names
-                       $value = substr(get_column_name($value), 4, strlen($value) - 2);
-                       $headers .= "<th>".$value."</th>";
-                     }
-                   }
-                   echo $headers;
-                 ?>
-               </tr>
-              </thead>
-              <tbody>
+    <?php if (isset($_POST['_items'])): ?>
+      <br />
+      <div class='table-responsive'>
+          <table id='item_order' class='table table-hover' cellpadding='8' cellspacing='10'>
+            <thead>
+             <tr class='w3-blue'>
                <?php
-                 if (sizeof($records) != 0) {
-                   foreach ($records as $key => $record) {
-                     echo "<tr>";
-                     foreach ($record as $rkey => $value) {
-                        $itemID = encrypt_data($record['itemID']);
-                        if ($rkey != 'itemID') {
-                          echo "<td >", $value, "</td>";
-                        }
-                     }
-                     echo "</tr>";
+                 $headers = "";
+                 foreach ($fields as $key => $value) {
+                   if ($value != 'itemID') {
+                     // Remove the 'item' from the table names
+                     $value = substr(get_column_name($value), 4, strlen($value) - 2);
+                     $headers .= "<th>".$value."</th>";
                    }
                  }
-              ?>
-            </tbody>
-          </table>
-        </div>
-      <?php endif; ?>
+                 echo $headers;
+               ?>
+             </tr>
+            </thead>
+            <tbody>
+             <?php
+               if (sizeof($records) != 0) {
+                 foreach ($records as $key => $record) {
+                   echo "<tr>";
+                   foreach ($record as $rkey => $value) {
+                      $itemID = encrypt_data($record['itemID']);
+                      if ($rkey != 'itemID') {
+                        echo "<td >", $value, "</td>";
+                      }
+                   }
+                   echo "</tr>";
+                 }
+               }
+            ?>
+          </tbody>
+        </table>
+      </div>
     <?php endif; ?>
 
   </div>

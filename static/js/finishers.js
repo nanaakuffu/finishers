@@ -1,13 +1,29 @@
 function get_question(value) {
-    // alert(value);
-    $.ajax({
-        type: "GET",
-        url: "get_sec_question.php",
-        data: "choice="+value,
-        success: function(data){
-            $('#s_question').val(data);
-        }
-    })
+  // alert(value);
+  $.ajax({
+      type: "GET",
+      url: "get_sec_question.php",
+      data: "choice="+value,
+      success: function(data){
+          $('#s_question').val(data);
+      }
+  })
+}
+
+function delete_unique_data(id) {
+  var value = id.value;
+  // alert(value);
+  // $('#DeleteModal').modal('hide');
+  $.ajax({
+      type: "GET",
+      url: "delete_data.php",
+      data: "choice="+value,
+      success: function(data){
+        $('#DeleteModal').modal('hide');
+        window.location.href = 'display_purchases.php';
+        // alert(data);
+      }
+  })
 }
 
 function save_cheque_details() {

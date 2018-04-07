@@ -34,7 +34,7 @@
                 {
                   text-decoration: none;
                 }
-                html, body {
+                html, body, h1, h2, h3, h4, h5, h6 {
                   font-family: Roboto, 'Open Sans', Arvo, Bitter, 'Sans Serif', Arial;
                 }
 
@@ -98,7 +98,7 @@
                     <span class='icon-bar'></span>
                     <span class='icon-bar'></span>
                 </button>
-                <a class='navbar-brand bitterlabel' href='index.php'> <i class='fa fa-home fa-fw'></i> Finishers Co. Ltd </a>
+                <a class='navbar-brand bitterlabel' href='purchase_order.php'> <i class='fa fa-home fa-fw'></i> Finishers Co. Ltd </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>

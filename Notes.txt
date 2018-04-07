@@ -6,6 +6,8 @@
 6. Finish the modal forms for the other forms.
 7.
 
+<a class='btn btn-primary btn-block' data-toggle='modal'
+	data-target='#DeleteModal' id='modalButton' $disable_control>Delete Order</a>
 
 SELECT tblpurchaseorderitems.poID,
 		   itemDescription, SUM(itemCost) AS Cost,

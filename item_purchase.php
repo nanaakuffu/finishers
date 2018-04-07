@@ -9,7 +9,6 @@
   // echo "<pre>", print_r($_POST) ,"</pre>";
   if (!isset($_POST['add_item'])) {
     include_once "item_form.php";
-    // include 'index.php';
     exit();
   } else {
       // Check for errors in the data submitted!
@@ -47,13 +46,12 @@
 
               // Reset the date for the database format
               $_POST['itemID'] = create_id(date('y-m-d'), 'itemID');
-              // $_POST['poID'] = $_SESSION['poID'];
 
-              /* Remove unwanted field names that came from the form */
+              /* Remove unwanted field names that came from the form  and secure data*/
               $_POST = filter_array($_POST, $field_names_array);
-
               $_POST = secure_data_array($_POST);
 
+              // Actually save the data in the database
               $save_data = $db->add_new($con, $_POST, "tblpurchaseorderitems");
 
               if ($save_data) {
@@ -62,7 +60,9 @@
 
                 // Add user acitivty
                 $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added '. $_POST['itemDescription'].' item for the order '.$_POST['poID']);
-                $_POST['add_item'] = 'Add Purchase Item';
+
+                // Raise a flag to keep showing the items being ordered
+                $_POST['_items'] = 'Adding';
                 include_once 'item_form.php';
               }
               break;
@@ -70,9 +70,8 @@
             case 'Update Item':
               // Reset the date for the database format
 
-              /* Removes unwanted field names that came from the form */
+              /* Removes unwanted field names that came from the form and secure data*/
               $_POST = filter_array($_POST, $field_names_array);
-
               $_POST = secure_data_array($_POST);
 
               // Update the data

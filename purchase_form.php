@@ -21,10 +21,6 @@
   $history_array = array('Payment ID', 'Amount Paid', 'Payment Type', 'Cheque ID', 'Balance');
   $summary_array = array('Order ID', 'Receipt Number', 'Order Cost', 'Amount Paid', 'Balance');
 
-  // $active_users = $db->get_active_users($con);
-
-  // $history = $db->display_data($con, "tblpaymenttracker", $fields, "poID");
-  // echo $_GET['po_id'];
   if (isset($_GET['po_id'])) {
     $po_id = decrypt_data($_GET['po_id']);
     $_POST = $db->view_data($con, "tblpurchaseordertracker", "poID", $po_id );
@@ -35,9 +31,10 @@
     // $records_summary = $db->display_specific_data($con, "tblpurchaseorderitems", $fields, "poID", $po_id, "poID");
     $summary = $db->get_payment_summary($con, $po_id);
     $history = $db->display_specific_data($con, "tblpaymenttracker", $fields_history, "poID", $po_id, "poID");
+    $payments = $db->get_order_payments($con, $po_id);
+
+    $disable_control = (!is_null($payments)) ? 'disabled' : 'required';
   }
-  //
-  // echo "<br /><pre>", print_r($_POST), "</pre>";
 
   if (isset($_SESSION['po_id'])) {
     $po_id = $_SESSION['po_id'];
@@ -50,6 +47,8 @@
   $receipt_no = (isset($_POST['add_order'])) ? $_POST['poReceiptNo'] : '' ;
   $station = (isset($_POST['add_order'])) ? $_POST['poStation'] : $station_array[0] ;
   $date = (isset($_POST['add_order'])) ? date("F-j-Y", strtotime($_POST['poDate'])) : date("F-j-Y");
+
+
 ?>
   <br />
   <div class='container topstart'>
@@ -65,7 +64,7 @@
       <div class='w3-container w3-blue'>
           <h3> Add Purchase Order </h3>
       </div>
-      <form class='w3-form w3-border w3-round' action='#' method='POST' id='poForm'>
+      <form class='w3-form w3-border w3-round' action='purchase_order.php' method='POST' id='poForm'>
         <div class='row'>
           <div class='col-sm-3'>
             <div class='form-group'>
@@ -119,7 +118,7 @@
           <form class='w3-form w3-border w3-round' action='purchase_order.php' method='POST' id='poForm'>
             <?php
               if (isset($_SESSION['update_order'])) {
-                 echo "<input type='hidden' name='poID' value='{$po_id}'>";
+                 echo "<input type='hidden' name='poID' id='pID' value='{$po_id}'>";
               }
             ?>
             <div class='form-group'>
@@ -155,7 +154,8 @@
               echo "<div class='form-group'>
                       <label class='bitterlabel'> Control </label><br />
                       <input class='btn btn-primary btn-block' type='submit' name='add_order' value='Update Order'>
-                      <input class='btn btn-primary btn-block' type='submit' name='add_order' value='Delete Order'>
+                      <a class='btn btn-primary btn-block' data-toggle='modal'
+                        data-target='#DeleteModal' id='modalButton' $disable_control>Delete Order</a>
                       <a class='btn btn-primary btn-block' href='display_purchases.php'>Back</a>
                     </div>";
             } else {
@@ -294,6 +294,30 @@
           </div>
         <?php } ?>
       <?php } ?>
+
+      <!-- Beginning of Delete Modal -->
+      <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel">
+    	  <div class="modal-dialog" role="document">
+    	    <div class="modal-content">
+    	      <div class="modal-header">
+    	        <h3 class="modal-title" id="DeleteModalLabel">Delete Data</h3>
+    	      </div>
+
+    	      <div class="modal-body">
+  	          <div class="box-body pad">
+            	  <h5>Are you sure you want to delete this data? </h5>
+  	          </div>
+    	      </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="delete_unique_data(pID);"> Yes </button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"> No </button>
+            </div>
+
+    	    </div>
+    	  </div>
+    	 </div>
+       <!-- End of Delete Modal -->
   </div>
 
 <?php
