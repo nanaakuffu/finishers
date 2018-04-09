@@ -48,9 +48,9 @@
                   $po_id = encrypt_data($record['poID']);
                   if ($rkey == 'poDate') {
                     $value = date("F j, Y", strtotime($value));
-                    echo "<td ><a href=purchase_form.php?po_id={$po_id}&up_order=1>", $value, "</a></td>";
+                    echo "<td ><a href='purchase_form.php?po_id={$po_id}&up_order=1'>", $value, "</a></td>";
                   } else {
-                    echo "<td ><a href=purchase_form.php?po_id={$po_id}&up_order=1>", $value, "</a></td>";
+                    echo "<td ><a href='purchase_form.php?po_id={$po_id}&up_order=1'>", $value, "</a></td>";
                   }
                }
                echo "</tr>";

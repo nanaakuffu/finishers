@@ -281,7 +281,7 @@
                          foreach ($record as $rkey => $value) {
                            if ($rkey != 'poID') {
                              $pmtid = encrypt_data($record['pmtID']);
-                             echo "<td ><a href=payment_form.php?pmtid={$pmtid}&up_pays=1>", $value, "</a></td>";
+                             echo "<td ><a href='payment_form.php?pmtid={$pmtid}&up_pays=1'>", $value, "</a></td>";
                            }
                          }
                          echo "</tr>";
