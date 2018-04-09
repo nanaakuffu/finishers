@@ -11,6 +11,7 @@
 
   switch ($starting_value) {
     case 'it':
+      $po_id = $db->get_id($con, 'tblpurchaseorderitems', 'poID', 'itemID', $id);
       // deleting an item
       $db->delete_data($con, 'tblpurchaseorderitems', 'itemID', $id);
       break;
@@ -22,6 +23,7 @@
       break;
 
     case 'pm':
+      $po_id = $db->get_id($con, 'tblpurchaseordertracker', 'poID', 'itemID', $id);
       // Deleting a payment
       $db->delete_data($con, "tblpaymenttracker", "pmtID", $id);
       break;
@@ -31,9 +33,14 @@
       break;
   }
 
-  // echo json_encode(array('receipt_no' => $new_data['poReceiptNo'],
-  //                        'amount' => $new_data['poAmount'],
-  //                        'amtpaid' => $new_data['amtPaid'] ));
+  $id_type = explode("_", $id)[0];
+  $po_id = encrypt_data($po_id);
+
+  if (!is_null($po_id)) {
+    echo json_encode(array('id_type' => $id_type, 'po_id' => $po_id));
+  } else {
+    echo json_encode(array('id_type' => $id_type));
+  }
 
   $db->close_connection($con);
 

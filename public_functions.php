@@ -184,80 +184,13 @@
     function create_footer()
     {
       // add_footer();
-      echo "  <script src='static/js/jquery-3.1.1.min.js'></script>
-              <script src='static/js/bootstrap.min.js'></script>
-              <script src='static/js/bootstrap-datepicker.min.js'></script>
-              <script src='static/js/jquery.dataTables.min.js'></script>
-              <script src='static/js/dataTables.bootstrap.min.js'></script>
-              <script src='static/js/jquery-editable-select.min.js'></script>
-              <script src='static/js/finishers.js'></script>
-              <script type='text/javascript'>
-                $(function () {
-                  $('#display_result').DataTable({
-                    'paging': true,
-                    'lengthChange': false,
-                    'searching': false,
-                    'ordering': true,
-                    'info': true,
-                    'autoWidth': true
-                  });
-                  $('#d_user').DataTable({
-                    'paging': true,
-                    'lengthChange': false,
-                    'searching': false,
-                    'ordering': true,
-                    'info': true,
-                    'autoWidth': true
-                  });
-                  $('#d_order').DataTable({
-                    'paging': true,
-                    'lengthChange': false,
-                    'searching': true,
-                    'ordering': true,
-                    'info': true,
-                    'autoWidth': true
-                  });
-                  $('#item_order').DataTable({
-                    'paging': true,
-                    'lengthChange': false,
-                    'searching': false,
-                    'ordering': true,
-                    'info': true,
-                    'autoWidth': true
-                  });
-                  $('#form_datetime').datepicker({
-                    format: 'MM-dd-yyyy',
-                    autoclose: true
-                  });
-                  $('#itemType').editableSelect({filter: false});
-                  $('#itemUnit').editableSelect({filter: false});
-                  $('#userType').editableSelect({filter: false});
-                  $('#itemDescription').editableSelect({filter: false});
-                  $('#poStation').editableSelect({filter: false});
-
-
-                  $('#spoID')
-                    .editableSelect({filter: false})
-                    .on('select.editable-select', function (e, li) {
-                      var str = li.text();
-                      $.ajax({
-                          type: 'GET',
-                          url: 'order_details.php',
-                          data: 'id='+str.trim(),
-                          success: function(data){
-                            var myjson = data;
-                            var myobj = JSON.parse(myjson);
-                            $('#receipt_no').val(myobj.receipt_no);
-                            $('#item_cost').val(myobj.amount);
-                            $('#amt_paid').val(myobj.amtpaid);
-                          }
-                      })
-                  });
-
-                });
-              </script>
-          </body>
-          </html>";
+      echo "<script src='static/js/jquery-3.1.1.min.js'></script>
+            <script src='static/js/bootstrap.min.js'></script>
+            <script src='static/js/bootstrap-datepicker.min.js'></script>
+            <script src='static/js/jquery.dataTables.min.js'></script>
+            <script src='static/js/dataTables.bootstrap.min.js'></script>
+            <script src='static/js/jquery-editable-select.min.js'></script>
+            <script src='static/js/finishers.js'></script>";
     }
 
     function select_data($data_array, $select_value, $sorted = FALSE)

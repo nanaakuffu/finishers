@@ -117,5 +117,12 @@
   </div>
 
 <?php
-      create_footer();
+  create_footer();
 ?>
+<script type='text/javascript'>
+	$(function () {
+		$('#userType').editableSelect({filter: false, effects: 'fade'});
+	});
+</script>
+</body>
+</html>

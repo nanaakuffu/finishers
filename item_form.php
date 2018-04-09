@@ -218,3 +218,12 @@
     unset($_SESSION['itemID']); // Unset the id
     create_footer();
 ?>
+<script type='text/javascript'>
+	$(function () {
+		$('#itemType').editableSelect({filter: false, effects: 'fade'});
+		$('#itemUnit').editableSelect({filter: false, effects: 'fade'});
+		$('#itemDescription').editableSelect({filter: false, effects: 'fade'});
+	});
+</script>
+</body>
+</html>

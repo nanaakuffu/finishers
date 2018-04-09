@@ -55,5 +55,6 @@
 <hr>
 
 <?php
+  add_footer();
   create_footer();
 ?>

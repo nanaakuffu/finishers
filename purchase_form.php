@@ -146,8 +146,9 @@
 
             <div class='form-group'>
               <label class='bitterlabel' for='station'> Company or Station: </label>
-              <input class='form-control' type='text' name='poStation' value='<?php echo $station; ?>'
-                     placeholder='Station' >
+              <select class='form-control' name='poStation' id='poStation' required>
+                <?php select_data($station_array, $station); ?>
+              </select>
             </div>
             <?php
             if ($_SESSION['is_admin']) {
@@ -175,7 +176,7 @@
               <h3> Items Ordered with ID <?php echo $po_id; ?> </h3>
           </div>
           <div class='table-responsive'>
-            <table id='d_order' class='table table-hover' cellpadding='8' cellspacing='10'>
+            <table id='d_items' class='table table-hover' cellpadding='8' cellspacing='10'>
               <thead>
                <tr class='w3-blue'>
                  <?php
@@ -226,7 +227,7 @@
             <div id="summary" class="tab-pane fade in active">
               <br />
               <div class='table-responsive'>
-                <table id='d_payment' class='table table-hover' cellpadding='8' cellspacing='10'>
+                <table class='table table-hover' cellpadding='8' cellspacing='10'>
                   <thead>
                    <tr class='w3-blue'>
                      <?php
@@ -258,7 +259,7 @@
             <div id="history" class="tab-pane fade">
               <br />
               <div class='table-responsive'>
-                <table id='d_order' class='table table-hover' cellpadding='8' cellspacing='10'>
+                <table id='d_payment' class='table table-hover' cellpadding='8' cellspacing='10'>
                   <thead>
                    <tr class='w3-blue'>
                      <?php
@@ -319,8 +320,41 @@
     	 </div>
        <!-- End of Delete Modal -->
   </div>
-
 <?php
-      unset($_SESSION['id']); // Unset the id
-      create_footer();
+  unset($_SESSION['id']); // Unset the id
+  create_footer();
 ?>
+<script type='text/javascript'>
+  $(function () {
+    $('#d_order').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': true,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+    $('#d_items').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': false,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+    $('#form_datetime').datepicker({
+      format: 'MM-dd-yyyy',
+      autoclose: true
+    });
+    $('#poStation').editableSelect({
+      filter: false,
+      effects: 'fade'
+    });
+    $('#poStation_2').editableSelect({
+      filter: false,
+      effects: 'fade'
+    });
+  });
+</script>
+</body>
+</html>

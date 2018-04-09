@@ -90,7 +90,7 @@
     {
       // require_once 'public_functions.php';
 
-      $form_data = array('activity_id' => create_id(date('y-m-d'), 'act_id'),
+      $form_data = array('activity_id' => create_id(date('y-m-d'), 'actID'),
                          'user_name' => $user_name,
                          'activity_details' => $activity,
                          'activity_date_time' => date('y-m-d h:i:s'));
@@ -461,6 +461,20 @@
         return $rows;
       } else {
         return $rows;
+      }
+    }
+
+    function get_id($connection, $table, $field, $key_field, $key)
+    {
+      $sql = "SELECT $field FROM $table WHERE $key_field="."'".$key."'";
+      $result = mysqli_query($connection, $sql);
+      $result_number = mysqli_num_rows($result);
+
+      if ($result_number > 0 ) {
+        while ($records = mysqli_fetch_assoc($result)) {
+          $data[] = $records;
+        }
+        return $data[0][$field];
       }
     }
 

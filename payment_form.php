@@ -135,7 +135,7 @@
               <div class="col-xs-5">
                 <label class='bitterlabel' for='amount'> Payment Type </label>
                   <?php
-                    echo "<select class='form-control' name='pmtType' id='ptype' onchange='get_cheque_id()'>\n";
+                    echo "<select class='form-control' name='pmtType' id='pType' onchange='get_cheque_id()'>\n";
                       select_data($type_array, $payment_type);
                     echo "</select>";
                   ?>
@@ -196,7 +196,7 @@
   	    <div class="modal-content">
 
   	      <div class="modal-header">
-  	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  	        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
   	        <h3 class="modal-title" id="ChequeModalLabel">Cheque Details</h3>
   	      </div>
 
@@ -226,12 +226,17 @@
                     </div>
                 		<!-- <input type="text" class="form-control" id="ChequeDate" name="chqDate" placeholder="Date of the Cheque" required> -->
                   </div>
-                  <div class="form-group">
-                    <button type="button" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"> Add Cheque Details</button>
-                 	</div>
+                  <!-- <div class="form-group">
+                    <button type="button" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
+                 	</div> -->
   	            </form>
   	          </div>
   	      </div>
+
+          <div class="modal-footer">
+            <button type="button" form="chqForm" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"> Cancel </button>
+          </div>
 
   	    </div>
   	  </div>
@@ -239,17 +244,39 @@
      <!-- End of Unit Modal -->
 
   </div>
-  <!-- <script type='text/javascript'>
-    $(function() {
-      $('#btnAdd').click(function() {
-        var value = $('#ChequeID').val();
-        $('#chqID').val(value);
-        $('#poTypeModal').modal('hide');
-      });
-    });
-  </script> -->
 
 <?php
       unset($_SESSION['id']); // Unset the id
       create_footer();
 ?>
+<script type='text/javascript'>
+	$(function () {
+		$('#spoID')
+			.editableSelect({filter: false})
+			.on('select.editable-select', function (e, li) {
+				var str = li.text();
+				$.ajax({
+						type: 'GET',
+						url: 'order_details.php',
+						data: 'id='+str.trim(),
+						success: function(data){
+							var myjson = data;
+							var myobj = JSON.parse(myjson);
+							$('#receipt_no').val(myobj.receipt_no);
+							$('#item_cost').val(myobj.amount);
+							$('#amt_paid').val(myobj.amtpaid);
+						}
+				})
+		});
+    $('#pType').editableSelect({
+      filter: false,
+      effects: 'fade'
+    });
+    $('#ChequeDate').datepicker({
+			format: 'MM-dd-yyyy',
+			autoclose: true
+		});
+	});
+</script>
+</body>
+</html>

@@ -42,3 +42,72 @@ onchange='get_order_details(this.options[this.selectedIndex].value);'
 Some thoughts
 1. I think Date should be included as a field in the payments.
 2. Also receipt number should be included as receipt is given upon payment.
+
+
+<script type='text/javascript'>
+	$(function () {
+		$('#display_result').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': false,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+		$('#d_user').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': false,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+		$('#d_order').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': true,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+		$('#item_order').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': false,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+		$('#form_datetime').datepicker({
+			format: 'MM-dd-yyyy',
+			autoclose: true
+		});
+		$('#itemType').editableSelect({filter: false});
+		$('#itemUnit').editableSelect({filter: false});
+		$('#userType').editableSelect({filter: false});
+		$('#itemDescription').editableSelect({filter: false});
+		$('#poStation').editableSelect({filter: false});
+
+
+		$('#spoID')
+			.editableSelect({filter: false})
+			.on('select.editable-select', function (e, li) {
+				var str = li.text();
+				$.ajax({
+						type: 'GET',
+						url: 'order_details.php',
+						data: 'id='+str.trim(),
+						success: function(data){
+							var myjson = data;
+							var myobj = JSON.parse(myjson);
+							$('#receipt_no').val(myobj.receipt_no);
+							$('#item_cost').val(myobj.amount);
+							$('#amt_paid').val(myobj.amtpaid);
+						}
+				})
+		});
+
+	});
+</script>
+</body>
+</html>

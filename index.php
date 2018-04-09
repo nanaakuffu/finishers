@@ -42,3 +42,17 @@
     $db->close_connection($con);
     create_footer();
 ?>
+<script type='text/javascript'>
+	$(function () {
+		$('#display_result').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': false,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+	});
+</script>
+</body>
+</html>

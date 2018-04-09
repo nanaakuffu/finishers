@@ -12,16 +12,23 @@ function get_question(value) {
 
 function delete_unique_data(id) {
   var value = id.value;
-  // alert(value);
-  // $('#DeleteModal').modal('hide');
   $.ajax({
       type: "GET",
       url: "delete_data.php",
       data: "choice="+value,
       success: function(data){
+        var newjson = data;
+        var obj = JSON.parse(newjson);
+        var id_type = obj.id_type;
+        
         $('#DeleteModal').modal('hide');
-        window.location.href = 'display_purchases.php';
-        // alert(data);
+
+        if (id_type == 'poID') {
+          window.location.href = 'display_purchases.php';
+        } else {
+          var po_id = obj.po_id
+          window.location.href = 'purchase_form.php?po_id='+po_id+'&up_order=1';
+        }
       }
   })
 }
@@ -34,12 +41,9 @@ function save_cheque_details() {
      type:'json',
      success:function(data)
      {
-         // $('#btnAdd').click(function() {
-         var value = $('#ChequeID').val();
-         $('#chqID').val(value);
-         $('#poTypeModal').modal('hide');
-         // });
-       // alert('Record Inserted Successfully.');
+       var value = $('#ChequeID').val();
+       $('#chqID').val(value);
+       $('#poTypeModal').modal('hide');
      }
 
   });

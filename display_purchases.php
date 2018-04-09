@@ -65,3 +65,17 @@
 <?php
     create_footer();
 ?>
+<script type='text/javascript'>
+	$(function () {
+		$('#d_order').DataTable({
+			'paging': true,
+			'lengthChange': false,
+			'searching': true,
+			'ordering': true,
+			'info': true,
+			'autoWidth': true
+		});
+	});
+</script>
+</body>
+</html>
