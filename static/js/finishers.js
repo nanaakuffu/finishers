@@ -20,7 +20,7 @@ function delete_unique_data(id) {
         var newjson = data;
         var obj = JSON.parse(newjson);
         var id_type = obj.id_type;
-        
+
         $('#DeleteModal').modal('hide');
 
         if (id_type == 'poID') {
@@ -68,7 +68,7 @@ function get_order_details(value) {
 }
 
 function set_focus() {
-  document.index_search.search_value.focus();
+  // document.getElementById('search_value').focus();
 }
 
 function calculate_amount(id_quantity, id_unitcost, id_amount) {
