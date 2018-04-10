@@ -23,7 +23,7 @@
   <br />
   <div class='container topstart'>
     <div class='table-responsive'>
-      <table id='d_order' class='table table-hover' cellpadding='8' cellspacing='10'>
+      <table id='display_orders' class='table table-hover' cellpadding='8' cellspacing='10'>
         <thead>
          <tr class='w3-blue'>
            <?php
@@ -67,9 +67,9 @@
 ?>
 <script type='text/javascript'>
 	$(function () {
-		$('#d_order').DataTable({
+		$('#display_orders').DataTable({
 			'paging': true,
-			'lengthChange': false,
+			'lengthChange': true,
 			'searching': true,
 			'ordering': true,
 			'info': true,

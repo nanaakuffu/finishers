@@ -20,7 +20,7 @@
 
               <!-- bootstrap-dataTables CSS -->
               <link href='static/css/dataTables.bootstrap.css' rel='stylesheet'>
-              <link href='static/css/jquery.dataTables.min.css' rel='stylesheet'>
+
 
               <!-- Custom CSS -->
               <link href='static/css/w3.css' rel='stylesheet'>
@@ -117,14 +117,14 @@
                         <a href='#' class='dropdown-toggle' data-toggle='dropdown'><i class='fa fa-tasks'></i> Orders <b class='glyphicon glyphicon-menu-down'></b></a>
                         <ul class='dropdown-menu'>
                             <li>
-                                <a href='purchase_order.php'><i class='fa fa-fw fa-plus'></i> Make An Order </a>
+                                <a href='purchase_order.php'><i class='fa fa-fw fa-shopping-cart'></i> Place An Order </a>
                             </li>
                             <li>
-                                <a href='display_purchases.php'><i class='fa fa-fw fa-desktop'></i> View Orders </a>
+                                <a href='display_purchases.php'><i class='fa fa-fw fa-desktop'></i> View Orders Made </a>
                             </li>";
                             if ( $_SESSION['is_admin'] == 1) {
-                              echo "<li><a href='payments.php'><i class='fa fa-fw fa-plus'></i> Add Payment </a></li>";
-                              echo "<li><a href='display_payments.php'><i class='fa fa-fw fa-desktop'></i> Display Payments </a></li>";
+                              echo "<li><a href='payments.php'><i class='fa fa-fw fa-paypal'></i> Make a Payment </a></li>";
+                              // echo "<li><a href='display_payments.php'><i class='fa fa-fw fa-desktop'></i> Display Payments </a></li>";
                             }
                   echo "</ul>
                     </li>

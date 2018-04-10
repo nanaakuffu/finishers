@@ -268,14 +268,33 @@
 						}
 				})
 		});
-    $('#pType').editableSelect({
-      filter: false,
-      effects: 'fade'
-    });
+    // $('#pType').editableSelect({
+    //   filter: false,
+    //   effects: 'fade'
+    // });
     $('#ChequeDate').datepicker({
 			format: 'MM-dd-yyyy',
 			autoclose: true
 		});
+    // $('#chqForm').on('submit', function (e) {
+    //   if (document.getElementById("chqForm").checkValidity()) {
+    //       e.preventDefault();
+    //       $.ajax({
+    //          url: "save_cheque_details.php",
+    //          method:"POST",
+    //          data:$('#chqForm').serialize(),
+    //          type:'json',
+    //          success:function(data)
+    //          {
+    //            var value = $('#ChequeID').val();
+    //            $('#chqID').val(value);
+    //            $('#poTypeModal').modal('hide');
+    //          }
+    //
+    //       });
+    //   }
+    //   return true;
+    // });
 	});
 </script>
 </body>

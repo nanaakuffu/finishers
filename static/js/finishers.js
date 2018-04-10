@@ -89,7 +89,7 @@ function calculate_balance(id_cost, id_paid, id_amount, id_balance){
 }
 
 function get_cheque_id(){
-  if (document.getElementById('ptype').value == 'Cash') {
+  if (document.getElementById('pType').value == 'Cash') {
     document.getElementById('chqID').disabled = true;
   } else {
     document.getElementById('chqID').disabled = false;
