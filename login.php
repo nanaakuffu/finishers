@@ -13,10 +13,12 @@
         $user_array = $db->get_user_priveleges($con, $_POST['user_name']);
 
         // $user_sql = "SELECT user_password, first_name, middle_name, last_name FROM user_details WHERE user_name = "."'".$_POST['user_name']."'";
-        $user_sql = "SELECT user_password, first_name, middle_name, last_name,
-                      COUNT(login_details.user_name) AS login_count FROM user_details,
-                      login_details WHERE user_details.user_name ='".$_POST['user_name']."' AND
-                      login_details.user_name ='".$_POST['user_name']."'";
+        $user_sql = "SELECT user_details.user_name, user_password, first_name, middle_name, last_name,
+                     COUNT(login_details.user_name) AS login_count
+                     FROM user_details
+                     INNER JOIN login_details
+                     ON user_details.user_name = login_details.user_name
+                     WHERE user_details.user_name = '".$_POST['user_name']."'";
 
         $result = mysqli_query($con, $user_sql) or die("Couldn't execute query for getting the user name.");
         $num = mysqli_num_rows($result);
@@ -39,7 +41,7 @@
               $_SESSION['login_time'] = time();
 
               // Create an array with the variables available
-              $log_array = array('login_id'=>create_id($today_date, "log"), 'user_name'=>$_POST['user_name'], 'login_date_time'=>date('y-m-d h:i:s'));
+              $log_array = array('login_id'=>create_id(date('y-m-d'), "logID"), 'user_name'=>$_POST['user_name'], 'login_date_time'=>date('y-m-d h:i:s'));
               $log_array = secure_data_array($log_array);
 
               $_SESSION['log_id'] = $log_array['login_id'];
