@@ -123,15 +123,17 @@
                    id='amt_paid' placeholder='Amount Redeemed' readonly>
           </div>
 
-          <div class='form-group'>
-            <label class='bitterlabel' for='paid'>Amount Paid </label>
-            <input class='form-control' type='text' name='pmtAmount'
-                    oninput='calculate_balance(item_cost, amt_paid, current_payment, balance);'
-                    value='<?php echo trim($amount_paid); ?>'
-                   id='current_payment' placeholder='Amount To Pay' required>
+          <div class='control-group'>
+            <label class='control-label bitterlabel' for='paid'>Amount Paid </label>
+            <div class="controls">
+              <input class='form-control' type='number' name='pmtAmount'
+                      oninput='calculate_balance(item_cost, amt_paid, current_payment, balance);'
+                      value='<?php echo trim($amount_paid); ?>'
+                     id='current_payment' placeholder='Amount To Pay' required>
+            </div>
           </div>
 
-          <div class='form-group row'>
+          <div class='form-group row' style="margin-top:16px">
               <div class="col-xs-5">
                 <label class='bitterlabel' for='amount'> Payment Type </label>
                   <?php
@@ -142,15 +144,15 @@
             </div>
             <div class="col-xs-7">
               <label for="ex3"> Cheque ID </label>
-              <div class="input-group">
-                <input class="form-control" id="chqID" type="text" name="chqID" value='<?php echo $cheque_id; ?>'
-                    placeholder="Cheque ID" value='' <?php echo $disabled; ?> >
-                <div class='input-group-btn'>
+              <!-- <div class="input-group"> -->
+              <input class="form-control" id="chqID" type="text" name="chqID" value='<?php echo $cheque_id; ?>'
+                  onfocus="invoke_modal();" placeholder="Cheque ID" value='' <?php echo $disabled; ?> >
+                <!-- <div class='input-group-btn'>
                     <a class='btn btn-primary' data-toggle="modal" data-target="#poTypeModal" id="modalButton">
                         <i class='fa fa-fw fa-plus'></i>
                     </a>
-                </div>
-              </div>
+                </div> -->
+              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -202,21 +204,30 @@
 
   	      <div class="modal-body">
   	          <div class="box-body pad">
-  	            <form id="chqForm" method="post" enctype="multipart/form-data">
+  	            <form name="chqForm" id="chqForm" method="post" enctype="multipart/form-data">
                   <div class="form-group">
               	  	<label for="ChequeID">Cheque ID: </label>
                 		<input type="text" class="form-control" id="ChequeID" name="chqID" placeholder="Cheque Number"
-                    value="<?php echo create_id(date('y-m-d'), 'chqID'); ?>">
+                    value="<?php echo create_id(date('y-m-d'), 'chqID'); ?>" readonly>
                   </div>
-                  <div class="form-group">
-              	  	<label for="ChequeNumber">Cheque Number: </label>
-                		<input type="text" class="form-control" id="ChequeNumber" name="chqNumber" placeholder="Cheque Number" required>
+
+                  <div class="control-group" style="margin-top:10px">
+              	  	<label class="control-label" for="ChequeNumber">Cheque Number: </label>
+                    <div class="controls">
+                		  <input type="text" class="form-control" id="ChequeNumber" name="chqNumber" placeholder="Cheque Number" required>
+                      <p class="help-block"></p>
+                    </div>
                   </div>
-                  <div class="form-group">
-              	  	<label for="ChequeBank">Bank: </label>
-                		<input type="text" class="form-control" id="ChequeBank" name="chqBank" placeholder="Bank of the Cheque" required>
+
+                  <div class="control-group" style="margin-top:10px">
+              	  	<label class="control-label"  for="ChequeBank">Bank: </label>
+                    <div class="controls">
+                		  <input type="text" class="form-control" id="ChequeBank" name="chqBank" placeholder="Bank of the Cheque" required>
+                      <p class="help-block"></p>
+                    </div>
                   </div>
-                  <div class="form-group">
+
+                  <div class="form-group" style="margin-top:10px">
               	  	<label for="ChequeDate">Cheque Date: </label>
                     <div class='input-group date' id='form_datetime'>
                       <input class='form-control' type='text' id="ChequeDate" name='chqDate' placeholder="Date of the Cheque" required>
@@ -226,15 +237,19 @@
                     </div>
                 		<!-- <input type="text" class="form-control" id="ChequeDate" name="chqDate" placeholder="Date of the Cheque" required> -->
                   </div>
+
                   <!-- <div class="form-group">
-                    <button type="button" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
+                    <button type="submit" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
+                    <button type="submit" id="btnAdd" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"> Cancel </button>
                  	</div> -->
   	            </form>
   	          </div>
   	      </div>
 
           <div class="modal-footer">
-            <button type="button" form="chqForm" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
+            <!-- <button type="submit" form="chqForm" id="btnAdd" class="btn btn-primary" onsubmit="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button> -->
+            <button type="submit" form="chqForm" id="btnAdd" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
             <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"> Cancel </button>
           </div>
 
@@ -268,33 +283,28 @@
 						}
 				})
 		});
-    // $('#pType').editableSelect({
-    //   filter: false,
-    //   effects: 'fade'
-    // });
+
     $('#ChequeDate').datepicker({
 			format: 'MM-dd-yyyy',
 			autoclose: true
 		});
-    // $('#chqForm').on('submit', function (e) {
-    //   if (document.getElementById("chqForm").checkValidity()) {
-    //       e.preventDefault();
-    //       $.ajax({
-    //          url: "save_cheque_details.php",
-    //          method:"POST",
-    //          data:$('#chqForm').serialize(),
-    //          type:'json',
-    //          success:function(data)
-    //          {
-    //            var value = $('#ChequeID').val();
-    //            $('#chqID').val(value);
-    //            $('#poTypeModal').modal('hide');
-    //          }
-    //
-    //       });
-    //   }
-    //   return true;
-    // });
+    $('#chqForm').on('submit', function(e){
+      e.preventDefault();
+      $.ajax({
+         url: "save_cheque_details.php",
+         method:"POST",
+         data:$('#chqForm').serialize(),
+         type:'json',
+         success:function(data)
+         {
+           var value = $('#ChequeID').val();
+           $('#chqID').val(value);
+           $('#poTypeModal').modal('hide');
+         }
+
+      });
+    })
+    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 	});
 </script>
 </body>
