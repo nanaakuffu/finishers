@@ -15,12 +15,11 @@
               <!-- Bootstrap Core CSS -->
               <link href='static/css/bootstrap.min.css' rel='stylesheet'>
 
-              <!-- bootstrap-datepicker CSS -->
+              <!-- datepicker CSS -->
               <link href='static/css/bootstrap-datepicker3.min.css' rel='stylesheet'>
 
-              <!-- bootstrap-dataTables CSS -->
-              <link href='static/css/dataTables.bootstrap.css' rel='stylesheet'>
-
+              <!-- dataTables CSS -->
+              <link href='static/css/dataTables.bootstrap.min.css' rel='stylesheet'>
 
               <!-- Custom CSS -->
               <link href='static/css/w3.css' rel='stylesheet'>
@@ -47,7 +46,7 @@
                 }
               </style>
             </head>
-            <body onload='set_focus();'>";
+            <body>";
     }
 
     function search_bar($search_page)
@@ -186,10 +185,11 @@
       // add_footer();
       echo "<script src='static/js/jquery-3.1.1.min.js'></script>
             <script src='static/js/bootstrap.min.js'></script>
-            <script src='static/js/bootstrap-datepicker.min.js'></script>
-            <script src='static/js/jquery.dataTables.min.js'></script>
+            <script src='static/js/dataTables.min.js'></script>
             <script src='static/js/dataTables.bootstrap.min.js'></script>
+            <script src='static/js/bootstrap-datepicker.min.js'></script>
             <script src='static/js/jquery-editable-select.min.js'></script>
+            <script src='static/js/jqBootstrapValidation.js'></script>
             <script src='static/js/finishers.js'></script>";
     }
 
