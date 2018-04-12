@@ -34,19 +34,20 @@ function delete_unique_data(id) {
 }
 
 function save_cheque_details() {
-  $.ajax({
-     url: "save_cheque_details.php",
-     method:"POST",
-     data:$('#chqForm').serialize(),
-     type:'json',
-     success:function(data)
-     {
-       var value = $('#ChequeID').val();
-       $('#chqID').val(value);
-       $('#poTypeModal').modal('hide');
-     }
-
-  });
+  alert('I am here');
+  // $.ajax({
+  //    url: "save_cheque_details.php",
+  //    method:"POST",
+  //    data:$('#chqForm').serialize(),
+  //    type:'json',
+  //    success:function(data)
+  //    {
+  //      var value = $('#ChequeID').val();
+  //      $('#chqID').val(value);
+  //      $('#poTypeModal').modal('hide');
+  //    }
+  //
+  // });
 }
 
 function get_order_details(value) {
@@ -68,7 +69,7 @@ function get_order_details(value) {
 }
 
 function set_focus() {
-  // document.getElementById('search_value').focus();
+  document.getElementById('search_value').focus();
 }
 
 function calculate_amount(id_quantity, id_unitcost, id_amount) {
@@ -100,7 +101,10 @@ function get_cheque_id(){
 
 function invoke_modal() {
     var input = document.getElementById('chqID')
-    input.addEventListener('click', function(event){
-        document.getElementById('modalButton').click();
-      });
+    $('#chqID').on('focus', function(){
+      $('#poTypeModal').modal('show');
+    });
+    // input.addEventListener('click', function(event){
+    //     document.getElementById('modalButton').click();
+    //   });
 }

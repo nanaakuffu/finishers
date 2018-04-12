@@ -3,7 +3,7 @@
 3. Add cheque details. -- done
 4. Concatenate order ID and description in the payment form. -- changed
 5. Change station to company in the order form. -- done
-6. Finish the modal forms for the other forms.
+6. Finish the modal forms for the other forms. -- done
 7.
 
 <a class='btn btn-primary btn-block' data-toggle='modal'
@@ -111,3 +111,58 @@ Some thoughts
 </script>
 </body>
 </html>
+
+// $('#chqForm').on('submit', function (e) {
+//   if (document.getElementById("chqForm").checkValidity()) {
+//       e.preventDefault();
+//       $.ajax({
+//          url: "save_cheque_details.php",
+//          method:"POST",
+//          data:$('#chqForm').serialize(),
+//          type:'json',
+//          success:function(data)
+//          {
+//            var value = $('#ChequeID').val();
+//            $('#chqID').val(value);
+//            $('#poTypeModal').modal('hide');
+//          }
+//
+//       });
+//   }
+//   return true;
+// });
+
+
+// $('#btnAdd').on('click', function(){
+//   // alert('clicked');
+//   $('form[name="chqForm"]').find('input,select,textarea').jqBootstrapValidation({
+//     submitSuccess: function ($form, event) {
+//       alert('validating');
+//       $.ajax({
+//         url: "save_cheque_details.php",
+//         method:"POST",
+//         data: $form.serialize(),
+//         type:'json',
+//         success: function(data)
+//         {
+//           alert(data);
+//           // var value = $('#ChequeID').val();
+//           // $('#chqID').val(value);
+//           // $('#poTypeModal').modal('hide');
+//         }
+//       });
+//
+//       // will not trigger the default submission in favor of the ajax function
+//       event.preventDefault();
+//     }
+//   });
+//   // alert('not validated');
+// });
+
+$('#pType')
+	.editableSelect({filter: false, effects: 'fade'})
+	.on('select.editable-select', function(e, li){
+		var str_selected = li.text();
+		alert(str_selected);
+		get_cheque_id(str_selected);
+	});
