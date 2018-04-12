@@ -84,11 +84,13 @@
             }
           ?>
           <input type='hidden' name='poID' value='<?php echo $order_id; ?>' >
-          <div class='form-group'>
-            <label class='bitterlabel' for='receiptno'> Quantity: </label>
-            <input class='form-control' type='text' name='itemQuantity'
-                   id='itemQuantity' value='<?php echo $quantity; ?>'
-                    placeholder='Item Quanity' required>
+          <div class='control-group'>
+            <label class='control-label bitterlabel' for='receiptno'> Quantity: </label>
+            <div class="controls">
+              <input class='form-control' type='number' name='itemQuantity'
+                     id='itemQuantity' value='<?php echo $quantity; ?>'
+                      placeholder='Item Quanity' required>
+            </div>
           </div>
 
           <div class='form-group'>
@@ -117,12 +119,14 @@
             <!-- </div> -->
           </div>
 
-          <div class='form-group'>
-            <label class='bitterlabel' for='itemUnitPrice'> Unit Price: </label>
-            <input class='form-control' type='text' name='itemUnitPrice'
-                   oninput='calculate_amount(itemQuantity, itemUnitPrice, itemCost);'
-                   value='<?php echo $unit_price; ?>'
-                   id='itemUnitPrice' placeholder='Item Unit Price' required>
+          <div class='control-group'>
+            <label class='control-label bitterlabel' for='itemUnitPrice'> Unit Price: </label>
+            <div class="controls">
+              <input class='form-control' type='number' name='itemUnitPrice'
+                     oninput='calculate_amount(itemQuantity, itemUnitPrice, itemCost);'
+                     value='<?php echo $unit_price; ?>'
+                     id='itemUnitPrice' placeholder='Item Unit Price' required>
+            </div>
           </div>
 
           <div class='form-group'>
@@ -223,6 +227,7 @@
 		$('#itemType').editableSelect({filter: false, effects: 'fade'});
 		$('#itemUnit').editableSelect({filter: false, effects: 'fade'});
 		$('#itemDescription').editableSelect({filter: false, effects: 'fade'});
+    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 	});
 </script>
 </body>

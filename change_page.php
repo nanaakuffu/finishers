@@ -36,15 +36,22 @@
           </div>
         </div>
         <div class="col-sm-5">
-          <div class='form-group'>
-              <label> New Password: </label>
-              <input class='form-control' type='password' name='new_password' value=''
-                       id='npass' placeholder='New Password' required>
+          <div class='control-group'>
+              <label class="control-label"> New Password: </label>
+              <div class="controls">
+                <input class='form-control' type='password' name='new_password' value=''
+                         minlength='8' id='npass' placeholder='New Password' required>
+                <p class="help-block"></p>
+              </div>
           </div>
-          <div class='form-group'>
-              <label> Confirm New Password: </label>
-              <input class='form-control' type='password' name='confirm_password' value=''
-                       id='cpass' placeholder='New Password' required>
+          <div class='control-group' style="margin-top:15px">
+              <label class="control-label"> Confirm New Password: </label>
+              <div class="controls">
+                <input class='form-control' type='password' name='confirm_password' value=''
+                    data-validation-match-match="new_password"
+                    id='cpass' placeholder='New Password' required>
+                <p class="help-block"></p>
+              </div>
           </div>
         </div>
         <div class="col-sm-2">
@@ -61,3 +68,10 @@
 <?php
       create_footer();
 ?>
+    <script type='text/javascript'>
+    	$(function () {
+        $('input,select,textarea').jqBootstrapValidation();
+    	});
+    </script>
+  </body>
+</html>

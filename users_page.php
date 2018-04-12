@@ -64,15 +64,32 @@
     <form class='w3-form w3-border' action='create_users.php' method='POST'>
       <div class="row">
         <div class="col-sm-5">
-          <div class='form-group'>
-              <label> User Name: </label>
-              <input class='form-control' type='text' name='user_name' value='<?php echo $user_name; ?>'
-                       id='uname' placeholder='Enter User Name' <?php echo $buttton_ctr; ?>>
-          </div>
-          <div class='form-group'>
-              <label> User Password: </label>
-              <input class='form-control' type='password' name='user_password' value='<?php echo trim($user_password); ?>'
-                       id='upass' placeholder='Enter Password' <?php echo $buttton_ctr; ?>>
+          <?php if (isset($_POST['submit'])): ?>
+            <div class='form-group'>
+                <label> User Name: </label>
+                <input class='form-control' type='text' name='user_name'
+                    value='<?php echo $user_name; ?>' readonly >
+            </div>
+          <?php else: ?>
+            <div class='control-group'>
+                <label class="control-label"> User Name: </label>
+                <div class="controls">
+                  <input class='form-control' type='text' name='user_name'
+                      value='' id='uname'
+                      data-validatation-ajax-ajax = 'user_name_check.php'
+                      placeholder='Enter User Name' required>
+                  <p class="help-block"></p>
+                </div>
+            </div>
+          <?php endif; ?>
+
+          <div class='control-group'>
+              <label class="control-label"> User Password: </label>
+              <div class="controls">
+                <input class='form-control' type='password' name='user_password' minlength='8' value='<?php echo trim($user_password); ?>'
+                         id='upass' placeholder='Enter Password' <?php echo $buttton_ctr; ?> >
+                <p class="help-block"></p>
+              </div>
           </div>
           <div class='form-group'>
               <label> User Type: </label>
@@ -122,6 +139,7 @@
 <script type='text/javascript'>
 	$(function () {
 		$('#userType').editableSelect({filter: false, effects: 'fade'});
+    $('input,select,textarea').jqBootstrapValidation();
 	});
 </script>
 </body>

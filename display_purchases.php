@@ -75,6 +75,14 @@
 			'info': true,
 			'autoWidth': true
 		});
+    $('.dataTables_filter input[type="search"]').
+      attr('placeholder','Search this table...').
+      css({'width':'250px',
+           'height':'20px',
+           'padding':'6px 12px',
+           'display':'inline-block',
+           'font-size':'15px'
+    });
 	});
 </script>
 </body>

@@ -77,10 +77,12 @@
               </div>
             </div>
 
-            <div class='form-group'>
-              <label class='bitterlabel' for='receiptno'> Receipt Number: </label>
-              <input class='form-control' type='text' name='poReceiptNo' value=''
-                     placeholder='Receipt Number' required>
+            <div class='control-group'>
+              <label class='control-label bitterlabel' for='receiptno'> Receipt Number: </label>
+              <div class="controls">
+                <input class='form-control' type='number' name='poReceiptNo' value=''
+                       placeholder='Receipt Number' required>
+              </div>
             </div>
           </div>
 
@@ -131,10 +133,12 @@
               </div>
             </div>
 
-            <div class='form-group'>
-              <label class='bitterlabel' for='receiptno'> Receipt Number: </label>
-              <input class='form-control' type='text' name='poReceiptNo' value='<?php echo $receipt_no; ?>'
-                     placeholder='Receipt Number' >
+            <div class='control-group'>
+              <label class='control-label bitterlabel' for='receiptno'> Receipt Number: </label>
+              <div class="controls">
+                <input class='form-control' type='number' name='poReceiptNo' value='<?php echo $receipt_no; ?>'
+                       placeholder='Receipt Number' >
+              </div>
             </div>
 
             <div class='form-group'>
@@ -354,6 +358,7 @@
       filter: false,
       effects: 'fade'
     });
+    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
   });
 </script>
 </body>
