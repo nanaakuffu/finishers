@@ -30,7 +30,12 @@
       try {
         $sconnect = mysqli_connect($this->host, $this->account, $this->password, $this->db_name);
                     // or die("Database Connection Failed! <br>"."Reason: ".mysqli_connect_error());
-        return $sconnect;
+        if ( mysqli_connect_errno()) {
+          echo "Failed to connect to MySQL: " .mysqli_connect_error();
+        } else {
+          return $sconnect;
+        }
+
       } catch (Exception $e) {
         var_dump($e->getMessage());
         return FALSE;
@@ -80,13 +85,17 @@
       $values = implode('","', $value_array);
       $query = "INSERT INTO $table_name ($fields) VALUES (\"$values\")";
 
-      if ($result = mysqli_query($connection, $query) or die("Couldn't execute query!<br>"."Reason:".mysqli_error()))
+      if (mysqli_query($connection, $query)) {
         return TRUE;
-      else
+      } else {
+        echo("Error description: " . mysqli_error($connection));
         return FALSE;
+      }
+
+
     }
 
-    function add_activity($connection, $user_name, $activity)
+    function add_activity($connection, $table_name, $user_name, $activity)
     {
       // require_once 'public_functions.php';
 
@@ -95,22 +104,26 @@
                          'activity_details' => $activity,
                          'activity_date_time' => date('y-m-d h:i:s'));
 
-      foreach($form_data as $field => $value)
-      {
-        $form_data[$field] = mysqli_real_escape_string($connection, $form_data[$field]);
+      $add_act = $this->add_new($connection, $form_data, $table_name);
 
-        $field_array[] = $field;
-        $value_array[] = $form_data[$field];
-      }
+      // foreach($form_data as $field => $value)
+      // {
+      //   $form_data[$field] = mysqli_real_escape_string($connection, $form_data[$field]);
+      //
+      //   $field_array[] = $field;
+      //   $value_array[] = $form_data[$field];
+      // }
+      //
+      // $fields = implode(",", $field_array);
+      // $values = implode('","', $value_array);
+      // $query = "INSERT INTO login_activity ($fields) VALUES (\"$values\")";
 
-      $fields = implode(",", $field_array);
-      $values = implode('","', $value_array);
-      $query = "INSERT INTO login_activity ($fields) VALUES (\"$values\")";
-
-      if ($result = mysqli_query($connection, $query))
+      if ($add_act) {
         return TRUE;
-      else
+      } else {
+        echo("Error description: ".mysqli_error($con));
         return FALSE;
+      }
     }
 
     function update_data($connection, $form_data, $table_name, $prim_key, $prim_value)

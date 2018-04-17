@@ -50,6 +50,28 @@ function save_cheque_details() {
   // });
 }
 
+function user_name_check() {
+  // alert('alerted');
+  var value = document.getElementById('uname').value;
+  $.ajax({
+    type: "GET",
+    url: "user_name_check.php",
+    data: "choice="+value,
+    success: function(data){
+      var newjson = data;
+      var obj = JSON.parse(newjson);
+      var message = obj.message;
+      var flag = obj.flag;
+
+      if (flag == 1) {
+        $('#user_p').html(message);
+        // $('#UserModal').modal('show');
+      }
+      // alert(data);
+    }
+  });
+}
+
 function get_order_details(value) {
   alert(value);
   // $.ajax({

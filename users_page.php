@@ -61,7 +61,7 @@
     <div class='w3-container w3-blue'>
         <h3> <?php echo $title_bar ?> </h3>
     </div>
-    <form class='w3-form w3-border' action='create_users.php' method='POST'>
+    <form class='w3-form w3-border' action='create_users.php' method='POST' novalidate>
       <div class="row">
         <div class="col-sm-5">
           <?php if (isset($_POST['submit'])): ?>
@@ -75,15 +75,15 @@
                 <label class="control-label"> User Name: </label>
                 <div class="controls">
                   <input class='form-control' type='text' name='user_name'
-                      value='' id='uname'
-                      data-validatation-ajax-ajax = 'user_name_check.php'
-                      placeholder='Enter User Name' required>
-                  <p class="help-block"></p>
+                      value='' id='uname' minlength='5'
+                      onblur="user_name_check();"
+                      placeholder='Enter User Name' autofocus required>
+                  <p class="help-block" id='user_p'></p>
                 </div>
             </div>
           <?php endif; ?>
 
-          <div class='control-group'>
+          <div class='control-group' style="margin-top:15px">
               <label class="control-label"> User Password: </label>
               <div class="controls">
                 <input class='form-control' type='password' name='user_password' minlength='8' value='<?php echo trim($user_password); ?>'
@@ -91,7 +91,7 @@
                 <p class="help-block"></p>
               </div>
           </div>
-          <div class='form-group'>
+          <div class='form-group' style="margin-top:15px">
               <label> User Type: </label>
               <?php
                 if (!isset($_SESSION['update_user'])) {
@@ -131,6 +131,30 @@
         </div>
       </div>
     </form>
+
+    <!-- Message about the  -->
+    <div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="UserModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="UserModalLabel">User Check</h3>
+          </div>
+
+          <div class="modal-body">
+            <div class="box-body pad">
+              <h6 id='user_m'></h6>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-primary" onclick="delete_unique_data(pID);"> Yes </button> -->
+            <button type="button" class="btn btn-primary" data-dismiss="modal"
+            aria-label="Close" id="closeBtn"> Ok </button>
+          </div>
+
+        </div>
+      </div>
+     </div>
   </div>
 
 <?php
@@ -140,6 +164,25 @@
 	$(function () {
 		$('#userType').editableSelect({filter: false, effects: 'fade'});
     $('input,select,textarea').jqBootstrapValidation();
+    // $('#uname').on('blur', function(){
+    //   var value = (this).value;
+    //   $.ajax({
+    //     type: "GET",
+    //     url: "user_name_check.php",
+    //     data: "choice="+value,
+    //     success: function(data){
+    //       var newjson = data;
+    //       var obj = JSON.parse(newjson);
+    //       var message = obj.message;
+    //       var flag = obj.flag;
+    //
+    //       if (flag == 1) {
+    //         $('#user_m').html(message);
+    //         $('#UserModal').modal('show');
+    //       }
+    //     }
+    //   });
+    // });
 	});
 </script>
 </body>

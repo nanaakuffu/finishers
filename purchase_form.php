@@ -329,7 +329,7 @@
   create_footer();
 ?>
 <script type='text/javascript'>
-  $(function () {
+  $(document).ready(function() {
     $('#d_order').DataTable({
 			'paging': true,
 			'lengthChange': false,

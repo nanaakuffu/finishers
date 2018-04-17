@@ -23,9 +23,9 @@
       $records = $db->display_data($con, "user_details", $fields, "first_name");
     }
 
-    echo "<br /><div class='container topstart'>",
-            search_bar('display_users.php', 'Search ...'),
-           "<br /><div class='table-responsive'>
+    echo "<br />
+           <div class='container topstart'>
+           <div class='table-responsive'>
               <table id='d_user' class='table table-hover' cellpadding='8' cellspacing='10'>
                 <thead>
                   <tr class='w3-blue'>";
@@ -68,11 +68,19 @@
 		$('#d_user').DataTable({
 			'paging': true,
 			'lengthChange': false,
-			'searching': false,
+			'searching': true,
 			'ordering': true,
 			'info': true,
 			'autoWidth': true
 		});
+    $('.dataTables_filter input[type="search"]').
+      attr('placeholder','Search this table...').
+      css({'width':'250px',
+           'height':'20px',
+           'padding':'6px 12px',
+           'display':'inline-block',
+           'font-size':'15px'
+    });
 	});
 </script>
 </body>
