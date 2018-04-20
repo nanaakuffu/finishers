@@ -78,7 +78,7 @@ if(!isset($_POST['submit'])) {
           $change_data = $db->update_data($con, $pass_data, 'users', 'user_name', $pass_data['user_name']);
 
           // Add user activity
-          $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Changed your password.');
+          $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Changed your password.');
 
           if ($change_data) {
             header('Location: index.php');
@@ -86,7 +86,7 @@ if(!isset($_POST['submit'])) {
         } else {
           $_SESSION['message'] = "<li><i class='fa-li fa fa-check-square'></i> User name and old password do not match. </li>";
           // Add user activity
-          $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Attempted to change password but failed due to user name paswword mismatch.');
+          $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Attempted to change password but failed due to user name paswword mismatch.');
           include_once 'change_page.php';
         }
       } else {

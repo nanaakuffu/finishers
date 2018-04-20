@@ -20,4 +20,6 @@
   } else {
     echo json_encode(array('flag'=>0, 'message' => '<ul><li>'.mysqli_error($con).'</li></ul>'));
   }
+
+  $db->close_connection($con);
 ?>

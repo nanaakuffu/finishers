@@ -74,7 +74,7 @@
 
                 if ($save_data) {
                   // Add user acitivty
-                  $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new user: '.$_POST['user_name']);
+                  $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Added a new user: '.$_POST['user_name']);
 
                   // If saving was possible try to set the access level
                   $_SESSION['new_user'] = $_POST['user_name'];
@@ -105,7 +105,7 @@
               $save_data = $db->update_data($con, $_POST, "user_details", "user_name", $_POST['user_name']);
 
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated your account details');
+              $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Updated your account details');
 
               unset($_SESSION['update_user']);
               unset($_SESSION['id']);

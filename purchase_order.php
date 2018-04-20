@@ -40,12 +40,15 @@
           // This is an array that holds the keys of the wanted field names
           $field_names_array = $db->get_field_names($con, "tblpurchaseordertracker");
 
+          // Work on the date
+          $date_from_data = change_string_to_date($_POST['poDate']);
+
           switch ($_POST['add_order']) {
             // Actually save the data from the form.
             case 'Add Purchase Order':
 
               // Reset the date for the database format
-              $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
+              $_POST['poDate'] = date("Y-m-d", $date_from_data);
               $_POST['poID'] = create_id(date('y-m-d'), 'poID');
               // $_SESSION['poID'] = $_POST['poID'];
 
@@ -65,7 +68,7 @@
 
               if ($save_data) {
                 // Add user acitivty
-                $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new order totalling '.$_POST['poAmount']);
+                $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Added a new order totalling '.$_POST['poAmount']);
                 include_once 'item_form.php';
               }
               // } else {
@@ -77,7 +80,7 @@
 
             case 'Update Order':
               // Reset the date for the database format
-              $_POST['poDate'] = Date("Y-m-d", strtotime($_POST['poDate']));
+              $_POST['poDate'] = date("Y-m-d", $date_from_data);
 
               /* Removes unwanted field names that came from the form */
               $_POST = filter_array($_POST, $field_names_array);
@@ -88,7 +91,7 @@
               $save_data = $db->update_data($con, $_POST, "tblpurchaseordertracker", "poID", $_POST['poID']);
 
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated an order with receipt number '.$_POST['poReceiptNo']);
+              $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Updated an order with receipt number '.$_POST['poReceiptNo']);
 
               unset($_SESSION['update_order']);
               unset($_SESSION['poid']);
@@ -100,7 +103,7 @@
               $item_data = $db->delete_data($con, 'tblpurchaseorderitems', 'poid', $_POST['poID']);
 
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Deleted an order with receipt number '.$_POST['poReceiptNo']);
+              $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Deleted an order with receipt number '.$_POST['poReceiptNo']);
 
               if ($delete_data) {
                 header("Location: display_purchases.php");

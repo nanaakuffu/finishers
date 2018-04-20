@@ -507,7 +507,9 @@
       $new_date = explode($delim, $date_string);
       $new_date[0] = date("m", strtotime($new_date[0]));
 
-      return $new_date;
+      $_date = strtotime($new_date[2]."/".$new_date[0]."/".$new_date[1]);
+
+      return $_date;
     }
 
 ?>

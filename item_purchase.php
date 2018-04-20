@@ -59,7 +59,7 @@
                 $update_amount = $db->update_order_amount($con, $_POST['poID']);
 
                 // Add user acitivty
-                $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added '. $_POST['itemDescription'].' item for the order '.$_POST['poID']);
+                $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Added '. $_POST['itemDescription'].' item for the order '.$_POST['poID']);
 
                 // Raise a flag to keep showing the items being ordered
                 $_POST['_items'] = 'Adding';
@@ -80,7 +80,7 @@
               // Update the order amount
               $update_amount = $db->update_order_amount($con, $_POST['poID']);
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated an item with order ID '.$_POST['poID']);
+              $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Updated an item with order ID '.$_POST['poID']);
 
               unset($_SESSION['update_item']);
               unset($_SESSION['itemID']);
@@ -95,7 +95,7 @@
               // Add user acitivty
               $update_amount = $db->update_order_amount($con, $_POST['poID']);
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Deleted an item with ID '.$_POST['itemID']);
+              $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Deleted an item with ID '.$_POST['itemID']);
 
               if ($delete_data) {
                 $po_id = encrypt_data($_POST['poID']);

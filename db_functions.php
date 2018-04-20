@@ -106,22 +106,10 @@
 
       $add_act = $this->add_new($connection, $form_data, $table_name);
 
-      // foreach($form_data as $field => $value)
-      // {
-      //   $form_data[$field] = mysqli_real_escape_string($connection, $form_data[$field]);
-      //
-      //   $field_array[] = $field;
-      //   $value_array[] = $form_data[$field];
-      // }
-      //
-      // $fields = implode(",", $field_array);
-      // $values = implode('","', $value_array);
-      // $query = "INSERT INTO login_activity ($fields) VALUES (\"$values\")";
-
       if ($add_act) {
         return TRUE;
       } else {
-        echo("Error description: ".mysqli_error($con));
+        echo("Error description: ".mysqli_error($connection));
         return FALSE;
       }
     }

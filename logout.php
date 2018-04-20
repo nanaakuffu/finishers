@@ -21,7 +21,7 @@
     $log_result = mysqli_query($con, $log_sql) or die("Couldn't execute query to successfully logout user.");
 
     // Add user activity
-    $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Logged out of the system.');
+    $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Logged out of the system.');
 
     // $user_sql = "UPDATE users SET status='0' WHERE user_name ="."'".$user_name."'";
     // $result = mysqli_query($con, $user_sql) or die("Couldn't execute query.");

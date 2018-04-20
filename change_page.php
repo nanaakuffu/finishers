@@ -56,8 +56,8 @@
         </div>
         <div class="col-sm-2">
           <div class='form-group'>
-            <label> Control </label>
-            <button class='btn btn-primary' type='submit' name='submit'
+            <label class='bitterlabel'> Control </label><br />
+            <button class='btn btn-primary btn-block' type='submit' name='submit'
                 form='change_p' value='Change Password'> Change Password <i class='fa fa-fw fa-plus'></i></button>
           </div>
         </div>

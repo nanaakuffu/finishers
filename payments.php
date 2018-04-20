@@ -67,7 +67,7 @@
 
                   if ($save_data) {
                     // Add user acitivty
-                    $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Added a new payment of '.$_POST['pmtAmount']. ' with receipt number '.$receipt_no);
+                    $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Added a new payment of '.$_POST['pmtAmount']. ' with receipt number '.$receipt_no);
                     include_once 'payment_form.php';
                   }
               } else {
@@ -93,7 +93,7 @@
               $save_data = $db->update_data($con, $_POST, "tblpaymenttracker", "pmtID", $_POST['pmtID']);
 
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Updated a payment with receipt number '.$receipt_no);
+              $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Updated a payment with receipt number '.$receipt_no);
 
               unset($_SESSION['update_payment']);
               unset($_SESSION['poid']);
@@ -110,7 +110,7 @@
               $delete_data = $db->delete_data($con, "tblpaymenttracker", "pmtID", $_POST['pmtID']);
 
               // Add user acitivty
-              $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Deleted an order with receipt number '.$receipt_no);
+              $add_activity = $db->add_activity($con, 'login_activity', $_SESSION['user_name'], 'Deleted an order with receipt number '.$receipt_no);
 
               if ($delete_data) {
                 header("Location: display_payments.php");

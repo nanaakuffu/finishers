@@ -52,7 +52,7 @@
                 // Update login count
                 $_SESSION['login_count'] = $full_rows[0]['login_count'] + 1;
                 // Add user activity
-                $add_activity = $db->add_activity($con, $_SESSION['user_name'], 'Logged into the system.');
+                $add_activity = $db->add_activity($con, 'login_details', $_SESSION['user_name'], 'Logged into the system.');
               }
 
               $db->close_connection($con);
