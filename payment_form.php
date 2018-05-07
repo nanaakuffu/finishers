@@ -47,16 +47,14 @@
   $balance = (isset($_POST['add_payment'])) ? $_POST['pmtBalance'] : '' ;
 
   // Fill cheque modal forms
-  if (isset($_chqDetails['chqID'])) {
-    $chqID = (isset($_POST['add_payment'])) ? $_chqDetails['chqID'] : create_id(date('y-m-d'), 'chqID');
-    $chqNumber = (isset($_POST['add_payment'])) ? $_chqDetails['chqNumber'] : '';
-    $chqBank = (isset($_POST['add_payment'])) ? $_chqDetails['chqBank'] : '';
-    $chqDate = (isset($_POST['add_payment'])) ? date("F-j-Y", strtotime($_chqDetails['chqDate'])) : date("F-j-Y");
-  }
+  // if (isset($_chqDetails['chqID'])) {
+  $chqID = (isset($_POST['add_payment'])) ? $_chqDetails['chqID'] : create_id(date('y-m-d'), 'chqID');
+  $chqNumber = (isset($_POST['add_payment'])) ? $_chqDetails['chqNumber'] : '';
+  $chqBank = (isset($_POST['add_payment'])) ? $_chqDetails['chqBank'] : '';
+  $chqDate = (isset($_POST['add_payment'])) ? date("F-j-Y", strtotime($_chqDetails['chqDate'])) : date("F-j-Y");
+  // }
 
   $chqBtn = (isset($_POST['add_payment'])) ? 'Update Cheque Details' : 'Add Cheque Details';
-
-
 
   $readonly = (isset($_POST['add_payment'])) ? 'readonly' : 'required' ;
   $disable_control = (!is_null($payments)) ? 'disabled' : 'required';
