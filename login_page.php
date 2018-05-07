@@ -4,8 +4,16 @@
 
     base_header('Login Form');
 
+    error_reporting(E_ERROR);
+
     $db = new Database();
     $con = $db->connect_to_db();
+    if (!$con) {
+      // echo "<div class='alert alert-danger'>
+      //         ", $con,
+      //      "</div>";
+      exit();
+    }
 ?>
 
 <div class='w3-container row'>
@@ -42,7 +50,7 @@
 <?php
   if (isset($_SESSION['message'])) {
     echo "<div class='alert alert-danger'>
-              ", $_SESSION['message'],
+            ", $_SESSION['message'],
          "</div>";
     unset($_SESSION['message']);
   }
@@ -55,6 +63,6 @@
 <hr>
 
 <?php
-  add_footer();
+  // add_footer();
   create_footer();
 ?>
