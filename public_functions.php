@@ -41,6 +41,28 @@
                   font-family: Roboto;
                 }
 
+                /* Styling the footer for the whole page */
+                .my-footer {
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                  position: relative;
+                  background-color: #333;
+                  overflow: hidden;
+                  display: block;
+                  max-height: 100%;
+                }
+
+                .my-footer-text {
+                  color:white;
+                  padding-top: 20px;
+                  padding-bottom: 20px;
+                }
+
+                .footer-shadow{
+                  box-shadow: 0 -4px 20px 0 rgba(0, 0, 0, 0.2);
+                }
+
                 .topstart {
                   margin-top:40px;
                 }
@@ -172,17 +194,19 @@
 
     function add_footer()
     {
-      echo "<footer class='footer navbar-fixed-bottom text-center'>
+      echo "<br/>
+            <footer class='my-footer navbar-fixed-bottom footer-shadow'>
               <div class='container'>
-                <span class='text-muted'><strong>Copyright &copy; ", date("Y"), "- Created by DatalabGH. &nbsp; </strong> All rights
-                reserved.</span>
+                <div class='my-footer-text'>
+                  <span>Copyright &copy; ", date("Y"), "- Created by DatalabGH. All rights reserved.</span>
+                </div>
               </div>
             </footer>";
     }
 
     function create_footer()
     {
-      // add_footer();
+      add_footer();
       echo "<script src='static/js/jquery-3.1.1.min.js'></script>
             <script src='static/js/bootstrap.min.js'></script>
             <script src='static/js/dataTables.min.js'></script>
