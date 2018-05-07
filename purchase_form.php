@@ -53,13 +53,13 @@
   <br />
   <div class='container topstart'>
     <?php
-      if (isset($_SESSION['message'])) {
-        echo "<div class='panel panel-default'>
-                <div class='panel-heading'>Input Error(s)</div>
-                <div class='panel-body'><ul class='fa-ul'>", $_SESSION['message'], "</ul></div>
-              </div>";
-        unset($_SESSION['message']);
-      }
+      // if (isset($_SESSION['message'])) {
+      //   echo "<div class='panel panel-default'>
+      //           <div class='panel-heading'>Input Error(s)</div>
+      //           <div class='panel-body'><ul class='fa-ul'>", $_SESSION['message'], "</ul></div>
+      //         </div>";
+      //   unset($_SESSION['message']);
+      // }
     if ( !isset($_GET['po_id'])) { ?>
       <div class='w3-container w3-blue'>
           <h3> Add Purchase Order </h3>
@@ -298,6 +298,8 @@
             </div>
           </div>
         <?php } ?>
+        </div>
+      </div>
       <?php } ?>
 
       <!-- Beginning of Delete Modal -->
@@ -310,7 +312,7 @@
 
     	      <div class="modal-body">
   	          <div class="box-body pad">
-            	  <h5>Are you sure you want to delete this data? </h5>
+            	  <h5> Are you sure you want to delete this data? </h5>
   	          </div>
     	      </div>
 
