@@ -31,7 +31,15 @@
         $sconnect = mysqli_connect($this->host, $this->account, $this->password, $this->db_name);
                     // or die("Database Connection Failed! <br>"."Reason: ".mysqli_connect_error());
         if ( mysqli_connect_errno()) {
-          echo "Failed to connect to MySQL: " .mysqli_connect_error();
+          $error_string = "<li><b>Error</b>: Failed to connect to MySQL Server.</li>";
+          $error_string .="<li><b>Reason</b>: ".mysqli_connect_error()."</li>";
+          echo "<div class='container' style='margin-top:12.5%'>
+                  <div class='alert alert-danger'>",
+                    $error_string,
+                 "</div>
+                </div>
+              </body>
+            </html>";
         } else {
           return $sconnect;
         }
