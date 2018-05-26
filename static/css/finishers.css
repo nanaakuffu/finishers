@@ -1,0 +1,45 @@
+a:hover, a:visited, a:link, a:active
+{
+  text-decoration: none;
+}
+html, body, h1, h2, h3, h4, h5, h6 {
+  font-family: Roboto, 'Open Sans', Arvo, Bitter, 'Sans Serif', Arial;
+}
+
+.bitterlabel {
+  font-family: Roboto;
+}
+
+.my-shadow{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btn:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Styling the footer for the whole page */
+.my-footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  position: relative;
+  background-color: #333;
+  overflow: hidden;
+  display: block;
+  max-height: 100%;
+}
+
+.my-footer-text {
+  color:white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.footer-shadow{
+  box-shadow: 0 -4px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.topstart {
+  margin-top:40px;
+}
