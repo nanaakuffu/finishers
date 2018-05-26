@@ -80,8 +80,12 @@
             <div class='control-group'>
               <label class='control-label bitterlabel' for='receiptno'> Receipt Number: </label>
               <div class="controls">
-                <input class='form-control' type='number' name='poReceiptNo' value=''
-                       placeholder='Receipt Number' required>
+                <input class='form-control' type='text' name='poReceiptNo' value=''
+                    placeholder='Receipt Number' maxlength="11"
+                    data-validation-regex-regex="[0-9]{11}$"
+                    data-validation-regex-message="Must not be more than 11 digits."
+                    data-validation-number-message="Must be a number, no letters or characters.">
+                <p class="help-block"></p>
               </div>
             </div>
           </div>
@@ -137,7 +141,8 @@
               <label class='control-label bitterlabel' for='receiptno'> Receipt Number: </label>
               <div class="controls">
                 <input class='form-control' type='number' name='poReceiptNo' value='<?php echo $receipt_no; ?>'
-                       placeholder='Receipt Number' >
+                       placeholder='Receipt Number' maxlength="10" pattern=".{,10}$">
+                <p class="help-block"></p>
               </div>
             </div>
 

@@ -21,7 +21,7 @@
     <br />
   </div>
   <div class='col-md-4'>
-    <div class='panel panel-default' style='margin-top:90px'>
+    <div class='panel panel-default my-shadow' style='margin-top:90px'>
       <div class='panel-heading w3-blue'>
         <b style='font-size:20px'> Please Login Here! </b>
       </div>

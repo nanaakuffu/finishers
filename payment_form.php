@@ -47,12 +47,12 @@
   $balance = (isset($_POST['add_payment'])) ? $_POST['pmtBalance'] : '' ;
 
   // Fill cheque modal forms
-  // if (isset($_chqDetails['chqID'])) {
-  $chqID = (isset($_POST['add_payment'])) ? $_chqDetails['chqID'] : create_id(date('y-m-d'), 'chqID');
-  $chqNumber = (isset($_POST['add_payment'])) ? $_chqDetails['chqNumber'] : '';
-  $chqBank = (isset($_POST['add_payment'])) ? $_chqDetails['chqBank'] : '';
-  $chqDate = (isset($_POST['add_payment'])) ? date("F-j-Y", strtotime($_chqDetails['chqDate'])) : date("F-j-Y");
-  // }
+  if (isset($_chqDetails['chqID']) && $payment_type == 'Cheque' ) {
+    $chqID = (isset($_POST['add_payment'])) ? $_chqDetails['chqID'] : create_id(date('y-m-d'), 'chqID');
+    $chqNumber = (isset($_POST['add_payment'])) ? $_chqDetails['chqNumber'] : '';
+    $chqBank = (isset($_POST['add_payment'])) ? $_chqDetails['chqBank'] : '';
+    $chqDate = (isset($_POST['add_payment'])) ? date("F-j-Y", strtotime($_chqDetails['chqDate'])) : date("F-j-Y");
+  }
 
   $chqBtn = (isset($_POST['add_payment'])) ? 'Update Cheque Details' : 'Add Cheque Details';
 
@@ -153,16 +153,9 @@
                   ?>
             </div>
             <div class="col-xs-7">
-              <label for="ex3"> Cheque ID </label>
-              <!-- <div class="input-group"> -->
+              <label for="chqID"> Cheque ID </label>
               <input class="form-control" id="chqID" type="text" name="chqID" value='<?php echo $cheque_id; ?>'
                   onfocus="invoke_modal();" placeholder="Cheque ID" value='' <?php echo $disabled; ?> >
-                <!-- <div class='input-group-btn'>
-                    <a class='btn btn-primary' data-toggle="modal" data-target="#poTypeModal" id="modalButton">
-                        <i class='fa fa-fw fa-plus'></i>
-                    </a>
-                </div> -->
-              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -208,7 +201,6 @@
   	    <div class="modal-content">
 
   	      <div class="modal-header">
-  	        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
   	        <h3 class="modal-title" id="ChequeModalLabel">Cheque Details</h3>
   	      </div>
 
@@ -248,20 +240,12 @@
                           <span class='glyphicon glyphicon-calendar'></span>
                       </span>
                     </div>
-                		<!-- <input type="text" class="form-control" id="ChequeDate" name="chqDate" placeholder="Date of the Cheque" required> -->
                   </div>
-
-                  <!-- <div class="form-group">
-                    <button type="submit" id="btnAdd" class="btn btn-primary" onclick="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
-                    <button type="submit" id="btnAdd" class="btn btn-primary"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"> Cancel </button>
-                 	</div> -->
   	            </form>
   	          </div>
   	      </div>
 
           <div class="modal-footer">
-            <!-- <button type="submit" form="chqForm" id="btnAdd" class="btn btn-primary" onsubmit="save_cheque_details()"><i class="fa fa-fw fa-plus"></i> Add Cheque Details </button> -->
             <button type="submit" name="chqSave" form="chqForm" id="btnAdd" value="<?php echo $chqBtn; ?>" class="btn btn-primary"> <?php echo $chqBtn; ?> </button>
             <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close"> Cancel </button>
           </div>
@@ -315,7 +299,6 @@
            var value = $('#ChequeID').val();
            $('#chqID').val(value);
            $('#poTypeModal').modal('hide');
-           // alert(data);
          }
 
       });

@@ -41,6 +41,14 @@
                   font-family: Roboto;
                 }
 
+                .my-shadow{
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                }
+
+                .btn:hover{
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                }
+
                 /* Styling the footer for the whole page */
                 .my-footer {
                   bottom: 0;
@@ -206,7 +214,7 @@
 
     function create_footer()
     {
-      add_footer();
+      // add_footer();
       echo "<script src='static/js/jquery-3.1.1.min.js'></script>
             <script src='static/js/bootstrap.min.js'></script>
             <script src='static/js/dataTables.min.js'></script>
