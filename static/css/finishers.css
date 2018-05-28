@@ -1,7 +1,7 @@
-a:hover, a:visited, a:link, a:active
-{
+a:hover, a:visited, a:link, a:active {
   text-decoration: none;
 }
+
 html, body, h1, h2, h3, h4, h5, h6 {
   font-family: Roboto, 'Open Sans', Arvo, Bitter, 'Sans Serif', Arial;
 }
@@ -10,7 +10,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
   font-family: Roboto;
 }
 
-.my-shadow{
+.my-shadow {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -36,7 +36,7 @@ html, body, h1, h2, h3, h4, h5, h6 {
   padding-bottom: 20px;
 }
 
-.footer-shadow{
+.footer-shadow {
   box-shadow: 0 -4px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
