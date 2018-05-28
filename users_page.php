@@ -164,25 +164,6 @@
 	$(function () {
 		$('#userType').editableSelect({filter: false, effects: 'fade'});
     $('input,select,textarea').jqBootstrapValidation();
-    // $('#uname').on('blur', function(){
-    //   var value = (this).value;
-    //   $.ajax({
-    //     type: "GET",
-    //     url: "user_name_check.php",
-    //     data: "choice="+value,
-    //     success: function(data){
-    //       var newjson = data;
-    //       var obj = JSON.parse(newjson);
-    //       var message = obj.message;
-    //       var flag = obj.flag;
-    //
-    //       if (flag == 1) {
-    //         $('#user_m').html(message);
-    //         $('#UserModal').modal('show');
-    //       }
-    //     }
-    //   });
-    // });
 	});
 </script>
 </body>
